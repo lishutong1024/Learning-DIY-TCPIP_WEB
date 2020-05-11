@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="applicable-device" content="pc,mobile" />
+    <title>新闻详细页</title>
+    
+    
+    
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/glide.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/online.css"rel="stylesheet" />
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <script src="js/jquery.glide.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="js/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+
+<body>
+    
+    <header>
+
+        <div class="topBox">
+            <div class="borderBottom">
+                <div class="container">
+                    <div class="welcomeBox">欢迎光临官方企业网站</div>
+                    <div class="languageBox">
+                        <a href="#" class="en">English</a><a href="#" class="zh">中文版</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-8 logo"><a href="index.html"><img src="images/logo.png" alt="MojoCube 官方" /></a></div>
+
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="address"></div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="tel">
+                            <img src="images/tel.gif" alt="" /><br />400-8888-8888
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-static-top navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"></a>             
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+
+                        <li><a href="index.html">网站首页</a></li>
+
+                        <li class="dropdown">
+                            <a href="about.html" class="dropdown-toggle" data-toggle="dropdown">关于我们</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='about.html'>公司简介</a></li>
+                                <li><a class='' href='contact.html'>联系我们</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="article.html" class="dropdown-toggle" data-toggle="dropdown">新闻中心</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='article.html'>公司新闻</a></li>
+                                <li><a class='' href='article.html'>行业新闻</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="product.html" class="dropdown-toggle" data-toggle="dropdown">产品中心</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='product.html'>产品分类1</a><span>+</span>
+                                    <ul>
+                                        <li><a class='' href='product.html'>产品子分类1</a><ul></ul></li>
+                                        <li><a class='' href='product.html'>产品子分类2</a><ul></ul></li>
+                                    </ul>
+                                </li>
+                                <li><a class='' href='product.html'>产品分类2</a></li>
+                                <li><a class='' href='product.html'>产品分类3</a></li>
+                                <li><a class='' href='product.html'>产品分类4</a></li>
+                                <li><a class='' href='product.html'>产品分类5</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="album.html">案例中心</a></li>
+
+                        <li><a href="comment.html">在线留言</a></li>
+
+                        <li><a href="contact.html">联系我们</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <div class="slider">
+            <ul class="slider__wrapper">
+                <li class="slider__item"><a target="_blank" title="1" href="" style="background-image:url(images/1.jpg)"><img src="images/banner-2.png" alt="MojoCube 官方" /></a></li>
+                <li class="slider__item"><a target="_blank" title="2" href="" style="background-image:url(images/1.jpg)"><img src="images/banner-2.png" alt="MojoCube 官方" /></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var glide = $('.slider').glide();
+    </script>
+    
+    <!-- 内容 -->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8 col-md-9" id="rightBox">
+
+                <div class="positionBox">
+                    <div class="titleBar">
+                        <h1>当前位置</h1>
+                        <span></span>
+                        <a href="index.html">首页</a> > <a href="article.html">新闻中心</a>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 pad">
+
+                    <div class="detailTitle" style="border:0px; background:none; font-size:20px; color:#000;">
+                        网页前端将在网站中占据很大的空间和位置
+                    </div>
+
+                    <div class="detailTime">
+                        2017-01-01 12:00
+                    </div>
+                
+                    <div class="detailContent">
+                
+                        <span style="color:#505050;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;line-height:22px;">
+                            CSS和XHTML经过这几年在国内的发展，已经占据了主导地位。也成了网页前端必须掌握的技能之一。关于两三年前用TABLE布局好还是DIV布局好的争议已经烟消云散，已经完全没有必要提了。网站的各个职位要求似乎都跟CSS沾上了边，设计、程序都要会写几个样式。
+                            <br /><br />
+                            网页前端制作也一下子成了热门职位，即使在金融危机的困难风潮下，招聘前端职位的公司还是很多。毕竟作为一个新兴的职位，和其它职位比较起来，前端技能熟练的人还不能算是太多。不过新人学习的劲头也足一些，很多人为了换博客和空间的皮肤也开始学习CSS，所以也产生了好多CSS相关的网站、论坛、 QQ群。也是个好现象吧。
+                            <br /><br />
+                            CSS3标准的呼之欲出，将使得CSS也会发展成为一门弱编程语言。所以前端的难度也会更大，更多的样式和属性需要使用。而且各个浏览器也会推出自己有关CSS功能的额外扩展需要我们知道。未来的CSS会更加强大和健壮。当然，浏览器的兼容问题依旧存在。最近WEB界掀起了反IE6的运动，为推动 W3C标准和更好的用户体验，建议升级IE6。而目前来说，IE8仍在测试阶段，对CSS3也提供了部分支持。而新版的火狐、Safari也开始支持 CSS3。
+                            <br /><br />
+                            JavaScript在最近几年也重新焕发了光彩，编程的要求也会越来越高，不过prototype、jQuery等JS插件的不断更新使我们更充满了想象力，也让代码书写更加从容简单。因而也是前端人员需要掌握的技能。不过IE的自身标准和W3C的标准不兼容问题，也需要我们从头开始学习。本博推荐JavaScript权威指南，比较详细的介绍JS核心内容和浏览器支持特性。
+                            <br /><br />
+                            就我个人来看，网页前端在将来还会在网站中占据很大的空间和位置。网页前端的水准会走上一个新的发展历程。
+                            <br /><br />
+                        </span>
+
+                    </div>
+                
+                    <div class="otherPageBox">
+                
+                        <div class="col-xs-9 col-sm-9 col-md-9 pad">
+                            <div class='otherPage'>
+                                <div class='prevBox'>上一个：<a href='article_detail.html' title="浅谈URL使用在前端设计中的优化">浅谈URL使用在前端设计中的优化</a></div>
+                                <div class='nextBox'>下一个：<a href='article_detail.html' title="网页前端将在网站中占据很大的空间和位置">网页前端将在网站中占据很大的空间和位置</a></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-3 col-sm-3 col-md-3 pad">
+                            <a class="back" href="javascript:history.go(-1)">返回</a>
+                        </div>
+
+                    </div>
+                
+                    <div class="aboutProduct newsBox">
+                        <div class="titleBar">
+                            <h1>相关新闻</h1>
+                            <span>&nbsp</span>
+                        </div>
+                        <ul class="newsList">
+                        
+                            <li><a href="article_detail.html" title="微软欲主动送Windows Phone 7设备给黑客破解">微软欲主动送Windows Phone 7设备给黑客破解</a></li>
+                            <li><a href="article_detail.html" title="友盟Android应用数据报告显示国内优质应用非常稀缺">友盟Android应用数据报告显示国内优质应用非常稀缺</a></li>
+                              
+                        </ul>
+                    </div>
+                
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-3">
+
+                <div class="navigationBox" id="classification">
+                    <div class="titleBar">
+                        <h1>导航栏目</h1>
+                        <span></span>
+                    </div>
+                    <div class="list">
+                        <ul id="firstpane">
+                            <li><a class='firstSelected selected' href='article.html'>公司新闻</a></li>
+                            <li><a class='' href='article.html'>行业资讯</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="leftContactBox">     
+                    <div class="content"> 
+                        <p style="padding-top:20px;">联系人：张经理</p>
+                        <p>手机：13800138000</p>
+                        <p>电话：020-88668888</p>
+                        <p>邮箱：mojocube@qq.com</p>
+                        <p>地址： 广东省广州市天河区天粤垦路88号</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <footer>
+    
+        <div class="copyright">
+            <p>
+                <a href="about.html">公司简介</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="article.html">新闻中心</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="product.html">产品中心</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="contact.html">联系我们</a>
+            </p>
+            <p class="copyright_p">© 2000-2017 MojoCube All Rights Reserved. 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+        </div>
+
+    </footer>
+    
+    <script type="text/javascript" src="js/common.js"></script>
+    
+    <!--客服面板-->
+    <!--电脑版-->
+    <div id="cmsFloatPanel">
+
+        <div class="ctrolPanel">
+            <a class="service" href="#"></a>
+            <a class="message" href="#"></a>
+            <a class="qrcode" href="#"></a>
+            <a class="arrow" title="返回顶部" href="#"></a>
+        </div>
+
+        <div class="servicePanel">
+            <div class="servicePanel-inner">
+                <div class="serviceMsgPanel">
+                    <div class="serviceMsgPanel-hd"><a href="#"><span>关闭</span></a></div>
+                    <div class="serviceMsgPanel-bd">
+                        <!--在线QQ-->
+                        <div class="msggroup">
+                            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=396288955&site=qq&menu=yes"><img class="qqimg" src="http://wpa.qq.com/pa?p=2:593036114:52" alt="QQ在线客服" />技术支持</a>
+                        </div>
+                        <!--在线MSN-->
+                        <div class="msggroup">
+                            <a href="" target="blank"><img class="qqimg" src="images/msn.jpg" alt="MSN在线客服" /> 官方</a>
+                        </div>
+                        <!--在线SKYPE-->
+                        <div class="msggroup">
+                            <a href=""><img class="qqimg" src="images/skype.gif" alt="SKYPE在线客服" /> 官方</a>
+                        </div>
+                        <!--淘宝旺旺-->
+                        <div class="msggroup">
+                            
+                        </div>
+                    </div>
+                    <div class="serviceMsgPanel-ft"></div>
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="messagePanel">
+            <div class="messagePanel-inner">
+                <div class="formPanel">
+
+                    <div class="formPanel-bd">
+                        <!-- JiaThis Button BEGIN -->
+                        <div class="jiathis_style_32x32">
+                            <a class="jiathis_button_qzone"></a>
+                            <a class="jiathis_button_tsina"></a>
+                            <a class="jiathis_button_tqq"></a>
+                            <a class="jiathis_button_weixin"></a>
+                            <a class="jiathis_button_renren"></a>
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                        </div>
+                        <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+                        <!-- JiaThis Button END -->
+                        <a type="button" class="btn btn-default btn-xs" href="#" style="margin: 6px 0px 0px 10px;">关闭</a>
+                    </div>
+
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow01"></div>
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qrcodePanel">
+            <div class="qrcodePanel-inner">
+                <div class="codePanel">
+                    <div class="codePanel-hd"><span style="float:left">用手机扫描二维码</span><a href="#"><span>关闭</span></a></div>
+                    <div class="codePanel-bd">
+                        <img src="images/qrcode.jpg" alt="二维码" />
+                    </div>
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow01"></div>
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="serviceBox" style="display:none">
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=396288955&site=qq&menu=yes"><img class="qqimg" src="http://wpa.qq.com/pa?p=2:593036114:52" alt="QQ在线客服" />技术支持</a>
+    </div>
+
+    <script type="text/javascript" src="js/online.js"></script>
+
+    <!--电脑版 end-->
+
+    <!--手机版-->
+    <nav class="navbar-default navbar-fixed-bottom footer_nav" style="background:#fafafa;">
+        <div class="foot_nav"><a href="javascript:mShare()"><span class="glyphicon glyphicon-share btn-lg" aria-hidden="true"></span>分享</a></div>
+        <div class="foot_nav"><a href=""><span class="glyphicon glyphicon-phone btn-lg" aria-hidden="true"></span>电话</a></div>
+        <div class="foot_nav" id="serviceBtn"><a onClick="showService()"><span class="glyphicon glyphicon glyphicon-headphones btn-lg" aria-hidden="true"></span>客服</a></div>
+        <div class="foot_nav"><a id="gototop" href="#"><span class="glyphicon glyphicon-circle-arrow-up btn-lg" aria-hidden="true"></span>顶部</a></div>
+        <div id="mShareBox" style="position: fixed; display: none; z-index: 999; bottom: 47px; width: 100%; height: 45px; background: #fff; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 5px;">
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style_m"></div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_m.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
+    </nav>
+    <!--手机版 end-->
+
+    <script type="text/javascript">
+        function mShare() {
+            $("#mShareBox").toggle();
+            $("#serviceBox").hide();
+        }
+
+        if ($(".banner .slider__wrapper li").length == 0) {
+            $(".banner").addClass("emptyBanner");
+        }
+
+        function showService() {
+            $("#mShareBox").hide();
+            $("#serviceBox").toggle();
+        }
+    </script>
+
+</body>
+</html>

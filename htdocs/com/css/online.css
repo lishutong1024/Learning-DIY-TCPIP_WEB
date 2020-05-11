@@ -1,0 +1,97 @@
+/* 浮动客服面板 */
+#cmsFloatPanel{overflow:hidden;}
+#cmsFloatPanel .ctrolPanel{width:50px;height:200px;background: url(panel-bg.png) no-repeat center bottom;position:fixed;right:0px;top:227px;overflow:hidden;z-index:1001;_position:absolute;_top:expression(eval(documentElement.scrollTop + 200));}
+#cmsFloatPanel .ctrolPanel a{width:50px; height: 50px; font-size:12px;color:#ff3300;text-align:center;overflow:hidden; text-decoration:none;}
+#cmsFloatPanel .ctrolPanel a:hover{background: rgba(255,255,255,0.3);}
+#cmsFloatPanel .ctrolPanel .arrow{line-height:28px;display:block;margin:1px auto;}
+#cmsFloatPanel .ctrolPanel .arrow span{display:none;}
+#cmsFloatPanel .ctrolPanel .arrow:hover{}
+#cmsFloatPanel .ctrolPanel .arrow:hover span{display:block;}
+#cmsFloatPanel .ctrolPanel .service{display:block;margin:2px auto;}
+#cmsFloatPanel .ctrolPanel .service span{color:#09F;line-height:90px;}
+#cmsFloatPanel .ctrolPanel .message{display:block;margin:2px auto;}
+#cmsFloatPanel .ctrolPanel .message span{color:#ff3300;line-height:90px;}
+#cmsFloatPanel .ctrolPanel .qrcode{display:block;margin:2px auto;}
+#cmsFloatPanel .ctrolPanel .qrcode span{color:#0C6;line-height:90px;}
+
+#cmsFloatPanel .arrow01{width:0;height:0;font-size:0;line-height:0;border-top:10px solid transparent;_border-top:10px solid black;_filter:chroma(color=black);border-right:10px solid transparent;_border-right:10px solid black;_filter:chroma(color=black);border-bottom:10px solid transparent;_border-bottom:10px solid black;_filter:chroma(color=black);border-left:10px solid #ddd;position:absolute;bottom:0;position:absolute;left:2px;top:0;}
+#cmsFloatPanel .arrow02{width:0;height:0;font-size:0;line-height:0;border-top:10px solid transparent;_border-top:10px solid black;_filter:chroma(color=black);border-right:10px solid transparent;_border-right:10px solid black;_filter:chroma(color=black);border-bottom:10px solid transparent;_border-bottom:10px solid black;_filter:chroma(color=black);border-left:10px solid #fff;position:absolute;bottom:0;position:absolute;left:0;top:0;}
+
+#cmsFloatPanel .servicePanel{width:120px;min-height:200px;position:fixed;right:50px;top:227px;z-index:1001;overflow:visible;display:none;_position:absolute;_top:expression(eval(documentElement.scrollTop + 200));}
+#cmsFloatPanel .servicePanel .servicePanel-inner{width:120px;position:relative;overflow:visible;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .arrowPanel{width:10px;height:30px;position:absolute;right:1px;top:16px;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .arrowPanel .arrow02{border-left:10px solid #d7eefe;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel{width:110px;position:absolute;left:0;top:0;overflow:hidden;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-hd{width:110px;height:60px;background:url(kf-top.jpg) no-repeat left top;overflow:hidden;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-hd a{width:24px;height:24px;font-size:12px;color:#fff;line-height:24px;display:block;float:right;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-hd a span{display:none;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-bd{width:110px;background:url(kf-middle.gif) repeat-y left top;overflow:hidden;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-bd .msggroup{width:90px;margin:0 15px; padding:4px 0px 4px 0px;}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-bd .msggroup a{font-size: 12px; color: #000;line-height:23px}
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-bd .msggroup a img{margin-bottom:-4px}
+
+
+#cmsFloatPanel .servicePanel .servicePanel-inner .serviceMsgPanel .serviceMsgPanel-ft{width:110px;height:49px;background:url(kf-bottom.gif) no-repeat left top;overflow:hidden;}
+
+#cmsFloatPanel .messagePanel{width:305px;height:90px;position:fixed;right:50px;top:280px;z-index:1001;overflow:visible;display:none;_position:absolute;_top:expression(eval(documentElement.scrollTop + 200));}
+#cmsFloatPanel .messagePanel .messagePanel-inner{width:305px;position:relative;overflow:visible;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .arrowPanel{width:10px;height:30px;position:absolute;right:1px;top:15px;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .arrowPanel .arrow01{border-left:10px solid #fff;left:1px;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .arrowPanel .arrow02{border-left:10px solid #fff;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel{width:295px;background:#fff;position:absolute;left:0;top:0;overflow:hidden;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-hd{height:32px;font-family:"微软雅黑";font-size:14px;color:#fff;line-height:32px;text-indent:10px;background:url(cmsfloatformpanel-hd-bg.gif) no-repeat left top;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-hd a{width:32px;height:32px;font-family:"宋体";font-size:12px;color:#fff;line-height:32px;letter-spacing:1px;text-indent:0;display:block;float:right;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-hd a span{display:none;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-bd{padding:10px 15px;overflow:hidden;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-bd p{font-size:12px;color:#666;line-height:22px;overflow:hidden;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-ft{height:30px;background:#f4f4f4;text-align:right;padding:0 10px;overflow:hidden;}
+#cmsFloatPanel .messagePanel .messagePanel-inner .formPanel .formPanel-ft a{font-size:12px;color:#999;line-height:30px;letter-spacing:1px;}
+
+#cmsFloatPanel .qrcodePanel{width:210px;height:240px;position:fixed;right:50px;top:227px;z-index:1001;overflow:visible;display:none;_position:absolute;_top:expression(eval(documentElement.scrollTop + 200));}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner{width:210px;position:relative;overflow:visible;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .arrowPanel{width:10px;height:30px;position:absolute;right:1px;top:120px;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .arrowPanel .arrow01{border-left:10px solid #fff;left:1px;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .arrowPanel .arrow02{border-left:10px solid #fff;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel{width:200px;background:#fff;border:position:absolute;left:0;top:0;overflow:hidden;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-hd{height:32px;font-family:"微软雅黑";font-size:14px;color:#fff;line-height:32px;text-indent:10px;background:url(cmsfloatqrcodepanel-hd-bg.gif) no-repeat right top;overflow:hidden;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-hd a{width:32px;height:32px;font-family:"宋体";font-size:12px;color:#fff;line-height:32px;letter-spacing:1px;text-indent:0;display:block;float:right;overflow: hidden;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-hd a span{display:none;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-bd{padding:10px;overflow:hidden;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-bd img{max-width:200px;border:none;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-ft{height:30px;background:#f4f4f4;text-align:center;padding:0 10px;overflow:hidden;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-ft a{font-size:12px;color:#666;line-height:30px;letter-spacing:1px;}
+#cmsFloatPanel .qrcodePanel .qrcodePanel-inner .codePanel .codePanel-ft a:hover{color:#F00;}
+
+#shareBtn
+{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    padding: 1px 2px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    text-decoration:none;
+}
+#shareBtn:hover
+{
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}

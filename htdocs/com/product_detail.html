@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="applicable-device" content="pc,mobile" />
+    <title>产品详细页</title>
+    
+    
+    
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/glide.css" rel="stylesheet" />
+    <link href="css/detailGlide.css" rel="stylesheet" />
+    <link href="css/lightgallery.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/online.css"rel="stylesheet" />
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <script src="js/jquery.glide.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="js/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+
+<body>
+    
+    <header>
+
+        <div class="topBox">
+            <div class="borderBottom">
+                <div class="container">
+                    <div class="welcomeBox">欢迎光临官方企业网站</div>
+                    <div class="languageBox">
+                        <a href="#" class="en">English</a><a href="#" class="zh">中文版</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-8 logo"><a href="index.html"><img src="images/logo.png" alt="MojoCube 官方" /></a></div>
+
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="address"></div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="tel">
+                            <img src="images/tel.gif" alt="" /><br />400-8888-8888
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-static-top navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"></a>             
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+
+                        <li><a href="index.html">网站首页</a></li>
+
+                        <li class="dropdown">
+                            <a href="about.html" class="dropdown-toggle" data-toggle="dropdown">关于我们</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='about.html'>公司简介</a></li>
+                                <li><a class='' href='contact.html'>联系我们</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="article.html" class="dropdown-toggle" data-toggle="dropdown">新闻中心</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='article.html'>公司新闻</a></li>
+                                <li><a class='' href='article.html'>行业新闻</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="product.html" class="dropdown-toggle" data-toggle="dropdown">产品中心</a><a href="#" id="app_menudown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-down btn-xs"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class='' href='product.html'>产品分类1</a><span>+</span>
+                                    <ul>
+                                        <li><a class='' href='product.html'>产品子分类1</a><ul></ul></li>
+                                        <li><a class='' href='product.html'>产品子分类2</a><ul></ul></li>
+                                    </ul>
+                                </li>
+                                <li><a class='' href='product.html'>产品分类2</a></li>
+                                <li><a class='' href='product.html'>产品分类3</a></li>
+                                <li><a class='' href='product.html'>产品分类4</a></li>
+                                <li><a class='' href='product.html'>产品分类5</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="album.html">案例中心</a></li>
+
+                        <li><a href="comment.html">在线留言</a></li>
+
+                        <li><a href="contact.html">联系我们</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <div class="slider">
+            <ul class="slider__wrapper">
+                <li class="slider__item"><a target="_blank" title="1" href="" style="background-image:url(images/1.jpg)"><img src="images/banner-2.png" alt="MojoCube 官方" /></a></li>
+                <li class="slider__item"><a target="_blank" title="2" href="" style="background-image:url(images/1.jpg)"><img src="images/banner-2.png" alt="MojoCube 官方" /></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var glide = $('.slider').glide();
+    </script>
+    
+    <!-- 内容 -->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8 col-md-9" id="rightBox">
+
+                <div class="positionBox">
+                    <div class="titleBar">
+                        <h1>当前位置</h1>
+                        <span></span>
+                        <a href="index.html">首页</a> > <a href="product.html">产品中心</a>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 pad">
+                    
+                    <div class="col-sm-12 col-md-6 pad">
+                        <div class="detailGlide" style="max-width:600px; margin:0 auto">
+                            <div class="slider">
+                                <ul class="slider__wrapper">
+                                    <li data-responsive='' data-src='images/products/1.jpg' data-sub-html='' class='slider__item real'><a><img src='images/products/1.jpg'></a></li>
+                                    <li data-responsive='' data-src='images/products/2.jpg' data-sub-html='' class='slider__item real'><a><img src='images/products/2.jpg'></a></li>
+                                    <li data-responsive='' data-src='images/products/3.jpg' data-sub-html='' class='slider__item real'><a><img src='images/products/3.jpg'></a></li>
+                                    <li data-responsive='' data-src='images/products/4.jpg' data-sub-html='' class='slider__item real'><a><img src='images/products/4.jpg'></a></li>
+                                </ul>
+                            </div>
+                            <div id="detailNav">
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            var glide = $('.slider').glide({ navigationImg: true, navigation: "#detailNav" });
+                        </script>
+                    </div>
+                
+                    <div class="col-sm-12 col-md-6 pad">
+                        <div class="detailTitle">
+                            官方内容管理系统
+                        </div>
+                        <div class="detailParameter" style="line-height:1.8em;">
+                            商品编号：20160704210343<br />
+                            版本：V5<br />
+                            架构：ASP.NET4.0+MSSQL/ACCESS<br />
+                            点击次数：62<br />
+                            上架时间：2016-07-04<br />
+                        </div>
+                        <div class="detailUrl"><a href="inquiry.html">在线订购</a></div>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-12 pad">
+                        <div class="detailTitleTxt">
+                            详情
+                        </div>
+                        <div class="detailContent" style="line-height:1.8em;">
+                            演示链接：<br />
+                            <a href="">http://www.mojocube.com/</a><br />
+                            
+                            产品特点：<br />
+
+                            1.运行环境：IIS + Mssql/Access + Asp.net 4.0 <br />
+
+                            2.响应式前后台设计，自适应PC、笔记本、平板、智能手机等等，可作为微官网使用。 <br />
+
+                            3.系统自带最常用的中英文语言包，采用语言包设计，无限制语言扩展，设定默认语言等。 <br />
+
+                            4.支持伪静态，可自动切换成aspx/asp/html/php/jsp等等。 <br />
+
+                            5.支持页面自定义SEO信息，生成网站地图等利于搜索引擎收录。 <br />
+
+                            6.单页、新闻、产品、下载、相册、招聘等，支持自定义页面名称。 <br />
+
+                            7.留言、询价、应聘等留言统一管理，不会错过一条信息。 <br />
+
+                            8.采用合理的缓存机制，加快页面访问速度，减少数据库连接。 <br />
+
+                            9.采用主题皮肤模板，可以自定义皮肤模板。 <br />
+
+                            10.可以动态设置水印效果，支持图片水印。 <br />
+
+                            11.自定义网站搜索，支持文章、产品搜索。 <br />
+
+                            12.自定义客服信息，支持QQ、阿里旺旺、MSN、SKYPE等等。 <br />
+
+                            13.支持IP限制访问功能，屏蔽非法访问。 <br />
+
+                            14.支持网站统计访问日志，查看点击率等。 <br />
+
+                            15.可自定义统计代码、分享代码等。 <br />
+
+                            16.支持暂时关闭网站，自定义关闭显示信息。 <br />
+
+                            17.支持自定义错误访问页面。 <br />
+
+                            18.支持恢复出厂设置，清除所有网站数据等。<br />
+
+                            19.自定义网站Logo、网站标题。 <br />
+
+                            20.自动生成访问中页面的二维码。 <br />
+
+                            21.手机访问网站，可以直接拨打联系电话。 <br />
+
+                            22.系统后台界面支持多种颜色皮肤。 <br />
+
+                            23.后台图片支持自定义分类，支持一处上传，处处使用。<br />
+
+                        </div>
+                    </div>
+                    
+                    <div class="otherPageBox">
+                        <div class="col-xs-9 col-sm-9 col-md-9 pad">
+                            <div class='otherPage'>
+                                <div class='prevBox'>上一个：<a title='PRO-001' href='product_detail.html'>PRO-001</a></div>
+                                <div class='nextBox'>下一个：<a title='PRO-002' href='product_detail.html'>PRO-002</a></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 pad">
+                            <a class="back" href="javascript:history.go(-1)">返回</a>
+                        </div>
+                    </div>
+                    
+                    <div class="aboutProduct">
+                        <div class="titleBar">
+                            <h1>相关产品</h1>
+                            <span>&nbsp</span>
+                        </div>
+                        <div class="productList">
+                            
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-mm-6 productImg">
+                                <a title="PRO-001" href='product_detail.html'>
+                                    <span class="imgLink-hover"><span class="hover-link"></span></span>
+                                    <img src="images/products/1.jpg" alt="PRO-001" />
+                                </a>
+                                <a class="productTitle" href="product_detail.html" title="PRO-001">PRO-001</a>
+                            </div>
+                                
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-mm-6 productImg">
+                                <a title="PRO-002" href='product_detail.html'>
+                                    <span class="imgLink-hover"><span class="hover-link"></span></span>
+                                    <img src="images/products/2.jpg" alt="PRO-002" />
+                                </a>
+                                <a class="productTitle" href="product_detail.html" title="PRO-002">PRO-002</a>
+                            </div>
+                                
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-mm-6 productImg">
+                                <a title="PRO-003" href='product_detail.html'>
+                                    <span class="imgLink-hover"><span class="hover-link"></span></span>
+                                    <img src="images/products/3.jpg" alt="PRO-003" />
+                                </a>
+                                <a class="productTitle" href="product_detail.html" title="PRO-003">PRO-003</a>
+                            </div>
+                                
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-mm-6 productImg">
+                                <a title="PRO-004" href='product_detail.html'>
+                                    <span class="imgLink-hover"><span class="hover-link"></span></span>
+                                    <img src="images/products/4.jpg" alt="PRO-004" />
+                                </a>
+                                <a class="productTitle" href="product_detail.html" title="PRO-004">PRO-004</a>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-3">
+
+                <div class="navigationBox" id="classification">
+                    <div class="titleBar">
+                        <h1>导航栏目</h1>
+                        <span></span>
+                    </div>
+                    <div class="list">
+                        <ul id="firstpane">
+                            <li><a class='' href='product.html'>产品分类1</a><span>+</span>
+                                <ul>
+                                    <li><a class='' href='product.html'>产品子分类1</a><ul></ul></li>
+                                    <li><a class='' href='product.html'>产品子分类2</a><ul></ul></li>
+                                </ul>
+                            </li>
+                            <li><a class='' href='product.html'>产品分类2</a></li>
+                            <li><a class='' href='product.html'>产品分类3</a></li>
+                            <li><a class='' href='product.html'>产品分类4</a></li>
+                            <li><a class='' href='product.html'>产品分类5</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="leftContactBox">     
+                    <div class="content"> 
+                        <p style="padding-top:20px;">联系人：张经理</p>
+                        <p>手机：13800138000</p>
+                        <p>电话：020-88668888</p>
+                        <p>邮箱：mojocube@qq.com</p>
+                        <p>地址： 广东省广州市天河区天粤垦路88号</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <footer>
+    
+        <div class="copyright">
+            <p>
+                <a href="about.html">公司简介</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="article.html">新闻中心</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="product.html">产品中心</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="contact.html">联系我们</a>
+            </p>
+            <p class="copyright_p">© 2000-2017 MojoCube All Rights Reserved. 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+        </div>
+
+    </footer>
+    
+    <script type="text/javascript" src="js/common.js"></script>
+    
+    <!--客服面板-->
+    <!--电脑版-->
+    <div id="cmsFloatPanel">
+
+        <div class="ctrolPanel">
+            <a class="service" href="#"></a>
+            <a class="message" href="#"></a>
+            <a class="qrcode" href="#"></a>
+            <a class="arrow" title="返回顶部" href="#"></a>
+        </div>
+
+        <div class="servicePanel">
+            <div class="servicePanel-inner">
+                <div class="serviceMsgPanel">
+                    <div class="serviceMsgPanel-hd"><a href="#"><span>关闭</span></a></div>
+                    <div class="serviceMsgPanel-bd">
+                        <!--在线QQ-->
+                        <div class="msggroup">
+                            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=396288955&site=qq&menu=yes"><img class="qqimg" src="http://wpa.qq.com/pa?p=2:593036114:52" alt="QQ在线客服" />技术支持</a>
+                        </div>
+                        <!--在线MSN-->
+                        <div class="msggroup">
+                            <a href="" target="blank"><img class="qqimg" src="images/msn.jpg" alt="MSN在线客服" /> 官方</a>
+                        </div>
+                        <!--在线SKYPE-->
+                        <div class="msggroup">
+                            <a href=""><img class="qqimg" src="images/skype.gif" alt="SKYPE在线客服" /> 官方</a>
+                        </div>
+                        <!--淘宝旺旺-->
+                        <div class="msggroup">
+                            
+                        </div>
+                    </div>
+                    <div class="serviceMsgPanel-ft"></div>
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="messagePanel">
+            <div class="messagePanel-inner">
+                <div class="formPanel">
+
+                    <div class="formPanel-bd">
+                        <!-- JiaThis Button BEGIN -->
+                        <div class="jiathis_style_32x32">
+                            <a class="jiathis_button_qzone"></a>
+                            <a class="jiathis_button_tsina"></a>
+                            <a class="jiathis_button_tqq"></a>
+                            <a class="jiathis_button_weixin"></a>
+                            <a class="jiathis_button_renren"></a>
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                        </div>
+                        <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+                        <!-- JiaThis Button END -->
+                        <a type="button" class="btn btn-default btn-xs" href="#" style="margin: 6px 0px 0px 10px;">关闭</a>
+                    </div>
+
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow01"></div>
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qrcodePanel">
+            <div class="qrcodePanel-inner">
+                <div class="codePanel">
+                    <div class="codePanel-hd"><span style="float:left">用手机扫描二维码</span><a href="#"><span>关闭</span></a></div>
+                    <div class="codePanel-bd">
+                        <img src="images/qrcode.jpg" alt="二维码" />
+                    </div>
+                </div>
+                <div class="arrowPanel">
+                    <div class="arrow01"></div>
+                    <div class="arrow02"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="serviceBox" style="display:none">
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=396288955&site=qq&menu=yes"><img class="qqimg" src="http://wpa.qq.com/pa?p=2:593036114:52" alt="QQ在线客服" />技术支持</a>
+    </div>
+
+    <script type="text/javascript" src="js/online.js"></script>
+
+    <!--电脑版 end-->
+
+    <!--手机版-->
+    <nav class="navbar-default navbar-fixed-bottom footer_nav" style="background:#fafafa;">
+        <div class="foot_nav"><a href="javascript:mShare()"><span class="glyphicon glyphicon-share btn-lg" aria-hidden="true"></span>分享</a></div>
+        <div class="foot_nav"><a href=""><span class="glyphicon glyphicon-phone btn-lg" aria-hidden="true"></span>电话</a></div>
+        <div class="foot_nav" id="serviceBtn"><a onClick="showService()"><span class="glyphicon glyphicon glyphicon-headphones btn-lg" aria-hidden="true"></span>客服</a></div>
+        <div class="foot_nav"><a id="gototop" href="#"><span class="glyphicon glyphicon-circle-arrow-up btn-lg" aria-hidden="true"></span>顶部</a></div>
+        <div id="mShareBox" style="position: fixed; display: none; z-index: 999; bottom: 47px; width: 100%; height: 45px; background: #fff; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 5px;">
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style_m"></div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_m.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
+    </nav>
+    <!--手机版 end-->
+
+    <script type="text/javascript">
+        function mShare() {
+            $("#mShareBox").toggle();
+            $("#serviceBox").hide();
+        }
+
+        if ($(".banner .slider__wrapper li").length == 0) {
+            $(".banner").addClass("emptyBanner");
+        }
+
+        function showService() {
+            $("#mShareBox").hide();
+            $("#serviceBox").toggle();
+        }
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.slider__wrapper').lightGallery({ selector: ".real" });
+        });
+    </script>
+    
+    <script src="js/picturefill.min.js"></script>
+
+    <script src="js/lightgallery.js"></script>
+
+    <script src="js/lg-fullscreen.js"></script>
+
+    <script src="js/lg-thumbnail.js"></script>
+
+    <script src="js/lg-video.js"></script>
+
+    <script src="js/lg-autoplay.js"></script>
+
+    <script src="js/lg-zoom.js"></script>
+
+    <script src="js/lg-hash.js"></script>
+
+    <script src="js/lg-pager.js"></script>
+
+</body>
+</html>

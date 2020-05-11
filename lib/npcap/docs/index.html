@@ -1,0 +1,253 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Npcap: Nmap Project's packet sniffing library for Windows</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.2"><meta name="description" content="A guide to Npcap, a packet capture and network analysis framework for Windows, for users and software developers. Npcap is a modern, safe, and compatible update to WinPcap."><link rel="home" href="index.html" title="Npcap: Nmap Project's packet sniffing library for Windows"><link rel="node" href="npcap-users-guide.html" title="Npcap Users' Guide"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Npcap: Nmap Project's packet sniffing library for Windows</th></tr><tr><td width="20%" align="left"> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="npcap-users-guide.html">Next</a></td></tr></table><hr></div><div class="article"><div class="titlepage"><div><div><h2 class="title"><a name="npcap"></a>Npcap: Nmap Project's packet sniffing library for Windows</h2></div><div><div class="abstract"><p class="title"><b>Abstract</b></p>
+    <p>A guide to Npcap, a packet capture and network analysis framework for Windows, for users and software developers. Npcap is a modern, safe, and compatible update to WinPcap.</p>
+  </div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="index.html#npcap-intro">Introduction</a></span></dt><dd><dl><dt><span class="sect2"><a href="index.html#npcap-description">What is Npcap?</a></span></dt><dt><span class="sect2"><a href="index.html#npcap-winpcap">Npcap and WinPcap</a></span></dt><dt><span class="sect2"><a href="index.html#id565096">Purpose of this manual</a></span></dt><dt><span class="sect2"><a href="index.html#id565130">Terminology</a></span></dt><dt><span class="sect2"><a href="index.html#npcap-license">Npcap License</a></span></dt><dt><span class="sect2"><a href="index.html#npcap-download">Obtaining Npcap</a></span></dt><dt><span class="sect2"><a href="index.html#npcap-guide-copyright">Acknowledgements and copyright</a></span></dt></dl></dd><dt><span class="sect1"><a href="npcap-users-guide.html">Npcap Users' Guide</a></span></dt><dd><dl><dt><span class="sect2"><a href="npcap-users-guide.html#npcap-installation">Installation</a></span></dt><dt><span class="sect2"><a href="npcap-users-guide.html#npcap-feature-dot11-wireshark">How to use Wireshark to capture raw 802.11 traffic in <span class="quote">&#8220;<span class="quote">Monitor Mode</span>&#8221;</span></a></span></dt><dt><span class="sect2"><a href="npcap-users-guide.html#npcap-qa">Q &amp; A</a></span></dt><dt><span class="sect2"><a href="npcap-users-guide.html#npcap-issues">Reporting Bugs</a></span></dt></dl></dd><dt><span class="sect1"><a href="npcap-devguide.html">Developing software with Npcap</a></span></dt><dd><dl><dt><span class="sect2"><a href="npcap-devguide.html#npcap-development">Using the Npcap SDK</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-examples">Examples</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-devguide-updating">Updating WinPcap software to Npcap</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-detect">How to detect what version Npcap/WinPcap you are using?</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-feature-native">For software that want to use Npcap first when Npcap and WinPcap coexist</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-feature-loopback">For software that uses Npcap loopback feature</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-feature-dot11">For software that uses Npcap raw 802.11 feature</a></span></dt><dt><span class="sect2"><a href="npcap-devguide.html#npcap-api">The Npcap API</a></span></dt></dl></dd><dt><span class="sect1"><a href="npcap-tutorial.html">Npcap Development Tutorial</a></span></dt><dd><dl><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-devlist">Obtaining the device list</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-devdetails">Obtaining advanced information about installed devices</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-openadapter">Opening an adapter and capturing the packets</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-pcap-node-ex">Capturing the packets without the callback</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-filtering">Filtering the traffic</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-interpreting">Interpreting the packets</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-offline">Handling offline dump files</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-sending">Sending Packets</a></span></dt><dt><span class="sect2"><a href="npcap-tutorial.html#npcap-tutorial-statistics">Gathering Statistics on the network traffic</a></span></dt></dl></dd><dt><span class="sect1"><a href="npcap-internals.html">Npcap internals</a></span></dt><dd><dl><dt><span class="sect2"><a href="npcap-internals.html#npcap-structure">Npcap structure</a></span></dt><dt><span class="sect2"><a href="npcap-internals.html#npcap-internals-driver">Npcap driver internals</a></span></dt><dt><span class="sect2"><a href="npcap-internals.html#npcap-internals-references">Further reading</a></span></dt></dl></dd></dl></div>
+
+<a class="indexterm" name="npcap-indexterm"></a>
+
+<div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="npcap-intro"></a>Introduction</h2></div></div></div>
+  
+
+  <p>This Manual describes the programming interface and the source code of
+    Npcap. It provides detailed descriptions of the functions and structures
+    exported to programmers, along with complete documentation of the Npcap
+    internals. Several tutorials and examples are provided as well.</p>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-description"></a>What is Npcap?</h3></div></div></div>
+    
+
+    <p>Npcap is an architecture for packet capture and network analysis for
+      Windows operating systems, consisting of a software library and a network
+      driver.</p>
+
+    <p>Most networking applications access the network through widely-used
+      operating system primitives such as sockets. It is easy to access data on
+      the network with this approach since the operating system copes with the
+      low level details (protocol handling, packet reassembly, etc.) and
+      provides a familiar interface that is similar to the one used to read and
+      write files.</p>
+
+    <p>Sometimes, however, the <span class="quote">&#8220;<span class="quote">easy way</span>&#8221;</span> is not up to the task,
+      since some applications require direct access to packets on the network.
+      That is, they need access to the <span class="quote">&#8220;<span class="quote">raw</span>&#8221;</span> data on the network
+      without the interposition of protocol processing by the operating
+      system.</p>
+
+    <p>The purpose of Npcap is to give this kind of access to Windows
+      applications. It provides facilities to:</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">capture raw packets, both the ones destined to the machine where
+        it's running and the ones exchanged by other hosts (on shared media)</li><li class="listitem">filter the packets according to user-specified rules before
+        dispatching them to the application</li><li class="listitem">transmit raw packets to the network</li><li class="listitem">gather statistical information on the network traffic</li></ul></div>
+
+    <p>This set of capabilities is obtained by means of a device driver,
+      which is installed inside the networking portion of the Windows kernel,
+      plus a couple of DLLs.</p>
+
+    <p>All of these features are exported through a powerful programming
+      interface, easily usable by applications. The main goal of this manual is
+      to document this interface, with the help of several examples.</p>
+
+    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id564787"></a>What kind of programs use Npcap?</h4></div></div></div>
+      
+
+      <p>The Npcap programming interface can be used by many types of
+        network tools for analysis, troubleshooting, security and monitoring.
+        In particular, classical tools that rely on Npcap are:</p>
+
+      <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">network and protocol analyzers</li><li class="listitem">network monitors</li><li class="listitem">traffic loggers</li><li class="listitem">traffic generators</li><li class="listitem">user-level bridges and routers</li><li class="listitem">network intrusion detection systems (NIDS)</li><li class="listitem">network scanners</li><li class="listitem">security tools</li></ul></div>
+    </div>
+
+    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id564811"></a>What Npcap can't do</h4></div></div></div>
+      
+
+      <p>Npcap receives and sends the packets independently from the host
+        protocols, like TCP/IP. This means that it isn't able to block, filter or
+        manipulate the traffic generated by other programs on the same machine: it 
+        simply <span class="quote">&#8220;<span class="quote">sniffs</span>&#8221;</span> the packets that transit on the wire. Therefore, it does not 
+        provide the appropriate support for applications like traffic shapers, QoS 
+        schedulers and personal firewalls. </p>
+    </div>
+
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-winpcap"></a>Npcap and WinPcap</h3></div></div></div>
+    
+
+    <p>Npcap is an update of <a class="ulink" href="http://www.winpcap.org/" target="_top">WinPcap</a>
+      to the <a class="ulink" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff565492(v=vs.85).aspx" target="_top">NDIS 6 Light-Weight Filter (LWF)</a> API.
+      It supports <span class="command"><strong>Windows Vista, 7, 8 and 10</strong></span>. It is developed
+      by the <a class="ulink" href="http://nmap.org/" target="_top">Nmap Project</a>
+      as a continuation of the project started by Yang Luo
+      under <a class="ulink" href="https://www.google-melange.com/gsoc/project/details/google/gsoc2013/hsluoyz/5727390428823552" target="_top">Google Summer of Code 2013</a> and
+      <a class="ulink" href="https://www.google-melange.com/gsoc/project/details/google/gsoc2015/hsluoyz/5723971634855936" target="_top">2015</a>.
+      It also received many helpful tests from <a class="ulink" href="https://www.wireshark.org/" target="_top">Wireshark</a>
+      and <a class="ulink" href="http://www.netscantools.com/" target="_top">NetScanTools</a>.
+    </p>
+
+    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="npcap-features"></a>Feature comparison with WinPcap</h4></div></div></div>
+      
+
+      <p>Npcap carries on the WinPcap legacy, but is not without its own
+        innovations. Here are some of the most exciting improvements and new
+        features that Npcap adds:</p>
+
+      <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><span class="emphasis"><em>NDIS 6 Support</em></span>: Npcap makes use of the new NDIS Lightweight Filter driver in
+            Windows Vista and later. This driver type is faster and has less overhead
+            than the legacy <a class="ulink" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff557012(v=vs.85).aspx" target="_top">NDIS 5 Intermediate Driver</a>
+            type used by WinPcap.
+        </p></li><li class="listitem"><p><span class="emphasis"><em>Latest libpcap API Support</em></span>: Npcap provides support
+            for the latest <a class="ulink" href="https://github.com/the-tcpdump-group/libpcap" target="_top">libpcap API</a>
+            by accepting libpcap as a <a class="ulink" href="https://git-scm.com/docs/git-submodule" target="_top">Git submodule</a>.
+            The latest libpcap 1.8 has integrated more fascinating features and functions than the
+            <a class="ulink" href="https://www.winpcap.org/misc/changelog.htm" target="_top">deprecated libpcap 1.0.0 shipped by WinPcap</a>.
+            Moreover, since Linux already has a good support for latest libpcap API, using
+            Npcap on Windows facilitates your software to base on the same API on both Windows and Linux.</p></li><li class="listitem"><p><span class="emphasis"><em><span class="quote">&#8220;<span class="quote">Admin-only Mode</span>&#8221;</span> Support</em></span>: Npcap supports to restrict its
+            use to Administrators for safety purpose. If Npcap is installed with
+            the option <span class="quote">&#8220;<span class="quote">Restrict Npcap driver's access to Administrators only</span>&#8221;</span> checked,
+            when a non-Admin user tries to start a user software (Nmap, Wireshark, etc),
+            the <a class="ulink" href="http://windows.microsoft.com/en-us/windows/what-is-user-account-control#1TC=windows-7" target="_top">User Account Control (UAC)</a>
+            dialog will prompt asking for Administrator privilege. Only when the end
+            user chooses Yes, the driver can be accessed. This is similar to UNIX
+            where you need root access to capture packets.</p></li><li class="listitem"><p><span class="emphasis"><em>Loopback Packet Capture</em></span>: Npcap is able to
+            see Windows loopback packets using the
+            <a class="ulink" href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa366510(v=vs.85).aspx" target="_top">
+              Windows Filtering Platform (WFP)</a>. Npcap supplies an
+            interface named <span class="quote">&#8220;<span class="quote">NPF_Loopback</span>&#8221;</span>, with the description <span class="quote">&#8220;<span class="quote">Adapter for loopback capture.</span>&#8221;</span>
+            If you are a Wireshark user, choose this adapter
+            to capture, you will see all loopback traffic the same way as other
+            non-loopback adapters. Try it by typing in commands like <span class="command"><strong>ping 127.0.0.1</strong></span>
+            (IPv4) or <span class="command"><strong>ping ::1</strong></span> (IPv6).</p></li><li class="listitem"><p><span class="emphasis"><em>Loopback Packet Injection</em></span>: Besides loopback packet
+            capturing, Npcap can also send out loopback packets using the
+            <a class="ulink" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff556958(v=vs.85).aspx" target="_top">Winsock Kernel (WSK)</a>
+            technique. A user software (e.g. Nmap) can just send packets
+            on the <span class="quote">&#8220;<span class="quote">NPF_Loopback</span>&#8221;</span> device using
+            <code class="function">pcap_inject()</code> or
+            <code class="function">PacketSendPacket</code> just like on a standard
+            interface. Npcap
+            will automatically remove the packet's DLT_NULL header and
+            inject the payload into Windows TCP/IP stack.</p></li><li class="listitem"><p><span class="emphasis"><em>Raw 802.11 Packets Capture Support</em></span>: Npcap is able to see
+            <span class="emphasis"><em>802.11</em></span> packets instead of <span class="emphasis"><em>fake Ethernet</em></span> packets on ordinary wireless
+            adapters. You need to select the <code class="option">Support raw 802.11 traffic (and monitor
+              mode) for wireless adapters</code> option in the installation wizard to enable
+            this feature. When your adapter is in <span class="quote">&#8220;<span class="quote">Monitor Mode</span>&#8221;</span>, Npcap will supply all
+            <span class="emphasis"><em>802.11 data + control + management</em></span> packets with radiotap headers. When
+            your adapter is in <span class="quote">&#8220;<span class="quote">Managed Mode</span>&#8221;</span>, Npcap will only supply <span class="emphasis"><em>Ethernet</em></span>
+            packets. Npcap directly supports to use Wireshark to capture in <span class="quote">&#8220;<span class="quote">Monitor Mode</span>&#8221;</span>.
+            Meantime, Npcap also provides the <code class="filename">WlanHelper.exe</code>
+            tool to help you switch to <span class="quote">&#8220;<span class="quote">Monitor Mode</span>&#8221;</span> on your own. See more details
+            about this feature in section
+            <span class="quote">&#8220;<span class="quote"><a class="link" href="npcap-devguide.html#npcap-feature-dot11" title="For software that uses Npcap raw 802.11 feature">For software that uses Npcap raw 802.11 feature</a></span>&#8221;</span>.
+            See more details about radiotap here:
+            <a class="ulink" href="http://www.radiotap.org/" target="_top">http://www.radiotap.org/</a></p></li><li class="listitem"><p><span class="emphasis"><em><span class="quote">&#8220;<span class="quote">WinPcap API-compatible Mode</span>&#8221;</span>
+              Support</em></span>: <span class="quote">&#8220;<span class="quote">WinPcap API-compatible Mode</span>&#8221;</span> makes Npcap a
+            strict WinPcap replacement by using the same DLL location and service name as
+            WinPcap. This is useful for testing or migrating from software that only uses
+            WinPcap, but because Npcap is masquerading as WinPcap, software will not be
+            able to be aware of and use Npcap's newer features.  It's notable that before
+            installing in this mode, any existing WinPcap installation will be
+            uninstalled and replaced.
+        </p></li></ul></div>
+    </div>
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="id565096"></a>Purpose of this manual</h3></div></div></div>
+    
+
+    <p>The purpose of this manual is to provide a comprehensive and easy way
+      to browse the documentation of the Npcap architecture. You will find
+      three main sections: <a class="xref" href="npcap-users-guide.html" title="Npcap Users' Guide">the section called &#8220;Npcap Users' Guide&#8221;</a>,
+      <a class="xref" href="npcap-devguide.html" title="Developing software with Npcap">the section called &#8220;Developing software with Npcap&#8221;</a>,
+      and <a class="xref" href="npcap-internals.html" title="Npcap internals">the section called &#8220;Npcap internals&#8221;</a>.</p>
+
+    <p><a class="xref" href="npcap-users-guide.html" title="Npcap Users' Guide">the section called &#8220;Npcap Users' Guide&#8221;</a> is for end users of Npcap, and
+      primarily concerns installation options, hardware compatibility, and bug
+      reporting procedures.</p>
+
+    <p><a class="xref" href="npcap-devguide.html" title="Developing software with Npcap">the section called &#8220;Developing software with Npcap&#8221;</a> is for programmers who need to use
+      Npcap from an application: it contains information about functions and
+      data structures exported by the Npcap API, a manual for writing packet
+      filters, and information on how to include it in an application. A
+      tutorial with several code samples is provided as well; it can be used to
+      learn the basics of the Npcap API using a step-by-step approach, but it
+      also offers code snippets that demonstrate advanced features.</p>
+
+    <p><a class="xref" href="npcap-internals.html" title="Npcap internals">the section called &#8220;Npcap internals&#8221;</a> is intended for Npcap developers
+      and maintainers, or for people who are curious about how this system
+      works: it provides a general description of the Npcap architecture and
+      explains how it works. Additionally, it documents the complete device
+      driver structure, the source code, the Packet.dll interface and the
+      low-level Npcap API. If you want to understand what happens inside Npcap
+      or if you need to extend it, this is the section you will want to
+      read.</p>
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="id565130"></a>Terminology</h3></div></div></div>
+    
+
+    <p>We call Npcap an <em class="wordasword">architecture</em> rather than
+      <em class="wordasword">library</em> because packet capture is a low level
+      mechanism that requires a strict interaction with the network adapter and
+      with the operating system, in particular with its networking
+      implementation, so a simple library is not sufficient.</p>
+
+    <p>For consistency with the literature, we will use the term
+      <em class="wordasword">packet</em> even though
+      <em class="wordasword">frame</em> is more accurate since the capture process
+      is done at the data-link layer and the data-link header is included in
+      the captured data.</p>
+
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-license"></a>Npcap License</h3></div></div></div>
+    
+
+    <p>Even though Npcap source code is publicly available for review, it is
+      not open source software and may not be redistributed without special 
+      permission from the Nmap Project. The
+      <a class="ulink" href="https://github.com/nmap/npcap/blob/master/LICENSE" target="_top">Npcap License</a>
+      allows end users to download, install, and use Npcap from our site for
+      free. Software providers (open source or otherwise) which want to use
+      Npcap functionality are welcome to point their users to npcap.org for
+      those users to download and install.</p> 
+    <p>We fund the Npcap project by selling licenses to companies who wish
+      to redistribute Npcap within their products. The
+      <a class="ulink" href="https://nmap.org/npcap/oem/" target="_top">Npcap OEM edition</a> allows
+      companies to silently and seamlessly install Npcap during their product's
+      installation rather than asking users to download and install Npcap
+      themselves. The Npcap OEM commercial license also includes support,
+      updates and indemnification. This is similar to the commercial licenses
+      we offer for embedding <a class="ulink" href="https://nmap.org/" target="_top">Nmap</a> in
+      commercial software. More details are available from <a class="ulink" href="https://nmap.org/npcap/oem/" target="_top">the Npcap OEM page</a>.</p>
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-download"></a>Obtaining Npcap</h3></div></div></div>
+    
+
+    <p>The latest Npcap release can always be found
+      <a class="ulink" href="https://nmap.org/npcap/#download" target="_top">on the Npcap
+        website</a> as an executable installer and as a source code
+      archive.</p>
+  </div>
+
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-guide-copyright"></a>Acknowledgements and copyright</h3></div></div></div>
+    
+
+    <p>Portions of this guide were adapted from the WinPcap documentation.
+      Copyright © 2002-2005 Politecnico di Torino. Copyright ©
+      2005-2010 CACE Technologies. Copyright © 2010-2013 Riverbed
+      Technology. Copyright © 2019 Insecure.Com, LLC. All rights
+      reserved.</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="npcap-users-guide.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"> </td><td width="40%" align="right" valign="top"> Npcap Users' Guide</td></tr></table></div></body></html>
