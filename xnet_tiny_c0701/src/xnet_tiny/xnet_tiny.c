@@ -604,10 +604,14 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
     uint16_t data_size = tcp->tx_buf.wait_send_count;
     uint16_t opt_size = (flags & XTCP_FLAG_SYN) ? 4 : 0;     // mss长度
 
-    data_size = min(data_size, tcp->remote_win);
-    data_size = min(data_size, tcp->remote_mss);
-    if (data_size + opt_size > XTCP_HDR_MAX_SIZE) {
-        data_size = XTCP_HDR_MAX_SIZE - opt_size;
+    if (tcp->remote_win) {
+        data_size = min(data_size, tcp->remote_win);
+        data_size = min(data_size, tcp->remote_mss);
+        if (data_size + opt_size > XTCP_HDR_MAX_SIZE) {
+            data_size = XTCP_HDR_MAX_SIZE - opt_size;
+        }
+    } else {
+        data_size = 0;      // 窗口为0，不允许发数据，但允许FIN+SYN等
     }
 
     packet = xnet_alloc_for_send(data_size + opt_size + sizeof(xtcp_hdr_t));
@@ -760,6 +764,7 @@ static xtcp_t * tcp_conn_accept(xtcp_t *tcp, xipaddr_t *src_ip, xtcp_hdr_t * tcp
     return new_tcp;
 }
 
+#include <stdio.h>
 void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
     uint16_t hdr_flags, hdr_size;
@@ -826,13 +831,20 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
                     }
                 }
 
-                read_size = tcp_recv(tcp, (uint8_t)hdr_flags, packet->data, packet->size); // 先读取包里的数据
-                if (hdr_flags & XTCP_FLAG_FIN) {    // FIN
-                    tcp->state = XTCP_STATE_LAST_ACK;       // 直接也关掉自己，不再等待对方关闭
-                    tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);       // 同时关掉自己, 直接进入LAST_ACK
-                } else if (read_size) {             // 如果是是收到数据，发ACK响应。无数据则无响应
-                    tcp_send(tcp, XTCP_FLAG_ACK);   
+                // 先读取包里的数据
+                read_size = tcp_recv(tcp, (uint8_t)hdr_flags, packet->data, packet->size);
+                if (hdr_flags & XTCP_FLAG_FIN) {
+                    // 收到关闭请求，发送ACK，同时也发送FIN，同时直接主动关掉
+                    // 这样就不必进入CLOSE_WAIT，而是等待对方的ACK
+                    tcp->state = XTCP_STATE_LAST_ACK;
+                    tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);
+                } else if (read_size) {
+                    // 如果是是收到数据，发ACK响应。
+                    tcp_send(tcp, XTCP_FLAG_ACK);
                     tcp->handler(tcp, XTCP_CONN_DATA_RECV);
+                } else if (tcp->tx_buf.data_count) {
+                    // 没有收到数据，可能是对方发来的ACK。此时，有数据有就发数据，没数据就不理会
+                    tcp_send(tcp, XTCP_FLAG_ACK);
                 }
             }
             break;
@@ -859,8 +871,9 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
 
                 read_size = tcp_recv(tcp, (uint8_t) hdr_flags, packet->data, packet->size);
                 if (hdr_flags & XTCP_FLAG_FIN) {          // FIN
-                    tcp->state = XTCP_STATE_CLOSED;
                     tcp_send(tcp, XTCP_FLAG_ACK);        // 对方也关闭
+                    tcp->state = XTCP_STATE_CLOSED;
+                    tcp_free(tcp);                      // 直接释放掉，不进入TIMED_WAIT
                 } else if (read_size) {                  // 仅接收，发ack响应
                     tcp_send(tcp, XTCP_FLAG_ACK);
                     tcp->handler(tcp, XTCP_CONN_DATA_RECV);
@@ -871,9 +884,8 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
             if (hdr_flags & XTCP_FLAG_ACK) {
                 tcp->state = XTCP_STATE_CLOSED;         // 直接关掉，不处理可能的重发
                 tcp->handler(tcp, XTCP_CONN_CLOSED);
+                tcp_free(tcp);              // 直接释放掉，不进入TIMED_WAIT
             }
-            break;
-        case XTCP_STATE_TIMED_WAIT:     // 不应该运行到这里
             break;
         case XTCP_STATE_LAST_ACK:
             if (hdr_flags & XTCP_FLAG_ACK) {
@@ -881,7 +893,8 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
                 tcp_free(tcp);
             }
             break;
-        default: break;
+        default:
+            break;
     }
 }
 
@@ -953,32 +966,33 @@ uint16_t xtcp_read(xtcp_t* tcp, uint8_t* data, uint16_t size) {
     return tcp_buf_read(&tcp->rx_buf, data, size);
 }
 
-uint16_t xtcp_write(xtcp_t * tcp, uint8_t * data, uint16_t size) {
+int xtcp_write(xtcp_t * tcp, uint8_t * data, uint16_t size) {
     uint16_t send_size;
 
     if ((tcp->state != XTCP_STATE_ESTABLISHED) && (tcp->state != XTCP_STATE_CLOSE_WAIT)) {
-        return 0;
+        return -1;
     }
 
     send_size = tcp_buf_write(&tcp->tx_buf, data, size);
     if (send_size) {
+        // 考虑到远程窗口可能为0，所以下面的调用不一定发送数据
+        // 数据将仅仅停留在缓存中，当下次收到对方的win更新时，再进行发送
         tcp_send(tcp, XTCP_FLAG_ACK);       // 不检查返回值，数据已经在缓冲区中
-    }
+     }
     return send_size;
 }
 
-void xtcp_close(xtcp_t *tcp) {
+xnet_err_t xtcp_close(xtcp_t *tcp) {
     xnet_err_t err;
 
-    if (tcp->state == XTCP_STATE_CLOSE_WAIT) {
+    if ((tcp->state == XTCP_STATE_ESTABLISHED) | (tcp->state == XTCP_STATE_SYNC_RECVD)) {
         err = tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);
-        if (err < 0) return;
-        tcp->state = XTCP_STATE_LAST_ACK;
-    } else if ((tcp->state == XTCP_STATE_ESTABLISHED) | (tcp->state == XTCP_STATE_SYNC_RECVD)) {
-        err = tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);
-        if (err < 0) return;
+        if (err < 0) return err;
         tcp->state = XTCP_STATE_FIN_WAIT_1;
+    } else {
+        tcp->state = XTCP_STATE_FREE;
     }
+    return XNET_ERR_OK;
 }
 
 void xnet_init (void) {

@@ -28,7 +28,7 @@
 #define XARP_CFG_ENTRY_PENDING_TMO	            (1 * 1000)          // ARP表项挂起超时时间
 #define XARP_CFG_MAX_RETRIES		            4                   // ARP表挂起时重试查询次数
 #define XUDP_CFG_MAX_UDP                        10                  // 最大支持的UDP连接数
-#define XTCP_CFG_MAX_TCP                        10                  // 最大支持的TCP连接数
+#define XTCP_CFG_MAX_TCP                        40                  // 最大支持的TCP连接数
 #define XTCP_CFG_RTX_BUF_SIZE                   1024                // TCP收发缓冲区大小
 
 #pragma pack(1)
@@ -112,6 +112,7 @@ typedef enum _xnet_err_t {
     XNET_ERR_STATE = -4,
     XNET_ERR_NONE = -5,
     XNET_ERR_PARAM = -6,
+    XNET_ERR_WIN_0 = -7,
 }xnet_err_t;
 
 typedef uint32_t xnet_time_t;           // 时间类型，返回当前系统跑了多少个100ms
@@ -266,9 +267,9 @@ void xtcp_in(xipaddr_t* remote_ip, xnet_packet_t* packet);
 xtcp_t * xtcp_open(xtcp_handler_t handler);
 xnet_err_t xtcp_bind(xtcp_t *tcp, uint16_t local_port);
 xnet_err_t xtcp_listen(xtcp_t * tcp);
-void xtcp_close(xtcp_t *tcp);
+xnet_err_t xtcp_close(xtcp_t *tcp);
 uint16_t xtcp_read(xtcp_t* tcp, uint8_t* data, uint16_t size);
-uint16_t xtcp_write(xtcp_t* tcp, uint8_t* data, uint16_t size);
+int xtcp_write(xtcp_t * tcp, uint8_t * data, uint16_t size);
 
 void xnet_init (void);
 void xnet_poll(void);
