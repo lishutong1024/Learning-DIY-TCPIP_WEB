@@ -1,3 +1,22 @@
+/**
+ * 用1500行代码从0开始实现TCP/IP协议栈+WEB服务器
+ *
+ * 本源码旨在用最简单、最易懂的方式帮助你快速地了解TCP/IP以及HTTP工作原理的主要核心知识点。
+ * 所有代码经过精心简化设计，避免使用任何复杂的数据结构和算法，避免实现其它无关紧要的细节。
+ *
+ * 本源码配套高清的视频教程，免费提供下载！具体的下载网址请见下面。
+ * 视频中的PPT不提供下载，但配套了学习指南，请访问下面的网址。
+ *
+ * 作者：李述铜
+ * 网址: http://01ketang.cc/tcpip
+ * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
+ * 微信公众号：请搜索 01课程
+ *
+ * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
+ * 注：
+ * 1.源码不断升级中，该版本可能非最新版。如需获取最新版，请访问上述网址获取最新版本的代码
+ * 2.1500行代码指未包含注释的代码。
+ */
 #include "xserver_http.h"
 #include <string.h>
 #include <stdio.h>
@@ -5,7 +24,7 @@
 static char rx_buffer[1024], tx_buffer[1024];
 static char url_path[255], file_path[255];
 
-#define XTCP_FIFO_SIZE      20
+#define XTCP_FIFO_SIZE      40
 
 typedef struct _xhttp_fifo_t {
     xtcp_t * buffer[XTCP_FIFO_SIZE];
@@ -70,7 +89,8 @@ static int http_send(xtcp_t * tcp, char* buf, int size) {
     int sended_size = 0;
 
     while (size > 0) {
-        uint16_t curr_size = xtcp_write(tcp, (uint8_t*)buf, (uint16_t)size);
+        int curr_size = xtcp_write(tcp, (uint8_t*)buf, (uint16_t)size);
+        if (curr_size < 0) break;
         size -= curr_size;
         buf += curr_size;
         sended_size += curr_size;
@@ -85,40 +105,44 @@ static void close_http(xtcp_t * tcp) {
     printf("http closed.\n");
 }
 
-static void send_404_not_found(xtcp_t * tcp) {
-    sprintf(tx_buffer, "HTTP/1.0 404 NOT FOUND\r\n"
-                       "Content-Type: text/html\r\n"
-                       "\r\n404 not found");
-    http_send(tcp, tx_buffer, strlen(tx_buffer));
-}
+struct xhttp_file_type_t {
+    const char * ext_name;
+    const char * content_type;
+};
 
-static void send_400_bad_request(xtcp_t * tcp) {
-    sprintf(tx_buffer, "HTTP/1.0 400 BAD REQUEST\r\n"
-                       "Content-type: text/html\r\n"
-                       "\r\n400 bad request");
-    http_send(tcp, tx_buffer, strlen(tx_buffer));
-}
+// 请参考以下链接
+// https://www.runoob.com/http/http-content-type.html
+const struct xhttp_file_type_t file_type_table[] = {
+        {".html", "text/html"},
+        {".bmp", "application/x-bmp"},
+        {".gif", "image/gif"},
+        {".ico", "image/x-icon"},
+        {".jpeg", "image/jpeg"},
+        {".css", "text/css"},
+        {".jpg", "image/jpeg"},
+        {".js", "application/x-javascript"},
+        {".png", "image/png"},
+};
 
 static void send_file (xtcp_t * tcp, const char * url) {
-    int is_text = 0;
     FILE * file;
     uint32_t size;
-    static char * text_file[] = {".html", ".css", ".js", "txt"};
+    const char * content_type = "text/html";
     int i;
 
     while (*url == '/') url++;
     sprintf(file_path, "%s/%s", XHTTP_DOC_DIR, url);
 
-    for (i = 0; i < sizeof(text_file) / sizeof(char *); i++) {
-        if (strstr(url_path, text_file[i])) {
-            is_text = 1;
+    for (i = 0; i < sizeof(file_type_table) / sizeof(struct xhttp_file_type_t); i++) {
+        if (strstr(url_path, file_type_table[i].ext_name)) {
+            content_type = file_type_table[i].content_type;
             break;
         }
     }
 
-    file = fopen(file_path, is_text ? "r" : "rb");
+    file = fopen(file_path, "rb");
     if (file == NULL) {
-        send_404_not_found(tcp);
+        //send_404_not_found(tcp);
         return;
     }
 
@@ -129,22 +153,17 @@ static void send_file (xtcp_t * tcp, const char * url) {
         "HTTP/1.0 200 OK\r\n"
         "Server: TINY HTTP SERVER/1.0\r\n"
         "Content-Length:%d\r\n"
+        "Connection:close\r\n"
         "Pragma:no-cache\r\n"
         "Content-Type:%s\r\n\r\n",
-        (int)size, is_text ? "text/html" : "image/jpeg");
+        (int)size, content_type);
     http_send(tcp, tx_buffer, strlen(tx_buffer));
 
-    if (is_text) {
-        while (!feof(file)) {
-            fgets(tx_buffer, sizeof(tx_buffer), file);
-            if (http_send(tcp, tx_buffer, strlen(tx_buffer)) <= 0) return;
-        }
-    } else {
+
         while (!feof(file)) {
             size = fread(tx_buffer, 1, sizeof(tx_buffer), file);
             if (http_send(tcp, tx_buffer, size) <= 0) return;
         }
-    }
     fclose(file);
 }
 
@@ -182,7 +201,7 @@ void xserver_http_run(void) {
 
         while (*c == ' ') c++;      // 跳过空格
         if (strncmp(rx_buffer, "GET", 3) != 0) {
-            send_400_bad_request(tcp);
+            //send_400_bad_request(tcp);
             close_http(tcp);
             continue;
         }
