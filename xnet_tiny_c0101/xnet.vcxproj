@@ -28,14 +28,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\xnet\pcap_device.h" />
-    <ClInclude Include="src\xnet_appcfg.h" />
     <ClInclude Include="src\xnet_app\xserver_datetime.h" />
     <ClInclude Include="src\xnet_app\xserver_http.h" />
     <ClInclude Include="src\xnet_tiny\xnet_tiny.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\lib\npcap\Lib\x64\Packet.lib" />
-    <Library Include="..\lib\npcap\Lib\x64\wpcap.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
