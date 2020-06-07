@@ -28,71 +28,6 @@
 #pragma comment(lib, "..\\lib\\npcap\\Lib\\x64\\wpcap.lib") 
 #endif
 
-#define IRQ_TBL_SIZE        10
-struct {
-    pcap_t* pcap;
-    irq_handler_t handler;
-    void* arg;
-}irq_table[IRQ_TBL_SIZE];
-
- /**
-  * 设置pcap的中断处理函数
-  */
-void pcap_set_irq_handler(pcap_t* pcap, irq_handler_t handler, void * arg) {
-    for (int i = 0; i < IRQ_TBL_SIZE; i++) {
-        if (irq_table[i].pcap == (pcap_t*)0) {
-            irq_table[i].pcap = pcap;
-            irq_table[i].handler = handler;
-            irq_table[i].arg = arg;
-            break;
-        }
-    }
-}
-
-/**
- * 相当于接收中断处理函数
- * 只不过，数据已经读出来了，存储在header和pkt_data里面
- */
-void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data) {
-    pcap_t* pcap = (pcap_t*)param;
-
-    for (int i = 0; i < IRQ_TBL_SIZE; i++) {
-        if (irq_table[i].pcap == pcap) {
-            irq_table[i].handler(irq_table[i].arg, 1, pkt_data, header->len);
-            break;
-        }
-    }
-}
-
-/**
- * 模拟硬件读取的线程
- */
-void pcap_read_thread(void* arg) {
-    pcap_t* pcap = (pcap_t*)arg;
-
-    // 硬件不断地在检测是否收到数据包，收到后会通过中断处理函数通知应用程序
-    // packet_handler在这里相当于接收中断处理程序
-    while (1) {
-        pcap_dispatch(pcap, -1, packet_handler, (u_char*)pcap);
-
-#if 0
-        HANDLE timer;
-        LARGE_INTEGER interval;
-        interval.QuadPart = -(1);
-        
-        // 简单释放下CPU，避免占用太高卡
-        timer = CreateWaitableTimer(NULL, TRUE, NULL);
-        if (timer == (HANDLE)0) {
-            return;
-        }
-
-        SetWaitableTimer(timer, &interval, 0, NULL, NULL, 0);
-        WaitForSingleObject(timer, INFINITE);
-        CloseHandle(timer);
-#endif
-    }
-}
-
 /**
  * 调整npcap的搜索路径：默认安装在系统的dll路径\npcap目录下
  * 设置该路径，以避免使用其它已经安装的winpcap版本的dll
@@ -268,7 +203,11 @@ pcap_t* pcap_device_open(const char* ip, const uint8_t * mac_addr, uint8_t poll_
         mask = 0;
     }
 
-    pcap = pcap_create(name_buf, err_buf);
+    pcap = pcap_open_live(name_buf,    // 设置字符串
+                          65536,  // 要捕获的最大字节数
+                          1, // 混杂模式
+                          0, // 读取超时（以毫秒为单位）
+                          err_buf);
     if (pcap == NULL) {
         fprintf(stderr, "pcap_open: create pcap failed %s\n net card name: %s\n", err_buf, name_buf);
         fprintf(stderr, "Use the following:\n");
@@ -276,27 +215,9 @@ pcap_t* pcap_device_open(const char* ip, const uint8_t * mac_addr, uint8_t poll_
         return (pcap_t*)0;
     }
 
-    // 获取整个包长，65535值足够
-    if (pcap_set_snaplen(pcap, 65536) != 0) {
-        fprintf(stderr, "pcap_open: set snaplen failed: %s\n", pcap_geterr(pcap));
-        return (pcap_t*)0;
-    }
-
-    // 混杂模式,接收所有地址的包
-    if (pcap_set_promisc(pcap, 0) != 0) {
-        fprintf(stderr, "pcap_open: set promisc failed: %s\n", pcap_geterr(pcap));
-        return (pcap_t*)0;
-    }
-
-    // 读超时时间
-    if (pcap_set_timeout(pcap, 1) != 0) {
-        fprintf(stderr, "pcap_open: set timeout failed: %s\n", pcap_geterr(pcap));
-        return (pcap_t*)0;
-    }
-
-    // 最后启用pcap
-    if (pcap_activate(pcap) != 0) {
-        fprintf(stderr, "pcap_open: active pcap failed: %s\n", pcap_geterr(pcap));
+    // 非阻塞模式读取，程序中使用查询的方式读
+    if (pcap_setnonblock(pcap, 1, err_buf) != 0) {
+        fprintf(stderr, "pcap_open: set none block failed: %s\n", pcap_geterr(pcap));
         return (pcap_t*)0;
     }
 
@@ -306,17 +227,11 @@ pcap_t* pcap_device_open(const char* ip, const uint8_t * mac_addr, uint8_t poll_
         fprintf(stderr, "pcap_open: set direction failed: %s\n", pcap_geterr(pcap));
     }
 
-    // 非阻塞模式读取，程序中使用查询的方式读
-    if (pcap_setnonblock(pcap, 1, err_buf) != 0) {
-        fprintf(stderr, "pcap_open: set none block failed: %s\n", pcap_geterr(pcap));
-        return (pcap_t*)0;
-    }
-
     // 只捕获发往本接口与广播的数据帧。相当于只处理发往这张网卡的包
     sprintf(filter_exp,
-        "(ether dst %02x:%02x:%02x:%02x:%02x:%02x or ether broadcast) and (not ether src %02x:%02x:%02x:%02x:%02x:%02x)",
-        mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5],
-        mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
+            "(ether dst %02x:%02x:%02x:%02x:%02x:%02x or ether broadcast) and (not ether src %02x:%02x:%02x:%02x:%02x:%02x)",
+            mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5],
+            mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
     if (pcap_compile(pcap, &fp, filter_exp, 0, net) == -1) {
         printf("pcap_open: couldn't parse filter %s: %s\n", filter_exp, pcap_geterr(pcap));
         return (pcap_t*)0;
@@ -326,12 +241,6 @@ pcap_t* pcap_device_open(const char* ip, const uint8_t * mac_addr, uint8_t poll_
         return (pcap_t*)0;
     }
 
-    if (!poll_mode) {
-#if defined(_WIN32) || defined(_WIN64)        // windows
-        // 创建一个线程，用于模拟硬件中断来收发数据包
-        CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)pcap_read_thread, pcap, 0, NULL);
-#endif
-    }
     return pcap;
 }
 
