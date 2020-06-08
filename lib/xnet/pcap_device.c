@@ -42,11 +42,6 @@ static int load_pcap_lib () {
         return 0;
     }
 
-    for (int i = 0; i < IRQ_TBL_SIZE; i++) {
-        irq_table[i].pcap = (pcap_t*)0;
-        irq_table[i].handler = (irq_handler_t)0;
-    }
-
     size = GetSystemDirectory(npcap_dir, 480);
     if (!size) {
         fprintf(stderr, "Error in GetSystemDirectory: %x", GetLastError());

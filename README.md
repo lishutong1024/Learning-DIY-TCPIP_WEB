@@ -12,7 +12,8 @@
 如需访问视频课程，请访问:[http://01ketang.cc](http://01ktang.cc/) 获取相关地址.
 
 # 联系我
-网站:http://01ketang.cc/about
+网站：http://01ketang.cc/about
+课程：http://01ketang.cc/xnet-tiny
 邮箱：527676163#qq.com (#换成@)
 
 # 开发工具
