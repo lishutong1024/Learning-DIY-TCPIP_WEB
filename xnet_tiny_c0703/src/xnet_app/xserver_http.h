@@ -37,7 +37,7 @@
 #if defined(__APPLE__)      // 根据实际情况修改
 #define XHTTP_DOC_DIR               "/Users/mac/Documents/work/git/Learning-DIY-TCP_WEB/htdocs"  // html文档所在的目录
 #else
-#define XHTTP_DOC_DIR               "d:/tiny_net"  // html文档所在的目录
+#define XHTTP_DOC_DIR               "d:/htdocs"  // html文档所在的目录
 #endif
 
 xnet_err_t xserver_http_create(uint16_t port);
