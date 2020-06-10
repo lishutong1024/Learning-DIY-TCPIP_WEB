@@ -1,7 +1,7 @@
 /***********************IMPORTANT NPCAP LICENSE TERMS***********************
  *                                                                         *
  * Npcap is a Windows packet sniffing driver and library and is copyright  *
- * (c) 2013-2016 by Insecure.Com LLC ("The Nmap Project").  All rights     *
+ * (c) 2013-2020 by Insecure.Com LLC ("The Nmap Project").  All rights     *
  * reserved.                                                               *
  *                                                                         *
  * Even though Npcap source code is publicly available for review, it is   *
@@ -111,12 +111,18 @@ typedef struct _AirpcapHandle* PAirpcapHandle;
 // Libpcap/wpcap recognizes this macro and knows Npcap Packet API is provided for compilation.
 #define HAVE_NPCAP_PACKET_API
 
-// Working modes
+// Working modes, a bitfield
+// 0b00000000
+//      |  ||_ STAT or CAPT
+//      |  |__ MON (TME extensions, not supported)
+//      |      UNUSED
+//      |      UNUSED
+//      |_____ DUMP (not supported)
 #define PACKET_MODE_CAPT 0x0 ///< Capture mode
 #define PACKET_MODE_STAT 0x1 ///< Statistical mode
 #define PACKET_MODE_MON 0x2 ///< Monitoring mode
 #define PACKET_MODE_DUMP 0x10 ///< Dump mode
-#define PACKET_MODE_STAT_DUMP MODE_DUMP | MODE_STAT ///< Statistical dump Mode
+#define PACKET_MODE_STAT_DUMP PACKET_MODE_DUMP | PACKET_MODE_STAT ///< Statistical dump Mode
 
 
 /// Alignment macro. Defines the alignment size.
@@ -134,6 +140,11 @@ typedef struct _AirpcapHandle* PAirpcapHandle;
 // Loopback behaviour definitions
 #define NPF_DISABLE_LOOPBACK	1	///< Drop the packets sent by the NPF driver
 #define NPF_ENABLE_LOOPBACK		2	///< Capture the packets sent by the NPF driver
+
+// Timestamp Modes
+#define TIMESTAMPMODE_SINGLE_SYNCHRONIZATION 0 // KeQueryPerformanceCounter
+#define TIMESTAMPMODE_QUERYSYSTEMTIME 2 // KeQuerySystemTime
+#define TIMESTAMPMODE_QUERYSYSTEMTIME_PRECISE 4 // KeQuerySystemTimePrecise, Windows 8 and newer
 
 /*!
   \brief Network type structure.
@@ -378,6 +389,7 @@ extern "C"
 	BOOLEAN PacketSetReadTimeout(LPADAPTER AdapterObject, int timeout);
 	BOOLEAN PacketSetBpf(LPADAPTER AdapterObject, struct bpf_program* fp);
 	BOOLEAN PacketSetLoopbackBehavior(LPADAPTER  AdapterObject, UINT LoopbackBehavior);
+	BOOLEAN PacketSetTimestampMode(LPADAPTER AdapterObject, ULONG mode);
 	INT PacketSetSnapLen(LPADAPTER AdapterObject, int snaplen);
 	BOOLEAN PacketGetStats(LPADAPTER AdapterObject, struct bpf_stat* s);
 	BOOLEAN PacketGetStatsEx(LPADAPTER AdapterObject, struct bpf_stat* s);

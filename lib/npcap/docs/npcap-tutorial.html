@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Npcap Development Tutorial</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.2"><meta name="description" content="A step-by-step guide to writing software that uses Npcap to list network adapters, capture packets, and send network traffic."><link rel="home" href="index.html" title="Npcap: Nmap Project's packet sniffing library for Windows"><link rel="up" href="index.html" title="Npcap: Nmap Project's packet sniffing library for Windows"><link rel="prev" href="npcap-devguide.html" title="Developing software with Npcap"><link rel="node" href="npcap-internals.html" title="Npcap internals"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Npcap Development Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="npcap-devguide.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="npcap-internals.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="npcap-tutorial"></a>Npcap Development Tutorial</h2></div><div><div class="abstract"><p class="title"><b>Abstract</b></p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Npcap Development Tutorial</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.2"><meta name="description" content="A step-by-step guide to writing software that uses Npcap to list network adapters, capture packets, and send network traffic."><link rel="home" href="index.html" title="Npcap: Nmap Project's packet sniffing library for Windows"><link rel="up" href="index.html" title="Npcap: Nmap Project's packet sniffing library for Windows"><link rel="prev" href="npcap-devguide.html" title="Developing software with Npcap"><link rel="next" href="npcap-internals.html" title="Npcap internals"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Npcap Development Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="npcap-devguide.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="npcap-internals.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="npcap-tutorial"></a>Npcap Development Tutorial</h2></div><div><div class="abstract"><p class="title"><b>Abstract</b></p>
       <p>A step-by-step guide to writing software that uses Npcap to list
         network adapters, capture packets, and send network traffic.</p>
     </div></div></div></div>
@@ -57,7 +57,7 @@ main()
 	}
 	
 	/* Print the list */
-	for(d= alldevs; d != NULL; d= d-&gt;node)
+	for(d= alldevs; d != NULL; d= d-&gt;next)
 	{
 		printf("%d. %s", ++i, d-&gt;name);
 		if (d-&gt;description)
@@ -149,7 +149,7 @@ void ifprint(pcap_if_t *d)
   printf("\tLoopback: %s\n",(d-&gt;flags &amp; PCAP_IF_LOOPBACK)?"yes":"no");
 
   /* IP addresses */
-  for(a=d-&gt;addresses;a;a=a-&gt;node) {
+  for(a=d-&gt;addresses;a;a=a-&gt;next) {
     printf("\tAddress Family: #%d\n",a-&gt;addr-&gt;sa_family);
   
     switch(a-&gt;addr-&gt;sa_family)
@@ -254,7 +254,7 @@ int main()
 	}
 	
 	/* Print the list */
-	for(d=alldevs; d; d=d-&gt;node)
+	for(d=alldevs; d; d=d-&gt;next)
 	{
 		printf("%d. %s", ++i, d-&gt;name);
 		if (d-&gt;description)
@@ -281,7 +281,7 @@ int main()
 	}
 	
 	/* Jump to the selected adapter */
-	for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;node, i++);
+	for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;next, i++);
 	
 	/* Open the device */
 	if ( (adhandle= pcap_open(d-&gt;name,			// name of the device
@@ -363,10 +363,10 @@ void packet_handler(u_char *param, const struct pcap_pkthdr *header, const u_cha
       fact that the handler is called by the packet capture driver; therefore
       the user application does not have direct control over it. Another
       approach (and to have more readable programs) is to use the <a class="ulink" href="wpcap/pcap_next_ex.html" target="_top">pcap_next_ex()</a> function, which is
-      presented in the node example (<a class="xref" href="npcap-tutorial.html#npcap-tutorial-pcap-node-ex" title="Capturing the packets without the callback">the section called &#8220;Capturing the packets without the callback&#8221;</a>).</p>
+      presented in the next example (<a class="xref" href="npcap-tutorial.html#npcap-tutorial-pcap-next-ex" title="Capturing the packets without the callback">the section called &#8220;Capturing the packets without the callback&#8221;</a>).</p>
   </div>
 
-  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-tutorial-pcap-node-ex"></a>Capturing the packets without the callback</h3></div></div></div>
+  <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="npcap-tutorial-pcap-next-ex"></a>Capturing the packets without the callback</h3></div></div></div>
     
 
     <p>The example program in this lesson behaves exactly like the previous
@@ -511,7 +511,7 @@ if(res == -1){
       </pre>
 
     <p>If you want to see some code that uses the filtering functions shown
-      in this lesson, look at the example presented in the node Lesson, <a class="xref" href="npcap-tutorial.html#npcap-tutorial-interpreting" title="Interpreting the packets">the section called &#8220;Interpreting the packets&#8221;</a>.</p>
+      in this lesson, look at the example presented in the next Lesson, <a class="xref" href="npcap-tutorial.html#npcap-tutorial-interpreting" title="Interpreting the packets">the section called &#8220;Interpreting the packets&#8221;</a>.</p>
 
   </div>
 
@@ -616,7 +616,7 @@ struct bpf_program fcode;
 	}
 	
 	/* Print the list */
-	for(d=alldevs; d; d=d-&gt;node)
+	for(d=alldevs; d; d=d-&gt;next)
 	{
 		printf("%d. %s", ++i, d-&gt;name);
 		if (d-&gt;description)
@@ -643,7 +643,7 @@ struct bpf_program fcode;
 	}
 
 	/* Jump to the selected adapter */
-	for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;node, i++);
+	for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;next, i++);
 	
 	/* Open the adapter */
 	if ( (adhandle= pcap_open(d-&gt;name,	// name of the device
@@ -857,7 +857,7 @@ pcap_dumper_t *dumpfile;
 	}
     
     /* Print the list */
-    for(d=alldevs; d; d=d-&gt;node)
+    for(d=alldevs; d; d=d-&gt;next)
     {
         printf("%d. %s", ++i, d-&gt;name);
         if (d-&gt;description)
@@ -884,7 +884,7 @@ pcap_dumper_t *dumpfile;
     }
 		
 	/* Jump to the selected adapter */
-    for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;node, i++);
+    for(d=alldevs, i=0; i&lt; inum-1 ;d=d-&gt;next, i++);
     
     
 	/* Open the device */
@@ -1154,7 +1154,7 @@ int res;
       networking are provided. Among them, the user can find a complete set of
       functions to send packets.</p>
 
-    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id579474"></a>Sending a single packet with <code class="literal">pcap_sendpacket()</code></h4></div></div></div>
+    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id574106"></a>Sending a single packet with <code class="literal">pcap_sendpacket()</code></h4></div></div></div>
       
 
       <p>The simplest way to send a packet is shown in the following code
@@ -1243,7 +1243,7 @@ int i;
 
     </div>
 
-    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id579488"></a>Send queues</h4></div></div></div>
+    <div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="id574120"></a>Send queues</h4></div></div></div>
       
 
       <p>While <a class="ulink" href="wpcap/pcap_inject.html" target="_top">pcap_sendpacket()</a>
@@ -1287,7 +1287,7 @@ int i;
         <code class="literal">pcap_sendqueue_destroy()</code> that frees all the buffers
         associated with the send queue.</p>
 
-      <p>The node program shows how to use send queues. It opens a capture
+      <p>The next program shows how to use send queues. It opens a capture
         file with <a class="ulink" href="wpcap/pcap_open_offline.html" target="_top">pcap_open_offline()</a>, then
         it moves the packets from the file to a properly allocated send queue.
         At his point it transmits the queue, synchronizing it if requested by

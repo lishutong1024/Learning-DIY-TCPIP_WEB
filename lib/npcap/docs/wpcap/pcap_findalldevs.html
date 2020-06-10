@@ -63,7 +63,7 @@ void pcap_freealldevs(pcap_if_t *alldevs);
 <p class="level0"><a name="DESCRIPTION"></a><h2 class="nroffsh">DESCRIPTION</h2>
 <p class="level0"><span Class="bold">pcap_findalldevs()</span> constructs a list of network devices that can be opened with <a Class="bold" href="./pcap_create.html">pcap_create</a> and <a Class="bold" href="./pcap_activate.html">pcap_activate</a> or with <a Class="bold" href="./pcap_open_live.html">pcap_open_live</a>. (Note that there may be network devices that cannot be opened by the process calling <span Class="bold">pcap_findalldevs()</span>, because, for example, that process does not have sufficient privileges to open them for capturing; if so, those devices will not appear on the list.) If <span Class="bold">pcap_findalldevs()</span> succeeds, the pointer pointed to by <span Class="emphasis">alldevsp</span> is set to point to the first element of the list, or to <span Class="bold">NULL</span> if no devices were found (this is considered success). Each element of the list is of type <span Class="bold">pcap_if_t</span>, and has the following members: 
 <p class="level1">
-<p class="level1"><span Class="bold">node</span> if not <span Class="bold">NULL</span>, a pointer to the node element in the list; <span Class="bold">NULL</span> for the last element of the list
+<p class="level1"><span Class="bold">next</span> if not <span Class="bold">NULL</span>, a pointer to the next element in the list; <span Class="bold">NULL</span> for the last element of the list 
 <p class="level1"><span Class="bold">name</span> a pointer to a string giving a name for the device to pass to <span Class="bold">pcap_open_live()</span> 
 <p class="level1"><span Class="bold">description</span> if not <span Class="bold">NULL</span>, a pointer to a string giving a human-readable description of the device 
 <p class="level1"><span Class="bold">addresses</span> a pointer to the first element of a list of network addresses for the device, or <span Class="bold">NULL</span> if the device has no addresses 
@@ -83,7 +83,7 @@ void pcap_freealldevs(pcap_if_t *alldevs);
 <p class="level0">
 <p class="level0">Each element of the list of addresses is of type <span Class="bold">pcap_addr_t</span>, and has the following members: 
 <p class="level1">
-<p class="level1"><span Class="bold">node</span> if not <span Class="bold">NULL</span>, a pointer to the node element in the list; <span Class="bold">NULL</span> for the last element of the list
+<p class="level1"><span Class="bold">next</span> if not <span Class="bold">NULL</span>, a pointer to the next element in the list; <span Class="bold">NULL</span> for the last element of the list 
 <p class="level1"><span Class="bold">addr</span> a pointer to a <span Class="bold">struct sockaddr</span> containing an address 
 <p class="level1"><span Class="bold">netmask</span> if not <span Class="bold">NULL</span>, a pointer to a <span Class="bold">struct sockaddr</span> that contains the netmask corresponding to the address pointed to by <span Class="bold">addr</span> 
 <p class="level1"><span Class="bold">broadaddr</span> if not <span Class="bold">NULL</span>, a pointer to a <span Class="bold">struct sockaddr</span> that contains the broadcast address corresponding to the address pointed to by <span Class="bold">addr</span>; may be null if the device doesn&#39;t support broadcasts 

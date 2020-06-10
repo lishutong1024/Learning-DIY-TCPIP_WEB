@@ -172,7 +172,7 @@ p.roffit {
 <p class="level1"><span Class="bold">pcap_datalink_val_to_description</span>(3PCAP) get description for a link-layer header type 
 <p class="level1"><a Class="bold" href="./pcap_datalink_name_to_val.html">pcap_datalink_name_to_val</a>(3PCAP) get link-layer header type corresponding to a name 
 <p class="level0"><a name="Reading"></a><h2 class="nroffsh">Reading packets</h2>
-<p class="level0">Packets are read with <span Class="bold">pcap_dispatch</span>() or <span Class="bold">pcap_loop</span>(), which process one or more packets, calling a callback routine for each packet, or with <span Class="bold">pcap_next</span>() or <span Class="bold">pcap_next_ex</span>(), which return the node packet. The callback for <span Class="bold">pcap_dispatch</span>() and <span Class="bold">pcap_loop</span>() is supplied a pointer to a <span Class="emphasis">struct pcap_pkthdr</span>, which includes the following members:
+<p class="level0">Packets are read with <span Class="bold">pcap_dispatch</span>() or <span Class="bold">pcap_loop</span>(), which process one or more packets, calling a callback routine for each packet, or with <span Class="bold">pcap_next</span>() or <span Class="bold">pcap_next_ex</span>(), which return the next packet. The callback for <span Class="bold">pcap_dispatch</span>() and <span Class="bold">pcap_loop</span>() is supplied a pointer to a <span Class="emphasis">struct pcap_pkthdr</span>, which includes the following members: 
 <p class="level1">
 <p class="level1"><span Class="bold">ts</span> a <span Class="emphasis">struct timeval</span> containing the time when the packet was captured 
 <p class="level1"><span Class="bold">caplen</span> a <span Class="emphasis">bpf_u_int32</span> giving the number of bytes of the packet that are available from the capture 
@@ -191,8 +191,8 @@ p.roffit {
 <p class="level1">
 <p class="level1"><span Class="bold">pcap_dispatch</span>(3PCAP) read a bufferful of packets from a <span Class="bold">pcap_t</span> open for a live capture or the full set of packets from a <span Class="bold">pcap_t</span> open for a ``savefile&#39;&#39; 
 <p class="level1"><a Class="bold" href="./pcap_loop.html">pcap_loop</a>(3PCAP) read packets from a <span Class="bold">pcap_t</span> until an interrupt or error occurs 
-<p class="level1"><span Class="bold">pcap_next</span>(3PCAP) read the node packet from a <span Class="bold">pcap_t</span> without an indication whether an error occurred
-<p class="level1"><a Class="bold" href="./pcap_next_ex.html">pcap_next_ex</a>(3PCAP) read the node packet from a <span Class="bold">pcap_t</span> with an error indication on an error
+<p class="level1"><span Class="bold">pcap_next</span>(3PCAP) read the next packet from a <span Class="bold">pcap_t</span> without an indication whether an error occurred 
+<p class="level1"><a Class="bold" href="./pcap_next_ex.html">pcap_next_ex</a>(3PCAP) read the next packet from a <span Class="bold">pcap_t</span> with an error indication on an error 
 <p class="level1"><a Class="bold" href="./pcap_breakloop.html">pcap_breakloop</a>(3PCAP) prematurely terminate the loop in <span Class="bold">pcap_dispatch</span>() or <span Class="bold">pcap_loop</span>() 
 <p class="level1"><a Class="bold" href="./pcap_setnonblock.html">pcap_setnonblock</a>(3PCAP) set or clear non-blocking mode on a <span Class="bold">pcap_t</span> 
 <p class="level1"><span Class="bold">pcap_getnonblock</span>(3PCAP) get the state of non-blocking mode for a <span Class="bold">pcap_t</span> 
