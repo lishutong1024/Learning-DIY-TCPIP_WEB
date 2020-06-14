@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "enc28j60_device.h"     
 
 // 一共8KB的以太网缓存

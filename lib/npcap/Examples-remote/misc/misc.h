@@ -1,4 +1,4 @@
-#include <tchar.h>
+﻿#include <tchar.h>
 #include <stdio.h>
 BOOL LoadNpcapDlls()
 {
