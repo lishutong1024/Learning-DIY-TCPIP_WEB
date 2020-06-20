@@ -10,7 +10,7 @@
  * 作者：李述铜
  * 网址: http://01ketang.cc/tcpip
  * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
- * 微信公众号：请搜索 01课程
+ * 微信公众号：请搜索 01课堂
  *
  * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
  * 注：
@@ -89,6 +89,7 @@ xnet_packet_t * xnet_alloc_for_send(uint16_t data_size) {
 xnet_packet_t * xnet_alloc_for_read(uint16_t data_size) {
     // 从最开始进行分配，用于最底层的网络数据帧读取
     rx_packet.data = rx_packet.payload;
+    rx_packet.size = data_size;
     return &rx_packet;
 }
 
