@@ -1,4 +1,4 @@
-/***********************IMPORTANT NPCAP LICENSE TERMS***********************
+﻿/***********************IMPORTANT NPCAP LICENSE TERMS***********************
  *                                                                         *
  * Npcap is a Windows packet sniffing driver and library and is copyright  *
  * (c) 2013-2020 by Insecure.Com LLC ("The Nmap Project").  All rights     *

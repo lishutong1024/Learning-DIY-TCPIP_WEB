@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2005 - 2006
  *		CACE Technologies, Davis, CA
  * All rights reserved.
