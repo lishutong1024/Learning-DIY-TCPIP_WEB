@@ -208,7 +208,7 @@ void xarp_poll(void) {
                     } else {    // 继续重试
                         xarp_make_request(&arp_entry.ipaddr);
                         arp_entry.state = XARP_ENTRY_RESOLVING;
-                        arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_PENDING_TMO);
+                        arp_entry.tmo = XARP_CFG_ENTRY_PENDING_TMO;
                     }
                 }
                 break;
@@ -216,7 +216,7 @@ void xarp_poll(void) {
                 if (--arp_entry.tmo == 0) {     // 超时，重新请求
                     xarp_make_request(&arp_entry.ipaddr);
                     arp_entry.state = XARP_ENTRY_RESOLVING;
-                    arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_PENDING_TMO);
+                    arp_entry.tmo = XARP_CFG_ENTRY_PENDING_TMO;
                 }
                 break;
         }

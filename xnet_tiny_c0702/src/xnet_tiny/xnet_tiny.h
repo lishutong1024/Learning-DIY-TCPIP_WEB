@@ -36,8 +36,8 @@
 
 #define XNET_CFG_NETIF_IP               {192, 168, 254, 2}  // 本机网卡IP
 #define XNET_CFG_PACKET_MAX_SIZE        1516        // 收发数据包的最大大小
-#define XARP_CFG_ENTRY_OK_TMO	        (5 * 1000)         // ARP表项超时时间
-#define XARP_CFG_ENTRY_PENDING_TMO	    (1 * 1000)          // ARP表项挂起超时时间
+#define XARP_CFG_ENTRY_OK_TMO	        (5)         // ARP表项超时时间
+#define XARP_CFG_ENTRY_PENDING_TMO	    (1)          // ARP表项挂起超时时间
 #define XARP_CFG_MAX_RETRIES		    4                   // ARP表挂起时重试查询次数
 #define XUDP_CFG_MAX_UDP                10                  // 最大支持的UDP连接数
 #define XTCP_CFG_MAX_TCP                        40                  // 最大支持的TCP连接数
@@ -147,7 +147,7 @@ typedef struct _xnet_packet_t{
 
 typedef uint32_t xnet_time_t;           // 时间类型，返回当前系统跑了多少个100ms
 const xnet_time_t xsys_get_time(void);
-int xnet_check_tmo(xnet_time_t* time, uint32_t ms);
+int xnet_check_tmo(xnet_time_t* time, uint32_t sec);
 
 xnet_packet_t * xnet_alloc_for_send(uint16_t data_size);
 xnet_packet_t * xnet_alloc_for_read(uint16_t data_size);
@@ -176,7 +176,7 @@ typedef union _xipaddr_t {
 #define XARP_ENTRY_FREE		        0       // ARP表项空闲
 #define XARP_ENTRY_OK		        1       // ARP表项解析成功
 #define XARP_ENTRY_RESOLVING	    2       // ARP表项正在解析
-#define XARP_TIMER_PERIOD           1000    // ARP扫描周期，1s足够
+#define XARP_TIMER_PERIOD           1    // ARP扫描周期，1s足够
 
 /**
  * ARP表项
@@ -192,8 +192,8 @@ typedef struct _xarp_entry_t {
 void xarp_init(void);
 xnet_err_t xarp_make_request(const xipaddr_t * ipaddr);
 void xarp_in(xnet_packet_t * packet);
-int xarp_find(const xipaddr_t* ipaddr, uint8_t** mac_addr);
-int xarp_resolve(const xipaddr_t * ipaddr, uint8_t ** mac_addr);
+xnet_err_t xarp_resolve(const xipaddr_t* ipaddr, uint8_t** mac_addr);
+
 void xarp_poll(void);
 
 #define XNET_VERSION_IPV4                   4           // IPV4

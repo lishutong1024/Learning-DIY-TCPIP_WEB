@@ -98,5 +98,5 @@ const xnet_time_t xsys_get_time(void) {
         pre = c;
     }
 #endif
-    return (xnet_time_t)(clock()  * 10 / CLOCKS_PER_SEC);
+    return (xnet_time_t)(clock() / CLOCKS_PER_SEC);
 }

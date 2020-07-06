@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include "xnet_tiny.h"
 
-#define arp_ms_to_tmo(ms)           (ms / XARP_TIMER_PERIOD)
+
 #define min(a, b)               ((a) > (b) ? (b) : (a))
 #define XTCP_HDR_MAX_SIZE       (XNET_CFG_PACKET_MAX_SIZE - sizeof(xether_hdr_t) - sizeof(xip_hdr_t) - sizeof(xtcp_hdr_t))
 #define tcp_get_init_seq()      ((rand() << 16) + rand())
@@ -63,12 +63,12 @@ static void update_arp_entry(uint8_t* src_ip, uint8_t* mac_addr);
  * @param ms 预期超时时间，值为0时，表示获取当前时间
  * @return 0 - 未超时，1-超时
  */
-int xnet_check_tmo(xnet_time_t * time, uint32_t ms) {
+int xnet_check_tmo(xnet_time_t * time, uint32_t sec) {
     xnet_time_t curr = xsys_get_time();
-    if (ms == 0) {          // 0，取当前时间
+    if (sec == 0) {          // 0，取当前时间
         *time = curr;
         return 0;
-    } else if (curr - *time > ms / 100) {   // 非0检查超时
+    } else if (curr - *time >= sec) {   // 非0检查超时
         *time = curr;       // 当超时时，才更新时间
         return 1;
     }
@@ -246,7 +246,7 @@ void xarp_poll(void) {
                     } else {    // 继续重试
                         xarp_make_request(&arp_entry.ipaddr);
                         arp_entry.state = XARP_ENTRY_RESOLVING;
-                        arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_PENDING_TMO);
+                        arp_entry.tmo = XARP_CFG_ENTRY_PENDING_TMO;
                     }
                 }
                 break;
@@ -254,7 +254,7 @@ void xarp_poll(void) {
                 if (--arp_entry.tmo == 0) {     // 超时，重新请求
                     xarp_make_request(&arp_entry.ipaddr);
                     arp_entry.state = XARP_ENTRY_RESOLVING;
-                    arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_PENDING_TMO);
+                    arp_entry.tmo = XARP_CFG_ENTRY_PENDING_TMO;
                 }
                 break;
         }
@@ -306,28 +306,14 @@ xnet_err_t xarp_make_request(const xipaddr_t * ipaddr) {
 }
 
 /**
- * 根据指定的ARP地址，在ARP中查找
- * @param ipaddr 查找的ip地址
- * @param mac_addr 返回的mac地址存储区
- * @return XNET_ERR_OK 查找成功，XNET_ERR_NONE 查找失败
- */
-xnet_err_t xarp_find(const xipaddr_t* ipaddr, uint8_t** mac_addr) {
-    if ((arp_entry.state == XARP_ENTRY_OK) && xipaddr_is_equal(ipaddr, &arp_entry.ipaddr)) {
-        *mac_addr = arp_entry.macaddr;
-        return XNET_ERR_OK;
-    }
-
-    return XNET_ERR_NONE;
-}
-
-/**
  * 解析指定的IP地址，如果不在ARP表项中，则发送ARP请求
  * @param ipaddr 查找的ip地址
  * @param mac_addr 返回的mac地址存储区
  * @return XNET_ERR_OK 查找成功，XNET_ERR_NONE 查找失败
  */
 xnet_err_t xarp_resolve(const xipaddr_t * ipaddr, uint8_t ** mac_addr) {
-    if (xarp_find(ipaddr, mac_addr) == XNET_ERR_OK) {
+    if ((arp_entry.state == XARP_ENTRY_OK) && xipaddr_is_equal(ipaddr, &arp_entry.ipaddr)) {
+        *mac_addr = arp_entry.macaddr;
         return XNET_ERR_OK;
     }
 
@@ -344,7 +330,7 @@ static void update_arp_entry(uint8_t * src_ip, uint8_t * mac_addr) {
     memcpy(arp_entry.ipaddr.array, src_ip, XNET_IPV4_ADDR_SIZE);
     memcpy(arp_entry.macaddr, mac_addr, 6);
     arp_entry.state = XARP_ENTRY_OK;
-    arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_OK_TMO);
+    arp_entry.tmo = (XARP_CFG_ENTRY_OK_TMO);
     arp_entry.retry_cnt = XARP_CFG_MAX_RETRIES;
 }
 
