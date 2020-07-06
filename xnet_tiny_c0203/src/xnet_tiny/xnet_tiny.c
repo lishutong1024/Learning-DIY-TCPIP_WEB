@@ -32,7 +32,6 @@
 #include <string.h>
 #include "xnet_tiny.h"
 
-#define arp_ms_to_tmo(ms)           (ms / XARP_TIMER_PERIOD)
 #define min(a, b)               ((a) > (b) ? (b) : (a))
 
 static const xipaddr_t netif_ipaddr = XNET_CFG_NETIF_IP;
@@ -44,20 +43,19 @@ static xnet_time_t arp_timer;                                   // ARP扫描定�
 
 #define swap_order16(v)   ((((v) & 0xFF) << 8) | (((v) >> 8) & 0xFF))
 #define xipaddr_is_equal_buf(addr, buf)      (memcmp((addr)->array, (buf), XNET_IPV4_ADDR_SIZE) == 0)
-#define xipaddr_is_equal(addr1, addr2)       ((addr1)->addr == (addr2)->addr)
 
 /**
  * 检查是否超时
  * @param time 前一时间
- * @param ms 预期超时时间，值为0时，表示获取当前时间
+ * @param sec 预期超时时间，值为0时，表示获取当前时间
  * @return 0 - 未超时，1-超时
  */
-int xnet_check_tmo(xnet_time_t * time, uint32_t ms) {
+int xnet_check_tmo(xnet_time_t * time, uint32_t sec) {
     xnet_time_t curr = xsys_get_time();
-    if (ms == 0) {          // 0，取当前时间
+    if (sec == 0) {          // 0，取当前时间
         *time = curr;
         return 0;
-    } else if (curr - *time > ms / 100) {   // 非0检查超时
+    } else if (curr - *time >= sec) {   // 非0检查超时
         *time = curr;       // 当超时时，才更新时间
         return 1;
     }
@@ -270,36 +268,6 @@ xnet_err_t xarp_make_request(const xipaddr_t * ipaddr) {
 }
 
 /**
- * 根据指定的ARP地址，在ARP中查找
- * @param ipaddr 查找的ip地址
- * @param mac_addr 返回的mac地址存储区
- * @return XNET_ERR_OK 查找成功，XNET_ERR_NONE 查找失败
- */
-xnet_err_t xarp_find(const xipaddr_t* ipaddr, uint8_t** mac_addr) {
-    if ((arp_entry.state == XARP_ENTRY_OK) && xipaddr_is_equal(ipaddr, &arp_entry.ipaddr)) {
-        *mac_addr = arp_entry.macaddr;
-        return XNET_ERR_OK;
-    }
-
-    return XNET_ERR_NONE;
-}
-
-/**
- * 解析指定的IP地址，如果不在ARP表项中，则发送ARP请求
- * @param ipaddr 查找的ip地址
- * @param mac_addr 返回的mac地址存储区
- * @return XNET_ERR_OK 查找成功，XNET_ERR_NONE 查找失败
- */
-xnet_err_t xarp_resolve(const xipaddr_t * ipaddr, uint8_t ** mac_addr) {
-    if (xarp_find(ipaddr, mac_addr) == XNET_ERR_OK) {
-        return XNET_ERR_OK;
-    }
-
-    xarp_make_request(ipaddr);
-    return XNET_ERR_NONE;
-}
-
-/**
  * 更新ARP表项
  * @param src_ip 源IP地址
  * @param mac_addr 对应的mac地址
@@ -308,7 +276,7 @@ static void update_arp_entry(uint8_t * src_ip, uint8_t * mac_addr) {
     memcpy(arp_entry.ipaddr.array, src_ip, XNET_IPV4_ADDR_SIZE);
     memcpy(arp_entry.macaddr, mac_addr, 6);
     arp_entry.state = XARP_ENTRY_OK;
-    arp_entry.tmo = arp_ms_to_tmo(XARP_CFG_ENTRY_OK_TMO);
+    arp_entry.tmo = XARP_CFG_ENTRY_OK_TMO;
     arp_entry.retry_cnt = XARP_CFG_MAX_RETRIES;
 }
 
