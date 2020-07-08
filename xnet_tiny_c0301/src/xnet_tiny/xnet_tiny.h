@@ -74,15 +74,7 @@ typedef struct _xip_hdr_t {
     uint8_t tos;		                // 服务类型
     uint16_t total_len;		            // 总长度
     uint16_t id;		                // 标识符
-    union {
-        struct {
-            uint16_t fragment_offset : 13;      // 数据报分片偏移
-            uint16_t more_fragment : 1;         // 不是最后一个包
-            uint16_t dont_fragment : 1;         // 不允许分片
-            uint16_t resvered : 1;              // 保留
-        }sub;
-        uint16_t all;
-    }flags_fragment;
+    uint16_t flags_fragment;            // 标志与分段
     uint8_t ttl;                        // 存活时间
     uint8_t protocol;	                // 上层协议
     uint16_t hdr_checksum;              // 首部校验和
@@ -96,7 +88,6 @@ typedef enum _xnet_err_t {
     XNET_ERR_OK = 0,
     XNET_ERR_IO = -1,
     XNET_ERR_NONE = -2,
-    XNET_ERR_MEM = -3,
 }xnet_err_t;
 
 /**
@@ -135,7 +126,7 @@ typedef union _xipaddr_t {
 #define XARP_ENTRY_FREE		        0       // ARP表项空闲
 #define XARP_ENTRY_OK		        1       // ARP表项解析成功
 #define XARP_ENTRY_RESOLVING	    2       // ARP表项正在解析
-#define XARP_TIMER_PERIOD           1    // ARP扫描周期，1s足够
+#define XARP_TIMER_PERIOD           1       // ARP扫描周期，1s足够
 
 /**
  * ARP表项
@@ -151,7 +142,6 @@ typedef struct _xarp_entry_t {
 void xarp_init(void);
 xnet_err_t xarp_make_request(const xipaddr_t * ipaddr);
 void xarp_in(xnet_packet_t * packet);
-
 void xarp_poll(void);
 
 #define XNET_VERSION_IPV4                   4           // IPV4

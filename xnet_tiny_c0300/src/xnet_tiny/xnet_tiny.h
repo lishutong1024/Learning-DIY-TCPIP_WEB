@@ -74,15 +74,7 @@ typedef struct _xip_hdr_t {
     uint8_t tos;		                // 服务类型
     uint16_t total_len;		            // 总长度
     uint16_t id;		                // 标识符
-    union {
-        struct {
-            uint16_t fragment_offset : 13;      // 数据报分片偏移
-            uint16_t more_fragment : 1;         // 不是最后一个包
-            uint16_t dont_fragment : 1;         // 不允许分片
-            uint16_t resvered : 1;              // 保留
-        }sub;
-        uint16_t all;
-    }flags_fragment;
+    uint16_t flags_fragment;            // 标志与分段
     uint8_t ttl;                        // 存活时间
     uint8_t protocol;	                // 上层协议
     uint16_t hdr_checksum;              // 首部校验和

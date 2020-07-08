@@ -52,7 +52,7 @@ static void update_arp_entry(uint8_t* src_ip, uint8_t* mac_addr);
 /**
  * 检查是否超时
  * @param time 前一时间
- * @param ms 预期超时时间，值为0时，表示获取当前时间
+ * @param sec 预期超时时间，值为0时，表示获取当前时间
  * @return 0 - 未超时，1-超时
  */
 int xnet_check_tmo(xnet_time_t * time, uint32_t sec) {
@@ -290,7 +290,7 @@ static void update_arp_entry(uint8_t * src_ip, uint8_t * mac_addr) {
     memcpy(arp_entry.ipaddr.array, src_ip, XNET_IPV4_ADDR_SIZE);
     memcpy(arp_entry.macaddr, mac_addr, 6);
     arp_entry.state = XARP_ENTRY_OK;
-    arp_entry.tmo = (XARP_CFG_ENTRY_OK_TMO);
+    arp_entry.tmo = XARP_CFG_ENTRY_OK_TMO;
     arp_entry.retry_cnt = XARP_CFG_MAX_RETRIES;
 }
 
@@ -390,12 +390,6 @@ void xip_in(xnet_packet_t * packet) {
     pre_checksum = iphdr->hdr_checksum;
     iphdr->hdr_checksum = 0;
     if (pre_checksum != checksum16((uint16_t*)iphdr, header_size, 0, 1)) {
-        return;
-    }
-
-    // 不支持IP分片处理，已经分片的数据包，直接丢掉
-    iphdr->flags_fragment.all = swap_order16(iphdr->flags_fragment.all);
-    if (iphdr->flags_fragment.sub.more_fragment || iphdr->flags_fragment.sub.fragment_offset) {
         return;
     }
 
