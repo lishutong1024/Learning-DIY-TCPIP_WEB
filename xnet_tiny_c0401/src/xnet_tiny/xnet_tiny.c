@@ -425,6 +425,7 @@ void xip_in(xnet_packet_t * packet) {
     if (pre_checksum != checksum16((uint16_t*)iphdr, header_size, 0, 1)) {
         return;
     }
+    iphdr->hdr_checksum = pre_checksum;
 
     // 只处理目标IP为自己的数据包，其它广播之类的IP全部丢掉
     if (!xipaddr_is_equal_buf(&netif_ipaddr, iphdr->dest_ip)) {
@@ -528,7 +529,7 @@ xnet_err_t xicmp_dest_unreach(uint8_t code, xip_hdr_t *ip_hdr) {
     // 计算要拷贝的ip数据量
     uint16_t ip_hdr_size = ip_hdr->hdr_len * 4;
     uint16_t ip_data_size = swap_order16(ip_hdr->total_len) - ip_hdr_size;
-    ip_data_size = ip_hdr_size + min(ip_data_size, 64);
+    ip_data_size = ip_hdr_size + min(ip_data_size, 8);
 
     // 生成数据包，然后发送
     packet = xnet_alloc_for_send(ip_data_size + sizeof(xicmp_hdr_t));
