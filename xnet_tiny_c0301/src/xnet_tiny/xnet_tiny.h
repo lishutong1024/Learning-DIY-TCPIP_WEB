@@ -142,6 +142,8 @@ typedef struct _xarp_entry_t {
 void xarp_init(void);
 xnet_err_t xarp_make_request(const xipaddr_t * ipaddr);
 void xarp_in(xnet_packet_t * packet);
+xnet_err_t xarp_resolve(const xipaddr_t* ipaddr, uint8_t** mac_addr);
+
 void xarp_poll(void);
 
 #define XNET_VERSION_IPV4                   4           // IPV4

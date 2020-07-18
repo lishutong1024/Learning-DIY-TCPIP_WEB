@@ -298,6 +298,22 @@ xnet_err_t xarp_make_request(const xipaddr_t * ipaddr) {
 }
 
 /**
+ * 解析指定的IP地址，如果不在ARP表项中，则发送ARP请求
+ * @param ipaddr 查找的ip地址
+ * @param mac_addr 返回的mac地址存储区
+ * @return XNET_ERR_OK 查找成功，XNET_ERR_NONE 查找失败
+ */
+xnet_err_t xarp_resolve(const xipaddr_t * ipaddr, uint8_t ** mac_addr) {
+    if ((arp_entry.state == XARP_ENTRY_OK) && xipaddr_is_equal(ipaddr, &arp_entry.ipaddr)) {
+        *mac_addr = arp_entry.macaddr;
+        return XNET_ERR_OK;
+    }
+
+    xarp_make_request(ipaddr);
+    return XNET_ERR_NONE;
+}
+
+/**
  * 更新ARP表项
  * @param src_ip 源IP地址
  * @param mac_addr 对应的mac地址
