@@ -28,59 +28,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc65e580-d7a5-4f8d-a439-9d26d9dd6884" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/xnet_core_c101.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/app.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/port_pcap.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/xserver_datetime.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/xserver_http.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/xnet.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/xnet.vcxproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/xnet.vcxproj.filters" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0607/xnet.vcxproj.user" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xnet_tiny_c100002/.idea/xnet_core_c101.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/xnet_core_c101.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/app.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/port_pcap.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_datetime.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/xnet.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/xnet.vcxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/xnet.vcxproj.filters" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xnet_tiny_c0605/xnet.vcxproj.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0607/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/xnet_core_c101.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/xnet_core_c101.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/port_pcap.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/port_pcap.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.sln" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/.idea/xnet_core_c101.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/.idea/xnet_core_c101.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/port_pcap.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/port_pcap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.sln" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj.filters" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/xnet.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/xnet.vcxproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,8 +85,27 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xnet_tiny_c0605/src/app.c">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/xnet_tiny_c0607/src/xnet_tiny/xnet_tiny.c" />
+        <option value="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" />
+        <option value="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.h" />
+        <option value="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" />
+      </list>
+    </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
@@ -99,6 +114,46 @@
   </component>
   <component name="ProjectId" id="1eITmskcwjYIROrpgn6MdmgrFfJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0604" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0605" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0605" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0607" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -115,12 +170,24 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\tongban\git\xnet_tiny" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="D:\tongban\git\xnet_tiny" />
       <recent name="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app" />
       <recent name="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app" />
       <recent name="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -183,18 +250,68 @@
       <workItem from="1595120477897" duration="2056000" />
       <workItem from="1595134003834" duration="2901000" />
       <workItem from="1595144954238" duration="1869000" />
+      <workItem from="1595146947661" duration="7000" />
+      <workItem from="1595147549842" duration="515000" />
     </task>
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="522000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2536349" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.32909605" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -209,5 +326,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="662" y="274" width="678" height="702" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1594008847398" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/xnet_tiny_c0605/src/app.c">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
   </component>
 </project>
