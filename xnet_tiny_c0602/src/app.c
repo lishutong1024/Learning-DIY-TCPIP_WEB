@@ -38,10 +38,6 @@ int main (void) {
     xnet_init();
 
     xserver_datetime_create(13);
-    xserver_datetime_create(14);
-    xserver_datetime_create(15);
-    xserver_datetime_create(16);
-
     xserver_http_create(80);
 
     printf("xnet running\n");

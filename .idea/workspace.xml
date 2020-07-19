@@ -11,26 +11,33 @@
   <component name="ChangeListManager">
     <list default="true" id="fc65e580-d7a5-4f8d-a439-9d26d9dd6884" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0300/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0300/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0301/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0301/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0400/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0400/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0401/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0401/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0500/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0500/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0500/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0500/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0501/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0501/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0501/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0501/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_http.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,13 +46,6 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>xipaddr_is_equal</find>
-      <find>ethernet_out</find>
-      <find>xarp_resolve</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -62,6 +62,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
@@ -136,7 +138,8 @@
       <workItem from="1594816932956" duration="1434000" />
       <workItem from="1594818922796" duration="625000" />
       <workItem from="1595071493725" duration="127000" />
-      <workItem from="1595120477897" duration="1809000" />
+      <workItem from="1595120477897" duration="2056000" />
+      <workItem from="1595134003834" duration="2901000" />
     </task>
     <servers />
   </component>
@@ -144,10 +147,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog" timestamp="1595124312145">
+    <state x="92" y="92" width="1736" height="896" maximized="true" key="DiffContextDialog" timestamp="1595136152124">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595124312145" />
+    <state x="92" y="92" width="1736" height="896" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595136152124" />
     <state x="662" y="274" width="678" height="702" key="find.popup" timestamp="1594008847398">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

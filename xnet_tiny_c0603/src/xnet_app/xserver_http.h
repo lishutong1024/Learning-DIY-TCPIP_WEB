@@ -7,17 +7,10 @@
  * 本源码配套高清的视频教程，免费提供下载！具体的下载网址请见下面。
  * 视频中的PPT暂时提供下载，但配套了学习指南，请访问下面的网址。
  *
-<<<<<<< HEAD
- * ���ߣ�����ͭ
- * ��ַ: http://01ketang.cc/tcpip
- * QQȺ��524699753����Ⱥʱ��ע����tcpip��������ṩ���ڸ�Դ���֧�ֺ�������
- * ΢�Ź��ںţ������� 01����
-=======
  * 作者：李述铜
  * 网址: http://01ketang.cc/tcpip
  * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
  * 微信公众号：请搜索 01课程
->>>>>>> de9572522cd2d201a960a7cf567130c66fcf7d58
  *
  * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
  * 注：
@@ -40,12 +33,6 @@
 #define XSERVER_HTTP_H
 
 #include "xnet_tiny.h"
-
-#if defined(__APPLE__)      // 根据实际情况修改
-#define XHTTP_DOC_DIR               "/Users/mac/work/git/xnet-tiny/htdocs"  // html文档所在的目录
-#else
-#define XHTTP_DOC_DIR               "d:/htdocs"  // html文档所在的目录
-#endif
 
 xnet_err_t xserver_http_create(uint16_t port);
 
