@@ -36,7 +36,6 @@
 #define TIME_STR_SIZE       128         // 时间字符串存储长度
 
 static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t src_port, xnet_packet_t * packet) {
-    xnet_err_t err;
     xnet_packet_t * tx_packet;
     time_t rawtime;
     const struct tm * timeinfo;
@@ -53,8 +52,8 @@ static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t s
 
     // strftime参见：http://www.cplusplus.com/reference/ctime/strftime/
     // Weekday, Month Day, Year Time-Zone
-    strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
-    truncate_packet(tx_packet, strlen((char *)tx_packet->data));
+    str_size = strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
+    tx_packet->data[str_size] = '\0';
 
     // todo: 将数据包发出去
 

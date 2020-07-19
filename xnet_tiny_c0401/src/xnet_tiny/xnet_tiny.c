@@ -189,13 +189,16 @@ static void ethernet_in (xnet_packet_t * packet) {
             xarp_in(packet);
             break;
         case XNET_PROTOCOL_IP: {
+            // 以下代码是从IP包头中提取IP地址，以及从以太网包头中提取mac地址
+            // 然后用其更新ARP表
+#if 0
             xip_hdr_t *iphdr = (xip_hdr_t *) (packet->data + sizeof(xether_hdr_t));
             if (packet->size >= sizeof(xether_hdr_t) + sizeof(xip_hdr_t)) {
                 if (memcmp(iphdr->dest_ip, &netif_ipaddr.array, XNET_IPV4_ADDR_SIZE) == 0) {
                     update_arp_entry(iphdr->src_ip, hdr->src);
                 }
             }
-
+#endif
             remove_header(packet, sizeof(xether_hdr_t));
             xip_in(packet);
             break;
@@ -439,6 +442,7 @@ void xip_in(xnet_packet_t * packet) {
             xicmp_in(&src_ip, packet);
             break;
         default:
+            // 这里应当写成协议不可达，因为没有任何协议能处理输入数据包
             xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
             break;
     }
@@ -529,6 +533,8 @@ xnet_err_t xicmp_dest_unreach(uint8_t code, xip_hdr_t *ip_hdr) {
     // 计算要拷贝的ip数据量
     uint16_t ip_hdr_size = ip_hdr->hdr_len * 4;
     uint16_t ip_data_size = swap_order16(ip_hdr->total_len) - ip_hdr_size;
+
+    // RFC文档里写的是8字节。但实际测试windows上发现复制了不止8个字节
     ip_data_size = ip_hdr_size + min(ip_data_size, 8);
 
     // 生成数据包，然后发送

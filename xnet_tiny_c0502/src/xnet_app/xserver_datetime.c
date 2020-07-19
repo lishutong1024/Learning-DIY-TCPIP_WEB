@@ -36,7 +36,6 @@
 #define TIME_STR_SIZE       128         // 时间字符串存储长度
 
 static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t src_port, xnet_packet_t * packet) {
-    xnet_err_t err;
     xnet_packet_t * tx_packet;
     time_t rawtime;
     const struct tm * timeinfo;

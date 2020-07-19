@@ -34,7 +34,6 @@
 #include <stdlib.h>
 #include "xnet_tiny.h"
 
-
 #define min(a, b)               ((a) > (b) ? (b) : (a))
 
 static const xipaddr_t netif_ipaddr = XNET_CFG_NETIF_IP;
@@ -55,7 +54,7 @@ static void update_arp_entry(uint8_t* src_ip, uint8_t* mac_addr);
 /**
  * 检查是否超时
  * @param time 前一时间
- * @param ms 预期超时时间，值为0时，表示获取当前时间
+ * @param sec 预期超时时间，值为0时，表示获取当前时间
  * @return 0 - 未超时，1-超时
  */
 int xnet_check_tmo(xnet_time_t * time, uint32_t sec) {
@@ -191,13 +190,16 @@ static void ethernet_in (xnet_packet_t * packet) {
             xarp_in(packet);
             break;
         case XNET_PROTOCOL_IP: {
+            // 以下代码是从IP包头中提取IP地址，以及从以太网包头中提取mac地址
+            // 然后用其更新ARP表
+#if 0
             xip_hdr_t *iphdr = (xip_hdr_t *) (packet->data + sizeof(xether_hdr_t));
             if (packet->size >= sizeof(xether_hdr_t) + sizeof(xip_hdr_t)) {
                 if (memcmp(iphdr->dest_ip, &netif_ipaddr.array, XNET_IPV4_ADDR_SIZE) == 0) {
                     update_arp_entry(iphdr->src_ip, hdr->src);
                 }
             }
-
+#endif
             remove_header(packet, sizeof(xether_hdr_t));
             xip_in(packet);
             break;
@@ -325,7 +327,7 @@ static void update_arp_entry(uint8_t * src_ip, uint8_t * mac_addr) {
     memcpy(arp_entry.ipaddr.array, src_ip, XNET_IPV4_ADDR_SIZE);
     memcpy(arp_entry.macaddr, mac_addr, 6);
     arp_entry.state = XARP_ENTRY_OK;
-    arp_entry.tmo = (XARP_CFG_ENTRY_OK_TMO);
+    arp_entry.tmo = XARP_CFG_ENTRY_OK_TMO;
     arp_entry.retry_cnt = XARP_CFG_MAX_RETRIES;
 }
 
@@ -427,12 +429,7 @@ void xip_in(xnet_packet_t * packet) {
     if (pre_checksum != checksum16((uint16_t*)iphdr, header_size, 0, 1)) {
         return;
     }
-
-    // 不支持IP分片处理，已经分片的数据包，直接丢掉
-    iphdr->flags_fragment.all = swap_order16(iphdr->flags_fragment.all);
-    if (iphdr->flags_fragment.sub.more_fragment || iphdr->flags_fragment.sub.fragment_offset) {
-        return;
-    }
+    iphdr->hdr_checksum = pre_checksum;
 
     // 只处理目标IP为自己的数据包，其它广播之类的IP全部丢掉
     if (!xipaddr_is_equal_buf(&netif_ipaddr, iphdr->dest_ip)) {
@@ -446,6 +443,7 @@ void xip_in(xnet_packet_t * packet) {
             xicmp_in(&src_ip, packet);
             break;
         default:
+            // 这里应当写成协议不可达，因为没有任何协议能处理输入数据包
             xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
             break;
     }
@@ -461,11 +459,6 @@ void xip_in(xnet_packet_t * packet) {
 xnet_err_t xip_out(xnet_protocol_t protocol, xipaddr_t* dest_ip, xnet_packet_t * packet) {
     static uint32_t ip_packet_id = 0;
     xip_hdr_t * iphdr;
-    uint16_t checksum;
-
-    if (packet->size >= 65535) {
-        return XNET_ERR_MEM;
-    }
 
     add_header(packet, sizeof(xip_hdr_t));
     iphdr = (xip_hdr_t*)packet->data;
@@ -474,14 +467,13 @@ xnet_err_t xip_out(xnet_protocol_t protocol, xipaddr_t* dest_ip, xnet_packet_t *
     iphdr->tos = 0;
     iphdr->total_len = swap_order16(packet->size);
     iphdr->id = swap_order16(ip_packet_id);
-    iphdr->flags_fragment.all = 0;
+    iphdr->flags_fragment = 0;
     iphdr->ttl = XNET_IP_DEFAULT_TTL;
     iphdr->protocol = protocol;
     memcpy(iphdr->dest_ip, dest_ip->array, XNET_IPV4_ADDR_SIZE);
     memcpy(iphdr->src_ip, netif_ipaddr.array, XNET_IPV4_ADDR_SIZE);
     iphdr->hdr_checksum = 0;
-    checksum = checksum16((uint16_t *)iphdr, sizeof(xip_hdr_t), 0, 1);
-    iphdr->hdr_checksum = checksum;
+    iphdr->hdr_checksum = checksum16((uint16_t *)iphdr, sizeof(xip_hdr_t), 0, 1);;
 
     ip_packet_id++;
     return ethernet_out(dest_ip, packet);
@@ -542,7 +534,9 @@ xnet_err_t xicmp_dest_unreach(uint8_t code, xip_hdr_t *ip_hdr) {
     // 计算要拷贝的ip数据量
     uint16_t ip_hdr_size = ip_hdr->hdr_len * 4;
     uint16_t ip_data_size = swap_order16(ip_hdr->total_len) - ip_hdr_size;
-    ip_data_size = ip_hdr_size + min(ip_data_size, 64);
+
+    // RFC文档里写的是8字节。但实际测试windows上发现复制了不止8个字节
+    ip_data_size = ip_hdr_size + min(ip_data_size, 8);
 
     // 生成数据包，然后发送
     packet = xnet_alloc_for_send(ip_data_size + sizeof(xicmp_hdr_t));
