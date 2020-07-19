@@ -725,6 +725,88 @@ xnet_err_t xudp_bind(xudp_t *udp, uint16_t local_port) {
 }
 
 /**
+ * 将发送缓冲区中的数据发送出去。尽最大努力发送最多
+ * @param tcp 处理的tcp连接
+ * @param flags 发送的标志位
+ * @return 发送结果
+ */
+static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
+    xnet_packet_t * packet;
+    xtcp_hdr_t * tcp_hdr;
+    xnet_err_t err;
+    uint16_t data_size = 0;
+    uint16_t opt_size = (flags & XTCP_FLAG_SYN) ? 4 : 0;     // mss长度
+
+    // 判断当前允许发送的字节量
+    if (tcp->remote_win) {
+        data_size = min(data_size, tcp->remote_win);
+        data_size = min(data_size, tcp->remote_mss);
+        if (data_size + opt_size > XTCP_HDR_MAX_SIZE) {
+            data_size = XTCP_HDR_MAX_SIZE - opt_size;
+        }
+    } else {
+        data_size = 0;      // 窗口为0，不允许发数据，但允许FIN+SYN等
+    }
+
+    packet = xnet_alloc_for_send(data_size + opt_size + sizeof(xtcp_hdr_t));
+    tcp_hdr = (xtcp_hdr_t *)packet->data;
+    tcp_hdr->src_port = swap_order16(tcp->local_port);
+    tcp_hdr->dest_port = swap_order16(tcp->remote_port);
+    tcp_hdr->seq = swap_order32(tcp->next_seq);
+    tcp_hdr->ack = swap_order32(tcp->ack);
+    tcp_hdr->hdr_flags.all = 0;
+    tcp_hdr->hdr_flags.field.hdr_len = (opt_size + sizeof(xtcp_hdr_t)) / 4;
+    tcp_hdr->hdr_flags.field.flags = flags;
+    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
+    tcp_hdr->window = 1024;
+    tcp_hdr->checksum = 0;
+    tcp_hdr->urgent_ptr = 0;
+    if (flags & XTCP_FLAG_SYN) {
+        uint8_t * opt_data = packet->data + sizeof(xtcp_hdr_t);
+        opt_data[0] = XTCP_KIND_MSS;
+        opt_data[1] = 4;        // 该选项总长，含0,1字节
+        *(uint16_t *)(opt_data + 2) = swap_order16(XTCP_MSS_DEFAULT);
+    }
+
+    tcp_hdr->checksum = checksum_peso(&netif_ipaddr, &tcp->remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
+    tcp_hdr->checksum = tcp_hdr->checksum ? tcp_hdr->checksum : 0xFFFF;
+    err = xip_out(XNET_PROTOCOL_TCP, &tcp->remote_ip, packet);
+    if (err < 0) return err;
+
+    tcp->remote_win -= data_size;               // 同时远端可用窗口减少
+    tcp->next_seq += data_size;                 // 新发送，序号要增加
+
+    if (flags & (XTCP_FLAG_SYN | XTCP_FLAG_FIN)) {        // FIN占用1个序号
+        tcp->next_seq++;
+    }
+    return XNET_ERR_OK;
+}
+
+/**
+ * 发送TCP复位包
+ */
+static xnet_err_t tcp_send_reset (uint32_t sender_seq, uint16_t local_port, xipaddr_t * remote_ip, uint16_t remote_port) {
+    xnet_packet_t * packet = xnet_alloc_for_send(sizeof(xtcp_hdr_t));
+    xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
+
+    tcp_hdr->src_port = swap_order16(local_port);
+    tcp_hdr->dest_port = swap_order16(remote_port);
+    tcp_hdr->seq = 0;                               // 固定为0即可
+    ++sender_seq;       // 注意，不要放在swap_order32，会导致++多次
+    tcp_hdr->ack = swap_order32(sender_seq);          // 响应指定的发送ack，即对上次发送的包的回应
+    tcp_hdr->hdr_flags.all = 0;
+    tcp_hdr->hdr_flags.field.hdr_len = sizeof(xtcp_hdr_t) / 4;
+    tcp_hdr->hdr_flags.field.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
+    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
+    tcp_hdr->window = 0;
+    tcp_hdr->urgent_ptr = 0;
+    tcp_hdr->checksum = 0;
+    tcp_hdr->checksum = checksum_peso(&netif_ipaddr, remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
+    tcp_hdr->checksum = tcp_hdr->checksum ? swap_order16(tcp_hdr->checksum) : 0xFFFF;
+    return xip_out(XNET_PROTOCOL_TCP, remote_ip, packet);
+}
+
+/**
  * 分配一个tcp连接块
  * @return 分配结果，0-分配失败
  */
@@ -784,88 +866,6 @@ static xtcp_t* tcp_find(xipaddr_t *remote_ip, uint16_t remote_port, uint16_t loc
     }
 
     return founded_tcp;
-}
-
-/**
- * 发送TCP复位包
- */
-static xnet_err_t tcp_send_reset (uint32_t sender_seq, uint16_t local_port, xipaddr_t * remote_ip, uint16_t remote_port) {
-    xnet_packet_t * packet = xnet_alloc_for_send(sizeof(xtcp_hdr_t));
-    xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
-
-    tcp_hdr->src_port = swap_order16(local_port);
-    tcp_hdr->dest_port = swap_order16(remote_port);
-    tcp_hdr->seq = 0;                               // 固定为0即可
-    ++sender_seq;       // 注意，不要放在swap_order32，会导致++多次
-    tcp_hdr->ack = swap_order32(sender_seq);          // 响应指定的发送ack，即对上次发送的包的回应
-    tcp_hdr->hdr_flags.all = 0;
-    tcp_hdr->hdr_flags.field.hdr_len = sizeof(xtcp_hdr_t) / 4;
-    tcp_hdr->hdr_flags.field.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
-    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
-    tcp_hdr->window = 0;
-    tcp_hdr->urgent_ptr = 0;
-    tcp_hdr->checksum = 0;
-    tcp_hdr->checksum = checksum_peso(&netif_ipaddr, remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
-    tcp_hdr->checksum = tcp_hdr->checksum ? tcp_hdr->checksum : 0xFFFF;
-    return xip_out(XNET_PROTOCOL_TCP, remote_ip, packet);
-}
-
-/**
- * 将发送缓冲区中的数据发送出去。尽最大努力发送最多
- * @param tcp 处理的tcp连接
- * @param flags 发送的标志位
- * @return 发送结果
- */
-static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
-    xnet_packet_t * packet;
-    xtcp_hdr_t * tcp_hdr;
-    xnet_err_t err;
-    uint16_t data_size = 0;
-    uint16_t opt_size = (flags & XTCP_FLAG_SYN) ? 4 : 0;     // mss长度
-
-    // 判断当前允许发送的字节量
-    if (tcp->remote_win) {
-        data_size = min(data_size, tcp->remote_win);
-        data_size = min(data_size, tcp->remote_mss);
-        if (data_size + opt_size > XTCP_HDR_MAX_SIZE) {
-            data_size = XTCP_HDR_MAX_SIZE - opt_size;
-        }
-    } else {
-        data_size = 0;      // 窗口为0，不允许发数据，但允许FIN+SYN等
-    }
-
-    packet = xnet_alloc_for_send(data_size + opt_size + sizeof(xtcp_hdr_t));
-    tcp_hdr = (xtcp_hdr_t *)packet->data;
-    tcp_hdr->src_port = swap_order16(tcp->local_port);
-    tcp_hdr->dest_port = swap_order16(tcp->remote_port);
-    tcp_hdr->seq = swap_order32(tcp->next_seq);
-    tcp_hdr->ack = swap_order32(tcp->ack);
-    tcp_hdr->hdr_flags.all = 0;
-    tcp_hdr->hdr_flags.field.hdr_len = (opt_size + sizeof(xtcp_hdr_t)) / 4;
-    tcp_hdr->hdr_flags.field.flags = flags;
-    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
-    tcp_hdr->window = 1024;
-    tcp_hdr->checksum = 0;
-    tcp_hdr->urgent_ptr = 0;
-    if (flags & XTCP_FLAG_SYN) {
-        uint8_t * opt_data = packet->data + sizeof(xtcp_hdr_t);
-        opt_data[0] = XTCP_KIND_MSS;
-        opt_data[1] = 4;        // 该选项总长，含0,1字节
-        *(uint16_t *)(opt_data + 2) = swap_order16(XTCP_MSS_DEFAULT);
-    }
-
-    tcp_hdr->checksum = checksum_peso(&netif_ipaddr, &tcp->remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
-    tcp_hdr->checksum = tcp_hdr->checksum ? tcp_hdr->checksum : 0xFFFF;
-    err = xip_out(XNET_PROTOCOL_TCP, &tcp->remote_ip, packet);
-    if (err < 0) return err;
-
-    tcp->remote_win -= data_size;               // 同时远端可用窗口减少
-    tcp->next_seq += data_size;                 // 新发送，序号要增加
-
-    if (flags & (XTCP_FLAG_SYN | XTCP_FLAG_FIN)) {        // FIN占用1个序号
-        tcp->next_seq++;
-    }
-    return XNET_ERR_OK;
 }
 
 /**
@@ -1016,7 +1016,46 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
             break;
         }
         case XTCP_STATE_ESTABLISHED:
-            printf("connection ok");
+            // 这里可能收到数据，或者FIN
+            if (hdr_flags & (XTCP_FLAG_ACK | XTCP_FLAG_FIN)) {
+                // 再然后，根据当前的标志位处理
+                if (hdr_flags & XTCP_FLAG_FIN) {
+                    // 收到关闭请求，发送ACK，同时也发送FIN，同时直接主动关掉，省得麻烦
+                    // 这样就不必进入CLOSE_WAIT，然后再等待对方的ACK
+                    tcp->state = XTCP_STATE_LAST_ACK;
+                    tcp->ack++;
+                    tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);
+                }
+            }
+            break;
+        case XTCP_STATE_FIN_WAIT_1:     // 收到ack后，自己的发送已经关掉，但仍可接收，等待对方发FIN
+            if (hdr_flags & XTCP_FLAG_ACK) {
+                tcp->state = XTCP_STATE_FIN_WAIT_2;    // 对方也许不想暂时关闭
+            } else if (hdr_flags & XTCP_FLAG_FIN) {
+                tcp->state = XTCP_STATE_CLOSING;        // 对方同时关闭发送，关掉整个
+                tcp_send(tcp, XTCP_FLAG_ACK);
+            }
+            break;
+        case XTCP_STATE_FIN_WAIT_2:    // 自己发送关闭，但仍然能数据接收
+            if (hdr_flags & (XTCP_FLAG_FIN | XTCP_FLAG_ACK)) {
+                if (hdr_flags & XTCP_FLAG_FIN) {          // FIN
+                    tcp_send(tcp, XTCP_FLAG_ACK);        // 对方也关闭
+                    tcp->state = XTCP_STATE_CLOSED;
+                    tcp_free(tcp);                      // 直接释放掉，不进入TIMED_WAIT
+                }
+            }
+            break;
+        case XTCP_STATE_CLOSING:
+            if (hdr_flags & XTCP_FLAG_ACK) {
+                tcp->handler(tcp, XTCP_CONN_CLOSED);
+                tcp_free(tcp);              // 直接释放掉，不进入TIMED_WAIT
+            }
+            break;
+        case XTCP_STATE_LAST_ACK:
+            if (hdr_flags & XTCP_FLAG_ACK) {
+                tcp->handler(tcp, XTCP_CONN_CLOSED);
+                tcp_free(tcp);
+            }
             break;
         default:
             break;

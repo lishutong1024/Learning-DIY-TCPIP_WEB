@@ -29,19 +29,46 @@
  * ..... 更多功能开发中...........
  * 如果你有兴趣的话，欢迎关注。
  */
-#include <stdio.h>
-#include "xnet_tiny.h"
 #include "xserver_datetime.h"
+#include <string.h>
+#include <time.h>
 
-int main (void) {
-    xnet_init();
+#define TIME_STR_SIZE       128         // 时间字符串存储长度
 
-    xserver_datetime_create(13);
+static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t src_port, xnet_packet_t * packet) {
+    xnet_packet_t * tx_packet;
+    time_t rawtime;
+    const struct tm * timeinfo;
 
-    printf("xnet running\n");
-    while (1) {
-        xnet_poll();
+    tx_packet = xnet_alloc_for_send(TIME_STR_SIZE);
+    if (tx_packet == (xnet_packet_t *)0) {
+        return XNET_ERR_MEM;
     }
 
+    // 参见：http://www.cplusplus.com/reference/ctime/localtime/
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+
+    // strftime参见：http://www.cplusplus.com/reference/ctime/strftime/
+    // Weekday, Month Day, Year Time-Zone
+    strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
+    truncate_packet(tx_packet, (uint16_t)strlen((char *)tx_packet->data));
+
+    return xudp_out(udp, src_ip, src_port, tx_packet);
+}
+
+xnet_err_t xserver_datetime_create(uint16_t port) {
+    xnet_err_t err;
+
+    xudp_t* udp = xudp_open(datetime_handler);
+    if (udp == (xudp_t*)0) {
+        return -1;
+    }
+
+    err = xudp_bind(udp, port);
+    if (err < 0) {
+        xudp_close(udp);
+        return err;
+    }
     return 0;
 }

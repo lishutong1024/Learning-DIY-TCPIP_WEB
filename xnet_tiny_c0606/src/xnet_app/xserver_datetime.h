@@ -29,19 +29,11 @@
  * ..... 更多功能开发中...........
  * 如果你有兴趣的话，欢迎关注。
  */
-#include <stdio.h>
+#ifndef XSERVER_DATETIME_H
+#define XSERVER_DATETIME_H
+
 #include "xnet_tiny.h"
-#include "xserver_datetime.h"
 
-int main (void) {
-    xnet_init();
+xnet_err_t xserver_datetime_create(uint16_t port);
 
-    xserver_datetime_create(13);
-
-    printf("xnet running\n");
-    while (1) {
-        xnet_poll();
-    }
-
-    return 0;
-}
+#endif // XSERVER_DATETIME_H

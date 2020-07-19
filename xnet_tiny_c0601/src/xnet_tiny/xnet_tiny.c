@@ -818,6 +818,7 @@ void xnet_init (void) {
     xicmp_init();
     xudp_init();
     xtcp_init();
+    srand(xsys_get_time());
 }
 
 /**

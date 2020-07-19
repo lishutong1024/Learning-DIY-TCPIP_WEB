@@ -10,7 +10,7 @@
  * 作者：李述铜
  * 网址: http://01ketang.cc/tcpip
  * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
- * 微信公众号：请搜索 01课堂
+ * 微信公众号：请搜索 01课程
  *
  * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
  * 注：
@@ -29,19 +29,26 @@
  * ..... 更多功能开发中...........
  * 如果你有兴趣的话，欢迎关注。
  */
+#include "xserver_http.h"
+#include <string.h>
 #include <stdio.h>
-#include "xnet_tiny.h"
-#include "xserver_datetime.h"
 
-int main (void) {
-    xnet_init();
-
-    xserver_datetime_create(13);
-
-    printf("xnet running\n");
-    while (1) {
-        xnet_poll();
+static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
+    if (state == XTCP_CONN_CONNECTED) {
+        printf("http conntected.\n");
+    } else if (state == XTCP_CONN_CLOSED) {
+        printf("http closed.\n");
     }
+    return XNET_ERR_OK;
+}
 
-    return 0;
+xnet_err_t xserver_http_create(uint16_t port) {
+    xnet_err_t err;
+
+    xtcp_t * tcp = xtcp_open(http_handler);
+    if (!tcp) return XNET_ERR_MEM;
+    err = xtcp_bind(tcp, port);       // HTTP熟知端口
+    if (err < 0) return  err;
+
+    return xtcp_listen(tcp);
 }

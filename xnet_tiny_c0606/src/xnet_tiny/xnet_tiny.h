@@ -246,6 +246,8 @@ typedef enum _xtcp_conn_state_t {
     XTCP_CONN_CLOSED,
 }xtcp_conn_state_t;
 
+#define XTCP_KIND_END                   0
+#define XTCP_KIND_MSS                   2
 #define XTCP_MSS_DEFAULT                1460
 
 typedef struct _xtcp_t xtcp_t;

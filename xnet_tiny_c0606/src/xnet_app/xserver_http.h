@@ -10,7 +10,7 @@
  * 作者：李述铜
  * 网址: http://01ketang.cc/tcpip
  * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
- * 微信公众号：请搜索 01课堂
+ * 微信公众号：请搜索 01课程
  *
  * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
  * 注：
@@ -29,19 +29,11 @@
  * ..... 更多功能开发中...........
  * 如果你有兴趣的话，欢迎关注。
  */
-#include <stdio.h>
+#ifndef XSERVER_HTTP_H
+#define XSERVER_HTTP_H
+
 #include "xnet_tiny.h"
-#include "xserver_datetime.h"
 
-int main (void) {
-    xnet_init();
+xnet_err_t xserver_http_create(uint16_t port);
 
-    xserver_datetime_create(13);
-
-    printf("xnet running\n");
-    while (1) {
-        xnet_poll();
-    }
-
-    return 0;
-}
+#endif // XSERVER_HTTP_H
