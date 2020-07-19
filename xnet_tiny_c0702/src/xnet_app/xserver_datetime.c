@@ -36,11 +36,9 @@
 #define TIME_STR_SIZE       128         // 时间字符串存储长度
 
 static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t src_port, xnet_packet_t * packet) {
-    xnet_err_t err;
     xnet_packet_t * tx_packet;
     time_t rawtime;
     const struct tm * timeinfo;
-    size_t str_size;
 
     tx_packet = xnet_alloc_for_send(TIME_STR_SIZE);
     if (tx_packet == (xnet_packet_t *)0) {
@@ -54,14 +52,9 @@ static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t s
     // strftime参见：http://www.cplusplus.com/reference/ctime/strftime/
     // Weekday, Month Day, Year Time-Zone
     strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
-    truncate_packet(tx_packet, strlen((char *)tx_packet->data));
+    truncate_packet(tx_packet, (uint16_t)strlen((char *)tx_packet->data));
 
-    err = xudp_out(udp, src_ip, src_port, tx_packet);
-    if (err < 0) {
-        return err;
-    }
-
-    return XNET_ERR_OK;
+    return xudp_out(udp, src_ip, src_port, tx_packet);
 }
 
 xnet_err_t xserver_datetime_create(uint16_t port) {

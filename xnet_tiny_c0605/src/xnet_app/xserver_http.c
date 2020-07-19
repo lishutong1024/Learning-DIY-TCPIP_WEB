@@ -36,20 +36,19 @@
 static uint8_t rx_buffer[1024];
 
 static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
+    static char* num = "0123456789ABCDEF";
+
     if (state == XTCP_CONN_CONNECTED) {
-        printf("http conntected.\n");
-    } else if (state == XTCP_CONN_CLOSED) {
-        printf("http closed.\n");
-    } else if (state == XTCP_CONN_DATA_RECV) {
         int i;
 
         // 随便发点什么
         for (i = 0; i < sizeof(rx_buffer); i++) {
-            rx_buffer[i] = i;
+            rx_buffer[i] = num[i % 16];
         }
         xtcp_write(tcp, rx_buffer, sizeof(rx_buffer));
-
-    }
+    } else if (state == XTCP_CONN_CLOSED) {
+        printf("http closed.\n");
+    } 
     return XNET_ERR_OK;
 }
 

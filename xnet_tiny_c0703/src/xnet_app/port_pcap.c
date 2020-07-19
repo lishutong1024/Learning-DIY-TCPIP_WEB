@@ -40,7 +40,6 @@ static pcap_t * pcap;
 // pcap所用的网卡
 const char * ip_str = "192.168.254.1";      // 根据实际电脑上存在的网卡地址进行修改
 const char my_mac_addr[] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88};
-
 /**
  * 初始化网络驱动
  * @return 0成功，其它失败

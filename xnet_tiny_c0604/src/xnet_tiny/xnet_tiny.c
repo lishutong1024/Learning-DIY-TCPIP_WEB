@@ -1031,13 +1031,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
             }
             break;
         case XTCP_STATE_FIN_WAIT_2:    // 自己发送关闭，但仍然能数据接收
-            if (hdr_flags & (XTCP_FLAG_FIN | XTCP_FLAG_ACK)) {
-                if (hdr_flags & XTCP_FLAG_FIN) {          // FIN
-                    tcp_send(tcp, XTCP_FLAG_ACK);        // 对方也关闭
-                    tcp->state = XTCP_STATE_CLOSED;
-                    tcp_free(tcp);                      // 直接释放掉，不进入TIMED_WAIT
-                }
-            }
+            // 不做半关闭下仍然接收数据的处理
             break;
         case XTCP_STATE_CLOSING:
             if (hdr_flags & XTCP_FLAG_ACK) {

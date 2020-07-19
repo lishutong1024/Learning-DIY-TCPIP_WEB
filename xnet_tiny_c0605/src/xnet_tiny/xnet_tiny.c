@@ -835,6 +835,7 @@ static xtcp_t * tcp_alloc(void) {
             tcp->remote_mss = XTCP_MSS_DEFAULT;
             tcp->unack_seq = tcp->next_seq = tcp_get_init_seq();
             tcp->ack = 0;
+            tcp_buf_init(&tcp->tx_buf);
             return tcp;
         }
     }
@@ -937,7 +938,7 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
     tcp_hdr->hdr_flags.field.hdr_len = (opt_size + sizeof(xtcp_hdr_t)) / 4;
     tcp_hdr->hdr_flags.field.flags = flags;
     tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
-    tcp_hdr->window = swap_order16(tcp_buf_free_count(&tcp->rx_buf));
+    tcp_hdr->window = 1024;
     tcp_hdr->checksum = 0;
     tcp_hdr->urgent_ptr = 0;
     if (flags & XTCP_FLAG_SYN) {
@@ -1106,8 +1107,6 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
         case XTCP_STATE_ESTABLISHED:
             // 这里可能收到数据，或者FIN
             if (hdr_flags & (XTCP_FLAG_ACK | XTCP_FLAG_FIN)) {
-                uint16_t read_size ;
-
                 // 先处理ACK的值，即ack确认之前发的数据被接收了，有2种情况
                 // 1.远程ack的值比自己未确认的值相等或更大，则说明有部分数据被远端接收确认了
                 // 2.远程ack < tcp_unack_seq，即可能之前重发的ack，不处理
@@ -1121,20 +1120,16 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
                 }
 
                 // 再读取当前包中的数据，里面可能是携带有数据的，即便是FIN，也可能是带有数据
-                read_size = tcp_recv(tcp, (uint8_t)hdr_flags, packet->data, packet->size);
+                //read_size = tcp_recv(tcp, (uint8_t)hdr_flags, packet->data, packet->size);
 
                 // 再然后，根据当前的标志位处理
                 if (hdr_flags & XTCP_FLAG_FIN) {
                     // 收到关闭请求，发送ACK，同时也发送FIN，同时直接主动关掉，省得麻烦
                     // 这样就不必进入CLOSE_WAIT，然后再等待对方的ACK
                     tcp->state = XTCP_STATE_LAST_ACK;
+                    tcp->ack++;
                     tcp_send(tcp, XTCP_FLAG_FIN | XTCP_FLAG_ACK);
-                } else if (read_size) {
-                    // 非FIN，看看有无数据，有的话发ACK响应
-                    // 如果是是收到数据，发ACK响应。
-                    tcp_send(tcp, XTCP_FLAG_ACK);
-                    tcp->handler(tcp, XTCP_CONN_DATA_RECV);
-                } else if (tcp_buf_wait_send_count(&tcp->tx_buf)) {
+                }  else if (tcp_buf_wait_send_count(&tcp->tx_buf)) {
                     // 或者看看有没有数据要发，有的话，同时发数据即ack
                     // 没有收到数据，可能是对方发来的ACK。此时，有数据有就发数据，没数据就不理会
                     tcp_send(tcp, XTCP_FLAG_ACK);
@@ -1147,30 +1142,19 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
                 tcp->state = XTCP_STATE_FIN_WAIT_2;    // 对方也许不想暂时关闭
             } else if (hdr_flags & XTCP_FLAG_FIN) {
                 tcp->state = XTCP_STATE_CLOSING;        // 对方同时关闭发送，关掉整个
+                tcp->ack++;
                 tcp_send(tcp, XTCP_FLAG_ACK);
             }
             break;
         case XTCP_STATE_FIN_WAIT_2:    // 自己发送关闭，但仍然能数据接收
             if (hdr_flags & (XTCP_FLAG_FIN | XTCP_FLAG_ACK)) {
-                uint16_t read_size;
-
-                if (hdr_flags & XTCP_FLAG_ACK) {    // 先处理之前发送的确认, todo: 设置
-                    if ((tcp->unack_seq <= remote_ack) && (remote_ack <= tcp->next_seq)) {
-                        uint16_t curr_ack_size = remote_ack - tcp->unack_seq;
-                        tcp_buf_add_acked_count(&tcp->tx_buf, curr_ack_size);
-                        tcp->unack_seq += curr_ack_size;
-                    }
-                }
-
-                read_size = tcp_recv(tcp, (uint8_t) hdr_flags, packet->data, packet->size);
-
+                // 不处理此状态下的数据接收
                 if (hdr_flags & XTCP_FLAG_FIN) {          // FIN
+                    tcp->ack++;
                     tcp_send(tcp, XTCP_FLAG_ACK);        // 对方也关闭
+
                     tcp->state = XTCP_STATE_CLOSED;
                     tcp_free(tcp);                      // 直接释放掉，不进入TIMED_WAIT
-                } else if (read_size) {                  // 仅接收，发ack响应
-                    tcp_send(tcp, XTCP_FLAG_ACK);
-                    tcp->handler(tcp, XTCP_CONN_DATA_RECV);
                 }
             }
             break;
