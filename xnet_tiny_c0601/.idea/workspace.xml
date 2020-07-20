@@ -14,21 +14,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdd61832-a7d3-4e22-a9cc-36a2b885a7f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0502/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0502/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0603/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0603/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/../xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="51">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="e#721#740#0" expanded="true" />
               </folding>
@@ -384,17 +370,20 @@
       <workItem from="1595233028890" duration="393000" />
       <workItem from="1595237575284" duration="108000" />
       <workItem from="1595241526819" duration="597000" />
+      <workItem from="1595243756729" duration="597000" />
+      <workItem from="1595245315206" duration="863000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94972000" />
+    <option name="totallyTimeSpent" value="96432000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.69863015" visible="true" weight="0.226979" />
-      <window_info id="Structure" order="1" sideWeight="0.30136988" side_tool="true" visible="true" weight="0.226979" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6958904" visible="true" weight="0.23344104" />
+      <window_info id="Structure" order="1" sideWeight="0.3041096" side_tool="true" visible="true" weight="0.23344104" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.14109589" />
@@ -587,8 +576,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/xnet_tiny/xnet_tiny.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="51">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="e#721#740#0" expanded="true" />
           </folding>

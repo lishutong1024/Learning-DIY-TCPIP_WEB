@@ -798,7 +798,7 @@ xtcp_t * xtcp_open(xtcp_handler_t handler) {
  */
 xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
     xtcp_t * curr, * end;
-    for (curr = tcp_socket, end = &tcp_socket[XUDP_CFG_MAX_UDP]; curr < end; curr++) {
+    for (curr = tcp_socket, end = &tcp_socket[XTCP_CFG_MAX_TCP]; curr < end; curr++) {
         if ((curr != tcp) && (curr->local_port == local_port)) {
             return XNET_ERR_BINDED;
         }
@@ -813,7 +813,7 @@ xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
  */
 xnet_err_t xtcp_listen(xtcp_t * tcp) {
     tcp->state = XTCP_STATE_LISTEN;
-    return XNET_ERR_STATE;
+    return XNET_ERR_OK;
 }
 
 /**
@@ -834,7 +834,6 @@ void xnet_init (void) {
     xicmp_init();
     xudp_init();
     xtcp_init();
-    srand(xsys_get_time());
 }
 
 /**

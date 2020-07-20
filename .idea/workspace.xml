@@ -29,22 +29,15 @@
   <component name="ChangeListManager">
     <list default="true" id="fc65e580-d7a5-4f8d-a439-9d26d9dd6884" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_app/xserver_datetime.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_app/xserver_datetime.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_app/xserver_datetime.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,8 +55,8 @@
         <entry file="file://$PROJECT_DIR$/Readme.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="61">
-                <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+              <first_editor relative-caret-position="236">
+                <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
               </first_editor>
               <second_editor />
             </state>
@@ -85,7 +78,6 @@
       <list>
         <option value="$PROJECT_DIR$/xnet_tiny_c0502/src/xnet_app/xserver_datetime.c" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" />
-        <option value="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.h" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" />
@@ -93,6 +85,9 @@
         <option value="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_tiny/xnet_tiny.c" />
         <option value="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_tiny/xnet_tiny.c" />
+        <option value="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" />
+        <option value="$PROJECT_DIR$/Readme.md" />
+        <option value="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" />
       </list>
     </option>
   </component>
@@ -114,6 +109,16 @@
             <path>
               <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
               <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0601" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
+              <item name="xnet_tiny_c0602" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -229,16 +234,18 @@
       <workItem from="1595237572083" duration="109000" />
       <workItem from="1595241525461" duration="1520000" />
       <workItem from="1595243755255" duration="1103000" />
+      <workItem from="1595246186373" duration="1142000" />
+      <workItem from="1595247358661" duration="1161000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8653000" />
+    <option name="totallyTimeSpent" value="10956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2819063" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2907916" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -308,8 +315,8 @@
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="61">
-            <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+          <first_editor relative-caret-position="236">
+            <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
           </first_editor>
           <second_editor />
         </state>

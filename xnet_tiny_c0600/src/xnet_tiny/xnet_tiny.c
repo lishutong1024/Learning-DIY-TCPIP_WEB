@@ -725,14 +725,6 @@ static xtcp_t * tcp_alloc(void) {
     for (tcp = tcp_socket, end = tcp_socket + XTCP_CFG_MAX_TCP; tcp < end; tcp++) {
         if (tcp->state == XTCP_STATE_FREE) {
             tcp->state = XTCP_STATE_CLOSED;
-            tcp->local_port = 0;
-            tcp->remote_port = 0;
-            tcp->remote_ip.addr = 0;
-            tcp->handler = (xtcp_handler_t)0;
-            tcp->remote_win = XTCP_MSS_DEFAULT;
-            tcp->remote_mss = XTCP_MSS_DEFAULT;
-            tcp->unack_seq = tcp->next_seq = tcp_get_init_seq();
-            tcp->ack = 0;
             return tcp;
         }
     }
