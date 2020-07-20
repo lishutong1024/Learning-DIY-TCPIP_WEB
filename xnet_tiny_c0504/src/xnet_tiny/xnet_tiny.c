@@ -193,11 +193,7 @@ static void ethernet_in (xnet_packet_t * packet) {
             // 以下代码是从IP包头中提取IP地址，以及从以太网包头中提取mac地址
             // 然后用其更新ARP表
             xip_hdr_t *iphdr = (xip_hdr_t *) (packet->data + sizeof(xether_hdr_t));
-            if (packet->size >= sizeof(xether_hdr_t) + sizeof(xip_hdr_t)) {
-                if (memcmp(iphdr->dest_ip, &netif_ipaddr.array, XNET_IPV4_ADDR_SIZE) == 0) {
-                    update_arp_entry(iphdr->src_ip, hdr->src);
-                }
-            }
+            update_arp_entry(iphdr->src_ip, hdr->src);
             remove_header(packet, sizeof(xether_hdr_t));
             xip_in(packet);
             break;
@@ -445,7 +441,7 @@ void xip_in(xnet_packet_t * packet) {
                     remove_header(packet, header_size);
                     xudp_in(udp, &src_ip, packet);
                 } else {
-                    xicmp_dest_unreach(XICMP_CODE_PORT_UNREACH, iphdr);
+                    xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
                 }
             }
             break;

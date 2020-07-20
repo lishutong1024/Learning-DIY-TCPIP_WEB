@@ -31,12 +31,9 @@
  */
 #include <stdio.h>
 #include "xnet_tiny.h"
-#include "xserver_datetime.h"
 
 int main (void) {
     xnet_init();
-
-    xserver_datetime_create(13);
 
     printf("xnet running\n");
     while (1) {

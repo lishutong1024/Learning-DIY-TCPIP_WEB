@@ -99,7 +99,6 @@ typedef enum _xnet_err_t {
     XNET_ERR_NONE = -2,
     XNET_ERR_BINDED = -3,
     XNET_ERR_PARAM = -4,
-    XNET_ERR_MEM = -5,
 }xnet_err_t;
 
 /**

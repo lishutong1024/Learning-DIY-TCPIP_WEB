@@ -447,7 +447,7 @@ void xip_in(xnet_packet_t * packet) {
                     remove_header(packet, header_size);
                     xudp_in(udp, &src_ip, packet);
                 } else {
-                    xicmp_dest_unreach(XICMP_CODE_PORT_UNREACH, iphdr);
+                    xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
                 }
             }
             break;

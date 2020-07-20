@@ -35,7 +35,6 @@
 #include "xnet_tiny.h"
 
 #define min(a, b)               ((a) > (b) ? (b) : (a))
-#define tcp_get_init_seq()      ((rand() << 16) + rand())
 
 static const xipaddr_t netif_ipaddr = XNET_CFG_NETIF_IP;
 static const uint8_t ether_broadcast[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -730,10 +729,6 @@ static xtcp_t * tcp_alloc(void) {
             tcp->remote_port = 0;
             tcp->remote_ip.addr = 0;
             tcp->handler = (xtcp_handler_t)0;
-            tcp->remote_win = XTCP_MSS_DEFAULT;
-            tcp->remote_mss = XTCP_MSS_DEFAULT;
-            tcp->unack_seq = tcp->next_seq = tcp_get_init_seq();
-            tcp->ack = 0;
             return tcp;
         }
     }
@@ -747,6 +742,35 @@ static xtcp_t * tcp_alloc(void) {
  */
 static void tcp_free(xtcp_t* tcp) {
     tcp->state = XTCP_STATE_FREE;
+}
+
+/**
+ * 根据远端的端口、ip找一个对应的tcp连接进行处理。
+ * 优先找端口、IP全匹配的，其次找处于监听状态的
+ * @param remote_ip
+ * @param remote_port
+ * @param local_port
+ * @return
+ */
+static xtcp_t* tcp_find(xipaddr_t *remote_ip, uint16_t remote_port, uint16_t local_port) {
+    xtcp_t * tcp, * end;
+    xtcp_t * founded_tcp = (xtcp_t *)0;
+
+    for (tcp = tcp_socket, end = tcp_socket + XTCP_CFG_MAX_TCP; tcp < end; tcp++) {
+        if ((tcp->state == XTCP_STATE_FREE) || (tcp->local_port != local_port)) {
+            continue;
+        }
+
+        if (xipaddr_is_equal(remote_ip, &tcp->remote_ip) && (remote_port == tcp->remote_port)) {
+            return tcp;     // 优先，远程的端口和ip完全相同，立即返回
+        }
+
+        if (tcp->state == XTCP_STATE_LISTEN) {
+            founded_tcp = tcp;  // 没有，默认使用监听端口
+        }
+    }
+
+    return founded_tcp;
 }
 
 /**
@@ -773,10 +797,6 @@ xtcp_t * xtcp_open(xtcp_handler_t handler) {
  * 以及通过该端口发送数据包
  */
 xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
-    if (local_port == 0) {
-        return XNET_ERR_PARAM;
-    }
-
     xtcp_t * curr, * end;
     for (curr = tcp_socket, end = &tcp_socket[XUDP_CFG_MAX_UDP]; curr < end; curr++) {
         if ((curr != tcp) && (curr->local_port == local_port)) {
@@ -792,11 +812,7 @@ xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
  * 控制tcp进入监听状态
  */
 xnet_err_t xtcp_listen(xtcp_t * tcp) {
-    if (tcp->state == XTCP_STATE_CLOSED) {
-        tcp->state = XTCP_STATE_LISTEN;
-        return XNET_ERR_OK;
-    }
-
+    tcp->state = XTCP_STATE_LISTEN;
     return XNET_ERR_STATE;
 }
 

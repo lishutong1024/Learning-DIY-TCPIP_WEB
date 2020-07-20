@@ -208,15 +208,6 @@ typedef enum _xtcp_state_t {
     XTCP_STATE_FREE,
     XTCP_STATE_CLOSED,
     XTCP_STATE_LISTEN,
-    XTCP_STATE_SYNC_RECVD,
-    XTCP_STATE_SYN_SENT,
-    XTCP_STATE_ESTABLISHED,
-    XTCP_STATE_FIN_WAIT_1,
-    XTCP_STATE_FIN_WAIT_2,
-    XTCP_STATE_CLOSING,
-    XTCP_STATE_TIMED_WAIT,
-    XTCP_STATE_CLOSE_WAIT,
-    XTCP_STATE_LAST_ACK,
 }xtcp_state_t;
 
 typedef enum _xtcp_conn_state_t {
@@ -225,18 +216,12 @@ typedef enum _xtcp_conn_state_t {
     XTCP_CONN_CLOSED,
 }xtcp_conn_state_t;
 
-#define XTCP_MSS_DEFAULT                1460
-
 typedef struct _xtcp_t xtcp_t;
 typedef xnet_err_t(*xtcp_handler_t)(xtcp_t* tcp, xtcp_conn_state_t event);
 struct _xtcp_t {
     xtcp_state_t state;                 // 状态
     uint16_t local_port, remote_port;   // 本地端口 + 源端口
     xipaddr_t remote_ip;                // 源IP
-    uint32_t unack_seq, next_seq;       // 未确认的起始序号，下一发送序号
-    uint32_t ack;                       // 期望对方发来的包序号
-    uint16_t remote_mss;                // 对方的mss,不含选项区
-    uint16_t remote_win;                // 对方的窗口大小
     xtcp_handler_t handler;             // 事件处理回调
 };
 
