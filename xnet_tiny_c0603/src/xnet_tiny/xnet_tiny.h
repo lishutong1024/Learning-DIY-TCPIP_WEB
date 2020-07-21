@@ -113,7 +113,7 @@ typedef struct _xtcp_hdr_t {
             uint16_t flags : 6;         // 标志位
             uint16_t reserved : 6;      // 保留位
             uint16_t hdr_len: 4;        // 首部长度，以4字节位为单位
-        }field;
+        };
         uint16_t all;
     }hdr_flags;
     uint16_t window;	            // 窗口大小，告诉对方自己能接收多少数据
@@ -251,7 +251,7 @@ struct _xtcp_t {
     xtcp_state_t state;                 // 状态
     uint16_t local_port, remote_port;   // 本地端口 + 源端口
     xipaddr_t remote_ip;                // 源IP
-    uint32_t unack_seq, next_seq;       // 未确认的起始序号，下一发送序号
+    uint32_t next_seq;                  // 未确认的起始序号，下一发送序号
     uint32_t ack;                       // 期望对方发来的包序号
     uint16_t remote_mss;                // 对方的mss,不含选项区
     uint16_t remote_win;                // 对方的窗口大小

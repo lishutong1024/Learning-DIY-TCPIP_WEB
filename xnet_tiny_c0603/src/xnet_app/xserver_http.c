@@ -43,10 +43,8 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
 }
 
 xnet_err_t xserver_http_create(uint16_t port) {
-    xnet_err_t err;
-
     xtcp_t * tcp = xtcp_open(http_handler);
     xtcp_bind(tcp, port);
-
-    return xtcp_listen(tcp);
+    xtcp_listen(tcp);
+    return XNET_ERR_OK;
 }

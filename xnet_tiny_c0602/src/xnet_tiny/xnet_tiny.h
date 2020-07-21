@@ -113,7 +113,7 @@ typedef struct _xtcp_hdr_t {
             uint16_t flags : 6;         // 标志位
             uint16_t reserved : 6;      // 保留位
             uint16_t hdr_len: 4;        // 首部长度，以4字节位为单位
-        }field;
+        };
         uint16_t all;
     }hdr_flags;
     uint16_t window;	            // 窗口大小，告诉对方自己能接收多少数据

@@ -195,11 +195,7 @@ static void ethernet_in (xnet_packet_t * packet) {
             // 以下代码是从IP包头中提取IP地址，以及从以太网包头中提取mac地址
             // 然后用其更新ARP表
             xip_hdr_t *iphdr = (xip_hdr_t *) (packet->data + sizeof(xether_hdr_t));
-            if (packet->size >= sizeof(xether_hdr_t) + sizeof(xip_hdr_t)) {
-                if (memcmp(iphdr->dest_ip, &netif_ipaddr.array, XNET_IPV4_ADDR_SIZE) == 0) {
-                    update_arp_entry(iphdr->src_ip, hdr->src);
-                }
-            }
+            update_arp_entry(iphdr->src_ip, hdr->src);
             remove_header(packet, sizeof(xether_hdr_t));
             xip_in(packet);
             break;
@@ -447,7 +443,7 @@ void xip_in(xnet_packet_t * packet) {
                     remove_header(packet, header_size);
                     xudp_in(udp, &src_ip, packet);
                 } else {
-                    xicmp_dest_unreach(XICMP_CODE_PORT_UNREACH, iphdr);
+                    xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
                 }
             }
             break;
@@ -788,11 +784,11 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
 
     tcp_hdr->src_port = swap_order16(local_port);
     tcp_hdr->dest_port = swap_order16(remote_port);
-    tcp_hdr->seq = 0;                               // 固定为0即可
-    tcp_hdr->ack = swap_order32(remote_ack);          // 响应指定的发送ack，即对上次发送的包的回应
+    tcp_hdr->seq = 0;                                   // 固定为0即可
+    tcp_hdr->ack = swap_order32(remote_ack);            // 响应指定的发送ack，即对上次发送的包的回应
     tcp_hdr->hdr_flags.all = 0;
-    tcp_hdr->hdr_flags.field.hdr_len = sizeof(xtcp_hdr_t) / 4;
-    tcp_hdr->hdr_flags.field.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
+    tcp_hdr->hdr_flags.hdr_len = sizeof(xtcp_hdr_t) / 4;
+    tcp_hdr->hdr_flags.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
     tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
     tcp_hdr->window = 0;
     tcp_hdr->urgent_ptr = 0;
@@ -802,16 +798,12 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
     return xip_out(XNET_PROTOCOL_TCP, remote_ip, packet);
 }
 
-
 /**
  * TCP包的输入处理
  */
 void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
-    uint16_t hdr_flags, hdr_size;
     xtcp_t* tcp;
-    uint16_t src_port, dest_port;
-    uint32_t remote_ack, remote_seq;
 
     // 大小检查，至少要有负载数据
     if (packet->size < sizeof(xtcp_hdr_t)) {
@@ -819,23 +811,19 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     }
 
     // 从包头中解析相关参数
-    src_port = swap_order16(tcp_hdr->src_port);
-    dest_port = swap_order16(tcp_hdr->dest_port);
-    hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
-    hdr_size = (hdr_flags >> 12) * 4;
-    remote_seq = swap_order32(tcp_hdr->seq);
-    remote_ack = swap_order32(tcp_hdr->ack);
+    tcp_hdr->src_port = swap_order16(tcp_hdr->src_port);
+    tcp_hdr->dest_port = swap_order16(tcp_hdr->dest_port);
+    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
+    tcp_hdr->seq = swap_order32(tcp_hdr->seq);
+    tcp_hdr->ack = swap_order32(tcp_hdr->ack);
 
     // 找到对应处理的tcb，可能是监听tcb，也可能是已经连接的tcb，没有处理项，则复位通知
-    tcp = tcp_find(remote_ip, src_port, dest_port);
+    tcp = tcp_find(remote_ip, tcp_hdr->src_port, tcp_hdr->dest_port);
     if (tcp == (xtcp_t *)0) {
-        tcp_send_reset(remote_ack, dest_port, remote_ip, src_port);
+        // 暂时先写成seq + 1，后面再改
+        tcp_send_reset(tcp_hdr->seq + 1, tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
-    tcp->remote_win = swap_order16(tcp_hdr->window);
-
-    // 测试用，直接复位
-    tcp_send_reset(remote_ack, dest_port, remote_ip, src_port);
 }
 
 /**

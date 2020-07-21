@@ -197,11 +197,7 @@ static void ethernet_in (xnet_packet_t * packet) {
             // 以下代码是从IP包头中提取IP地址，以及从以太网包头中提取mac地址
             // 然后用其更新ARP表
             xip_hdr_t *iphdr = (xip_hdr_t *) (packet->data + sizeof(xether_hdr_t));
-            if (packet->size >= sizeof(xether_hdr_t) + sizeof(xip_hdr_t)) {
-                if (memcmp(iphdr->dest_ip, &netif_ipaddr.array, XNET_IPV4_ADDR_SIZE) == 0) {
-                    update_arp_entry(iphdr->src_ip, hdr->src);
-                }
-            }
+            update_arp_entry(iphdr->src_ip, hdr->src);
             remove_header(packet, sizeof(xether_hdr_t));
             xip_in(packet);
             break;
@@ -449,7 +445,7 @@ void xip_in(xnet_packet_t * packet) {
                     remove_header(packet, header_size);
                     xudp_in(udp, &src_ip, packet);
                 } else {
-                    xicmp_dest_unreach(XICMP_CODE_PORT_UNREACH, iphdr);
+                    xicmp_dest_unreach(XICMP_CODE_PRO_UNREACH, iphdr);
                 }
             }
             break;
@@ -739,7 +735,7 @@ static xtcp_t * tcp_alloc(void) {
             tcp->handler = (xtcp_handler_t)0;
             tcp->remote_win = XTCP_MSS_DEFAULT;
             tcp->remote_mss = XTCP_MSS_DEFAULT;
-            tcp->unack_seq = tcp->next_seq = tcp_get_init_seq();
+            tcp->next_seq = tcp_get_init_seq();
             tcp->ack = 0;
             return tcp;
         }
@@ -794,11 +790,11 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
 
     tcp_hdr->src_port = swap_order16(local_port);
     tcp_hdr->dest_port = swap_order16(remote_port);
-    tcp_hdr->seq = 0;                               // 固定为0即可
-    tcp_hdr->ack = swap_order32(remote_ack);          // 响应指定的发送ack，即对上次发送的包的回应
+    tcp_hdr->seq = 0;                                   // 固定为0即可
+    tcp_hdr->ack = swap_order32(remote_ack);            // 响应指定的发送ack，即对上次发送的包的回应
     tcp_hdr->hdr_flags.all = 0;
-    tcp_hdr->hdr_flags.field.hdr_len = sizeof(xtcp_hdr_t) / 4;
-    tcp_hdr->hdr_flags.field.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
+    tcp_hdr->hdr_flags.hdr_len = sizeof(xtcp_hdr_t) / 4;
+    tcp_hdr->hdr_flags.flags = XTCP_FLAG_RST | XTCP_FLAG_ACK;
     tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
     tcp_hdr->window = 0;
     tcp_hdr->urgent_ptr = 0;
@@ -806,6 +802,22 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
     tcp_hdr->checksum = checksum_peso(&netif_ipaddr, remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
     tcp_hdr->checksum = tcp_hdr->checksum ? tcp_hdr->checksum : 0xFFFF;
     return xip_out(XNET_PROTOCOL_TCP, remote_ip, packet);
+}
+
+static uint32_t get_reply_ack(xnet_packet_t * packet, xtcp_hdr_t* tcp_hdr) {
+    uint32_t seq = tcp_hdr->seq;
+    uint32_t hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
+
+    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_FIN) {
+        seq++;
+    }
+
+    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_SYN) {
+        seq++;
+    }
+
+    seq += packet->size - tcp_hdr->hdr_flags.hdr_len * 4;
+    return seq;
 }
 
 /**
@@ -828,8 +840,8 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
     tcp_hdr->seq = swap_order32(tcp->next_seq);
     tcp_hdr->ack = swap_order32(tcp->ack);
     tcp_hdr->hdr_flags.all = 0;
-    tcp_hdr->hdr_flags.field.hdr_len = (opt_size + sizeof(xtcp_hdr_t)) / 4;
-    tcp_hdr->hdr_flags.field.flags = flags;
+    tcp_hdr->hdr_flags.hdr_len = (opt_size + sizeof(xtcp_hdr_t)) / 4;
+    tcp_hdr->hdr_flags.flags = flags;
     tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
     tcp_hdr->window = 1024;
     tcp_hdr->checksum = 0;
@@ -861,7 +873,7 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
  * @param tcp_hdr tcp包头
  */
 static void tcp_read_mss(xtcp_t *tcp, xtcp_hdr_t *tcp_hdr) {
-    uint16_t opt_len = tcp_hdr->hdr_flags.field.hdr_len * 4 - sizeof(xtcp_hdr_t);
+    uint16_t opt_len = tcp_hdr->hdr_flags.hdr_len * 4 - sizeof(xtcp_hdr_t);
 
     if (opt_len == 0) {
         tcp->remote_mss = XTCP_MSS_DEFAULT;
@@ -882,12 +894,12 @@ static void tcp_read_mss(xtcp_t *tcp, xtcp_hdr_t *tcp_hdr) {
  * 处理tcp连接请求
  */
 static void tcp_process_accept(xtcp_t *listen_tcp, xipaddr_t *remote_ip, xtcp_hdr_t *tcp_hdr) {
-    uint16_t hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
+    uint16_t hdr_flags = tcp_hdr->hdr_flags.all;
 
     // 对于监听套接字，仅处理syn，其余发reset处理
     if (hdr_flags & XTCP_FLAG_SYN) {
         xnet_err_t err;
-        uint32_t ack = swap_order32(tcp_hdr->seq) + 1;
+        uint32_t ack = tcp_hdr->seq + 1;
 
         xtcp_t* new_tcp = tcp_alloc();
         if (!new_tcp) return;
@@ -895,11 +907,11 @@ static void tcp_process_accept(xtcp_t *listen_tcp, xipaddr_t *remote_ip, xtcp_hd
         new_tcp->state = XTCP_STATE_SYNC_RECVD;
         new_tcp->local_port = listen_tcp->local_port;
         new_tcp->handler = listen_tcp->handler;
-        new_tcp->remote_port = swap_order16(tcp_hdr->src_port);    // 肯定会成功的，因为这里端口太多
+        new_tcp->remote_port = tcp_hdr->src_port;    // 肯定会成功的，因为这里端口太多
         new_tcp->remote_ip.addr = remote_ip->addr;
         new_tcp->ack = ack;                                     // 对方的seq + syn的长度1，不算选项
-        new_tcp->next_seq = new_tcp->unack_seq = tcp_get_init_seq();     // 使用自己的，不用监听套接字的
-        new_tcp->remote_win = swap_order16(tcp_hdr->window);
+        new_tcp->next_seq = tcp_get_init_seq();     // 使用自己的，不用监听套接字的
+        new_tcp->remote_win = tcp_hdr->window;
         tcp_read_mss(new_tcp, tcp_hdr);         // 读选项，主要是mss
 
         err = tcp_send(new_tcp, XTCP_FLAG_SYN | XTCP_FLAG_ACK);
@@ -911,7 +923,7 @@ static void tcp_process_accept(xtcp_t *listen_tcp, xipaddr_t *remote_ip, xtcp_hd
         return;
     }
 
-    tcp_send_reset(swap_order16(tcp_hdr->seq), listen_tcp->local_port, remote_ip, swap_order16(tcp_hdr->src_port));
+    tcp_send_reset(tcp_hdr->seq, listen_tcp->local_port, remote_ip, tcp_hdr->src_port);
 }
 
 /**
@@ -930,10 +942,7 @@ static void tcp_process_reset(xtcp_t * tcp, xtcp_hdr_t * tcp_hdr) {
  */
 void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
-    uint16_t hdr_flags, hdr_size;
     xtcp_t* tcp;
-    uint16_t src_port, dest_port;
-    uint32_t remote_ack, remote_seq;
 
     // 大小检查，至少要有负载数据
     if (packet->size < sizeof(xtcp_hdr_t)) {
@@ -941,20 +950,20 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     }
 
     // 从包头中解析相关参数
-    src_port = swap_order16(tcp_hdr->src_port);
-    dest_port = swap_order16(tcp_hdr->dest_port);
-    hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
-    hdr_size = (hdr_flags >> 12) * 4;
-    remote_seq = swap_order32(tcp_hdr->seq);
-    remote_ack = swap_order32(tcp_hdr->ack);
+    tcp_hdr->src_port = swap_order16(tcp_hdr->src_port);
+    tcp_hdr->dest_port = swap_order16(tcp_hdr->dest_port);
+    tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
+    tcp_hdr->seq = swap_order32(tcp_hdr->seq);
+    tcp_hdr->ack = swap_order32(tcp_hdr->ack);
+    tcp_hdr->window = swap_order16(tcp_hdr->window);
 
     // 找到对应处理的tcb，可能是监听tcb，也可能是已经连接的tcb，没有处理项，则复位通知
-    tcp = tcp_find(remote_ip, src_port, dest_port);
+    tcp = tcp_find(remote_ip, tcp_hdr->src_port, tcp_hdr->dest_port);
     if (tcp == (xtcp_t *)0) {
-        tcp_send_reset(remote_ack, dest_port, remote_ip, src_port);
+        tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
-    tcp->remote_win = swap_order16(tcp_hdr->window);
+    tcp->remote_win = tcp_hdr->window;
 
     // 监听套接字，只能接收SYNC请求，其它包直接发送复位报错。没有可用的tcb，也发送复位
     if (tcp->state == XTCP_STATE_LISTEN) {
@@ -963,18 +972,18 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     }
 
     // 收到复位处理
-    if (hdr_flags & XTCP_FLAG_RST) {
+    if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_RST) {
         tcp_process_reset(tcp, tcp_hdr);
         return;
     }
 
     // 序号不一致，可能要进行重发
-    if (remote_seq != tcp->ack) {
+    if (tcp_hdr->seq != tcp->ack) {
         if (tcp->state != XTCP_STATE_ESTABLISHED) {
             // 非连接状态下，直接复位，关闭简单处理
             tcp->state = XTCP_STATE_ESTABLISHED;
             tcp->handler(tcp, XTCP_CONN_CLOSED);
-            tcp_send_reset(swap_order16(remote_seq), tcp->local_port, remote_ip, swap_order16(src_port));
+            tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp->local_port, remote_ip, tcp_hdr->src_port);
             tcp_free(tcp);
         } else {
             // 数据重发,
@@ -984,13 +993,12 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     }
 
     // 序号相同时的处理
-    remove_header(packet, hdr_size);
+    remove_header(packet, tcp_hdr->hdr_flags.hdr_len);
     switch (tcp->state) {
         case XTCP_STATE_SYNC_RECVD: {
             // 已经收到SYN，且发了SYN+ACK，检查是否是ACK，是，则连接成功
-            if (hdr_flags & XTCP_FLAG_ACK) {
+            if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_ACK) {
                 // 收到ack，则说明已经建立成功，进入已经连接成功状态
-                tcp->unack_seq++;       // syn占用了一个序号
                 tcp->state = XTCP_STATE_ESTABLISHED;
                 tcp->handler(tcp, XTCP_CONN_CONNECTED);
             }
@@ -1029,7 +1037,7 @@ xtcp_t * xtcp_open(xtcp_handler_t handler) {
  */
 xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
     xtcp_t * curr, * end;
-    for (curr = tcp_socket, end = &tcp_socket[XUDP_CFG_MAX_UDP]; curr < end; curr++) {
+    for (curr = tcp_socket, end = &tcp_socket[XTCP_CFG_MAX_TCP]; curr < end; curr++) {
         if ((curr != tcp) && (curr->local_port == local_port)) {
             return XNET_ERR_BINDED;
         }
@@ -1044,7 +1052,7 @@ xnet_err_t xtcp_bind(xtcp_t* tcp, uint16_t local_port) {
  */
 xnet_err_t xtcp_listen(xtcp_t * tcp) {
     tcp->state = XTCP_STATE_LISTEN;
-    return XNET_ERR_STATE;
+    return XNET_ERR_OK;
 }
 
 /**

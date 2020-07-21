@@ -39,11 +39,9 @@ static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t s
     xnet_packet_t * tx_packet;
     time_t rawtime;
     const struct tm * timeinfo;
+    size_t str_size;
 
     tx_packet = xnet_alloc_for_send(TIME_STR_SIZE);
-    if (tx_packet == (xnet_packet_t *)0) {
-        return XNET_ERR_MEM;
-    }
 
     // 参见：http://www.cplusplus.com/reference/ctime/localtime/
     time (&rawtime);
@@ -51,8 +49,7 @@ static xnet_err_t datetime_handler (xudp_t * udp, xipaddr_t * src_ip, uint16_t s
 
     // strftime参见：http://www.cplusplus.com/reference/ctime/strftime/
     // Weekday, Month Day, Year Time-Zone
-    strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
-    truncate_packet(tx_packet, (uint16_t)strlen((char *)tx_packet->data));
+    str_size = strftime((char *)tx_packet->data, TIME_STR_SIZE, "%A, %B %d, %Y %T-%z", timeinfo);
 
     return xudp_out(udp, src_ip, src_port, tx_packet);
 }
