@@ -29,23 +29,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fc65e580-d7a5-4f8d-a439-9d26d9dd6884" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0600/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0601/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0602/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_app/xserver_http.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0603/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0604/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +153,7 @@
       <workItem from="1595246186373" duration="1142000" />
       <workItem from="1595247358661" duration="1161000" />
       <workItem from="1595289133895" duration="4018000" />
+      <workItem from="1595321731687" duration="2245000" />
     </task>
     <servers />
   </component>
@@ -201,10 +187,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog" timestamp="1595307593007">
+    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog" timestamp="1595321938289">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595307593007" />
+    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595321938289" />
     <state x="662" y="274" width="678" height="702" key="find.popup" timestamp="1594008847398">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
