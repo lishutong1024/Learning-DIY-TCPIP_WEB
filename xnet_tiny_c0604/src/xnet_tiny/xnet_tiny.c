@@ -36,7 +36,6 @@
 #include "xnet_tiny.h"
 
 #define min(a, b)               ((a) > (b) ? (b) : (a))
-#define XTCP_DATA_MAX_SIZE       (XNET_CFG_PACKET_MAX_SIZE - sizeof(xether_hdr_t) - sizeof(xip_hdr_t) - sizeof(xtcp_hdr_t))
 #define tcp_get_init_seq()      ((rand() << 16) + rand())
 
 static const xipaddr_t netif_ipaddr = XNET_CFG_NETIF_IP;
@@ -971,7 +970,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     // 找到对应处理的tcb，可能是监听tcb，也可能是已经连接的tcb，没有处理项，则复位通知
     tcp = tcp_find(remote_ip, tcp_hdr->src_port, tcp_hdr->dest_port);
     if (tcp == (xtcp_t *)0) {
-        tcp_send_reset(tcp_hdr->seq + 1, tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
+        tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
     tcp->remote_win = tcp_hdr->window;
@@ -987,7 +986,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
         if (tcp->state != XTCP_STATE_ESTABLISHED) {
             // 非连接状态下，直接复位，关闭简单处理
             tcp->handler(tcp, XTCP_CONN_CLOSED);
-            tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp->local_port, remote_ip, tcp_hdr->src_port);
+            tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
             tcp_free(tcp);
         }
         return;
