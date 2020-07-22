@@ -117,38 +117,6 @@ static void close_http(xtcp_t * tcp) {
     printf("http closed.\n");
 }
 
-static void send_404_not_found(xtcp_t * tcp) {
-    sprintf(tx_buffer, "HTTP/1.0 404 NOT FOUND\r\n"
-                       "Content-Type: text/html\r\n"
-                       "\r\n404 not found");
-    http_send(tcp, tx_buffer, strlen(tx_buffer));
-}
-
-static void send_400_bad_request(xtcp_t * tcp) {
-    sprintf(tx_buffer, "HTTP/1.0 400 BAD REQUEST\r\n"
-                       "Content-type: text/html\r\n"
-                       "\r\n400 bad request");
-    http_send(tcp, tx_buffer, strlen(tx_buffer));
-}
-
-struct xhttp_file_type_t {
-    const char * ext_name;
-    const char * content_type;
-};
-
-// 请参考以下链接
-// https://www.runoob.com/http/http-content-type.html
-const struct xhttp_file_type_t file_type_table[] = {
-        {".html", "text/html"},
-        {".bmp", "application/x-bmp"},
-        {".gif", "image/gif"},
-        {".ico", "image/x-icon"},
-        {".jpeg", "image/jpeg"},
-        {".css", "text/css"},
-        {".jpg", "image/jpeg"},
-        {".js", "application/x-javascript"},
-        {".png", "image/png"},
-};
 
 static void send_file (xtcp_t * tcp, const char * url) {
     FILE * file;
@@ -158,13 +126,6 @@ static void send_file (xtcp_t * tcp, const char * url) {
 
     while (*url == '/') url++;
     sprintf(file_path, "%s/%s", XHTTP_DOC_DIR, url);
-
-    for (i = 0; i < sizeof(file_type_table) / sizeof(struct xhttp_file_type_t); i++) {
-        if (strstr(url_path, file_type_table[i].ext_name)) {
-            content_type = file_type_table[i].content_type;
-            break;
-        }
-    }
 
     file = fopen(file_path, "rb");
     if (file == NULL) {
@@ -177,18 +138,17 @@ static void send_file (xtcp_t * tcp, const char * url) {
     fseek(file, 0, SEEK_SET);
     sprintf(tx_buffer,
         "HTTP/1.0 200 OK\r\n"
-        "Server: TINY HTTP SERVER/1.0\r\n"
-        "Content-Length:%d\r\n"
-        "Connection:close\r\n"
-        "Pragma:no-cache\r\n"
-        "Content-Type:%s\r\n\r\n",
-        (int)size, content_type);
+        "Content-Length:%d\r\n\r\n",
+        (int)size);
     http_send(tcp, tx_buffer, strlen(tx_buffer));
 
 
         while (!feof(file)) {
             size = fread(tx_buffer, 1, sizeof(tx_buffer), file);
-            if (http_send(tcp, tx_buffer, size) <= 0) return;
+            if (http_send(tcp, tx_buffer, size) <= 0) {
+                fclose(file);
+                return;
+            }
         }
     fclose(file);
 }
@@ -197,6 +157,8 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
     if (state == XTCP_CONN_CONNECTED) {
         xhttp_fifo_in(&http_fifo, tcp);
         printf("http conntected.\n");
+    } else if (state == XTCP_CONN_CLOSED) {
+        printf("http closed.\n");
     }
     return XNET_ERR_OK;
 }
@@ -227,7 +189,7 @@ void xserver_http_run(void) {
 
         while (*c == ' ') c++;      // 跳过空格
         if (strncmp(rx_buffer, "GET", 3) != 0) {
-            send_400_bad_request(tcp);
+            //send_400_bad_request(tcp);
             close_http(tcp);
             continue;
         }
@@ -235,7 +197,7 @@ void xserver_http_run(void) {
         while (*c != ' ') c++;      // 跳过GET字符
         while (*c == ' ') c++;      // 跳过空格
         for (i = 0; i < sizeof(url_path); i++) {
-            if ((*c == '\0') || (*c == ' ')) break;
+            if (*c == ' ') break;
             url_path[i] = *c++;
         }
 
