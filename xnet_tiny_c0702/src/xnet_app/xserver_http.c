@@ -117,10 +117,6 @@ static void close_http(xtcp_t * tcp) {
     printf("http closed.\n");
 }
 
-struct xhttp_file_type_t {
-    const char * ext_name;
-    const char * content_type;
-};
 
 static void send_file (xtcp_t * tcp, const char * url) {
     FILE * file;
@@ -149,7 +145,10 @@ static void send_file (xtcp_t * tcp, const char * url) {
 
         while (!feof(file)) {
             size = fread(tx_buffer, 1, sizeof(tx_buffer), file);
-            if (http_send(tcp, tx_buffer, size) <= 0) return;
+            if (http_send(tcp, tx_buffer, size) <= 0) {
+                fclose(file);
+                return;
+            }
         }
     fclose(file);
 }
@@ -198,7 +197,7 @@ void xserver_http_run(void) {
         while (*c != ' ') c++;      // 跳过GET字符
         while (*c == ' ') c++;      // 跳过空格
         for (i = 0; i < sizeof(url_path); i++) {
-            if ((*c == '\0') || (*c == ' ')) break;
+            if (*c == ' ') break;
             url_path[i] = *c++;
         }
 
