@@ -117,6 +117,20 @@ static void close_http(xtcp_t * tcp) {
     printf("http closed.\n");
 }
 
+static void send_404_not_found(xtcp_t * tcp) {
+    sprintf(tx_buffer, "HTTP/1.0 404 NOT FOUND\r\n"
+                       "Content-Type: text/html\r\n"
+                       "\r\n404 not found");
+    http_send(tcp, tx_buffer, strlen(tx_buffer));
+}
+
+static void send_400_bad_request(xtcp_t * tcp) {
+    sprintf(tx_buffer, "HTTP/1.0 400 BAD REQUEST\r\n"
+                       "Content-type: text/html\r\n"
+                       "\r\n400 bad request");
+    http_send(tcp, tx_buffer, strlen(tx_buffer));
+}
+
 struct xhttp_file_type_t {
     const char * ext_name;
     const char * content_type;
@@ -154,7 +168,7 @@ static void send_file (xtcp_t * tcp, const char * url) {
 
     file = fopen(file_path, "rb");
     if (file == NULL) {
-        //send_404_not_found(tcp);
+        send_404_not_found(tcp);
         return;
     }
 
@@ -163,7 +177,10 @@ static void send_file (xtcp_t * tcp, const char * url) {
     fseek(file, 0, SEEK_SET);
     sprintf(tx_buffer,
         "HTTP/1.0 200 OK\r\n"
+        "Server: TINY HTTP SERVER/1.0\r\n"
         "Content-Length:%d\r\n"
+        "Connection:close\r\n"
+        "Pragma:no-cache\r\n"
         "Content-Type:%s\r\n\r\n",
         (int)size, content_type);
     http_send(tcp, tx_buffer, strlen(tx_buffer));
@@ -180,8 +197,6 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
     if (state == XTCP_CONN_CONNECTED) {
         xhttp_fifo_in(&http_fifo, tcp);
         printf("http conntected.\n");
-    } else if (state == XTCP_CONN_CLOSED) {
-        printf("http closed.\n");
     }
     return XNET_ERR_OK;
 }
@@ -212,7 +227,7 @@ void xserver_http_run(void) {
 
         while (*c == ' ') c++;      // 跳过空格
         if (strncmp(rx_buffer, "GET", 3) != 0) {
-            //send_400_bad_request(tcp);
+            send_400_bad_request(tcp);
             close_http(tcp);
             continue;
         }
