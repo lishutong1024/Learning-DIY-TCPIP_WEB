@@ -51,7 +51,20 @@ static xtcp_t tcp_socket[XTCP_CFG_MAX_TCP];                     // TCP连接块
 static void update_arp_entry(uint8_t* src_ip, uint8_t* mac_addr);
 
 #define swap_order16(v)   ((((v) & 0xFF) << 8) | (((v) >> 8) & 0xFF))
-#define swap_order32(v)   ((((v >> 0) & 0xFF) << 24) | (((v >> 8) & 0xFF) << 16) | (((v >> 16) & 0xFF) << 8) | ((v >> 24) & 0xFF))
+//#define swap_order32(v)   ((((v >> 0) & 0xFF) << 24) | (((v >> 8) & 0xFF) << 16) | (((v >> 16) & 0xFF) << 8) | ((v >> 24) & 0xFF))
+
+uint32_t swap_order32(uint32_t v) {
+    uint32_t r_v;
+    uint8_t* src = (uint8_t*)&v;
+    uint8_t* dest = (uint8_t*)&r_v;
+
+    dest[0] = src[3];
+    dest[1] = src[2];
+    dest[2] = src[1];
+    dest[3] = src[0];
+    return r_v;
+}
+
 #define xipaddr_is_equal_buf(addr, buf)      (memcmp((addr)->array, (buf), XNET_IPV4_ADDR_SIZE) == 0)
 #define xipaddr_is_equal(addr1, addr2)       ((addr1)->addr == (addr2)->addr)
 #define xipaddr_from_buf(dest, buf)          ((dest)->addr = *(uint32_t *)(buf))
@@ -805,22 +818,6 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
     return xip_out(XNET_PROTOCOL_TCP, remote_ip, packet);
 }
 
-static uint32_t get_reply_ack(xnet_packet_t * packet, xtcp_hdr_t* tcp_hdr) {
-    uint32_t seq = tcp_hdr->seq;
-    uint32_t hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
-
-    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_FIN) {
-        seq++;
-    }
-
-    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_SYN) {
-        seq++;
-    }
-
-    seq += packet->size - tcp_hdr->hdr_flags.hdr_len * 4;
-    return seq;
-}
-
 /**
  * 将发送缓冲区中的数据发送出去。尽最大努力发送最多
  * @param tcp 处理的tcp连接
@@ -831,10 +828,9 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
     xnet_packet_t * packet;
     xtcp_hdr_t * tcp_hdr;
     xnet_err_t err;
-    uint16_t data_size = 0;
     uint16_t opt_size = (flags & XTCP_FLAG_SYN) ? 4 : 0;     // mss长度
 
-    packet = xnet_alloc_for_send(data_size + opt_size + sizeof(xtcp_hdr_t));
+    packet = xnet_alloc_for_send(opt_size + sizeof(xtcp_hdr_t));
     tcp_hdr = (xtcp_hdr_t *)packet->data;
     tcp_hdr->src_port = swap_order16(tcp->local_port);
     tcp_hdr->dest_port = swap_order16(tcp->remote_port);
@@ -856,11 +852,9 @@ static xnet_err_t tcp_send(xtcp_t *tcp, uint8_t flags) {
 
     tcp_hdr->checksum = checksum_peso(&netif_ipaddr, &tcp->remote_ip, XNET_PROTOCOL_TCP, (uint16_t *) packet->data, packet->size);
     tcp_hdr->checksum = tcp_hdr->checksum ? tcp_hdr->checksum : 0xFFFF;
+
     err = xip_out(XNET_PROTOCOL_TCP, &tcp->remote_ip, packet);
     if (err < 0) return err;
-
-    tcp->remote_win -= data_size;               // 同时远端可用窗口减少
-    tcp->next_seq += data_size;                 // 新发送，序号要增加
 
     if (flags & (XTCP_FLAG_SYN | XTCP_FLAG_FIN)) {        // FIN占用1个序号
         tcp->next_seq++;
@@ -885,7 +879,7 @@ static void tcp_read_mss(xtcp_t *tcp, xtcp_hdr_t *tcp_hdr) {
         while ((*opt_data != XTCP_KIND_END) && (opt_data < opt_end)) {
             if ((*opt_data++ == XTCP_KIND_MSS) && (*opt_data++ == 4)) {
                 tcp->remote_mss = swap_order16(*(uint16_t *) opt_data);
-                opt_data += 2;
+                return;
             }
         }
     }
@@ -920,23 +914,28 @@ static void tcp_process_accept(xtcp_t *listen_tcp, xipaddr_t *remote_ip, xtcp_hd
             tcp_free(new_tcp);
             return;
         }
-
-        return;
     }
-
-    tcp_send_reset(tcp_hdr->seq, listen_tcp->local_port, remote_ip, tcp_hdr->src_port);
-}
-
-/**
- * 处理tcp复位包的输入
- */
-static void tcp_process_reset(xtcp_t * tcp, xtcp_hdr_t * tcp_hdr) {
-    // 仅当收到的复位与与自己期望的一致，因为可能有很早前发的复位包这里才到达，此时不应处理
-    if (tcp->ack == swap_order32(tcp_hdr->seq)) {
-        tcp->handler(tcp, XTCP_CONN_CLOSED);
-        tcp_free(tcp);
+    else {
+        tcp_send_reset(tcp_hdr->seq, listen_tcp->local_port, remote_ip, tcp_hdr->src_port);
     }
 }
+
+static uint32_t get_reply_ack(xnet_packet_t * packet, xtcp_hdr_t* tcp_hdr) {
+    uint32_t seq = tcp_hdr->seq;
+    uint32_t hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
+
+    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_FIN) {
+        seq++;
+    }
+
+    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_SYN) {
+        seq++;
+    }
+
+    seq += packet->size - tcp_hdr->hdr_flags.hdr_len * 4;
+    return seq;
+}
+
 
 /**
  * TCP包的输入处理
@@ -944,10 +943,21 @@ static void tcp_process_reset(xtcp_t * tcp, xtcp_hdr_t * tcp_hdr) {
 void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
     xtcp_t* tcp;
+    uint16_t pre_checksum;
 
     // 大小检查，至少要有负载数据
     if (packet->size < sizeof(xtcp_hdr_t)) {
         return;
+    }
+
+    pre_checksum = tcp_hdr->checksum;
+    tcp_hdr->checksum = 0;
+    if (pre_checksum != 0) {
+        uint16_t checksum = checksum_peso(remote_ip, &netif_ipaddr, XNET_PROTOCOL_TCP, (uint16_t*)tcp_hdr, packet->size);
+        checksum = (checksum == 0) ? 0xFFFF : checksum;
+        if (checksum != pre_checksum) {
+            return;
+        }
     }
 
     // 从包头中解析相关参数
@@ -961,7 +971,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     // 找到对应处理的tcb，可能是监听tcb，也可能是已经连接的tcb，没有处理项，则复位通知
     tcp = tcp_find(remote_ip, tcp_hdr->src_port, tcp_hdr->dest_port);
     if (tcp == (xtcp_t *)0) {
-        tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
+        tcp_send_reset(tcp_hdr->seq + 1, tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
     tcp->remote_win = tcp_hdr->window;
@@ -972,24 +982,14 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
         return;
     }
 
-    // 收到复位处理
-    if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_RST) {
-        tcp_process_reset(tcp, tcp_hdr);
-        return;
-    }
-
     // 序号不一致，可能要进行重发
     if (tcp_hdr->seq != tcp->ack) {
         if (tcp->state != XTCP_STATE_ESTABLISHED) {
             // 非连接状态下，直接复位，关闭简单处理
-            tcp->state = XTCP_STATE_ESTABLISHED;
             tcp->handler(tcp, XTCP_CONN_CLOSED);
             tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp->local_port, remote_ip, tcp_hdr->src_port);
             tcp_free(tcp);
-        } else {
-            // 数据重发,
         }
-
         return;
     }
 

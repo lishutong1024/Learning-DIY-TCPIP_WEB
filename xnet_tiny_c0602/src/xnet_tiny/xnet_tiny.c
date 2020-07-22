@@ -48,7 +48,20 @@ static xtcp_t tcp_socket[XTCP_CFG_MAX_TCP];                     // TCP连接块
 static void update_arp_entry(uint8_t* src_ip, uint8_t* mac_addr);
 
 #define swap_order16(v)   ((((v) & 0xFF) << 8) | (((v) >> 8) & 0xFF))
-#define swap_order32(v)   ((((v >> 0) & 0xFF) << 24) | (((v >> 8) & 0xFF) << 16) | (((v >> 16) & 0xFF) << 8) | ((v >> 24) & 0xFF))
+//#define swap_order32(v)   ((((v >> 0) & 0xFF) << 24) | (((v >> 8) & 0xFF) << 16) | (((v >> 16) & 0xFF) << 8) | ((v >> 24) & 0xFF))
+
+uint32_t swap_order32(uint32_t v) {
+    uint32_t r_v;
+    uint8_t* src = (uint8_t*)&v;
+    uint8_t* dest = (uint8_t*)&r_v;
+
+    dest[0] = src[3];
+    dest[1] = src[2];
+    dest[2] = src[1];
+    dest[3] = src[0];
+    return r_v;
+}
+
 #define xipaddr_is_equal_buf(addr, buf)      (memcmp((addr)->array, (buf), XNET_IPV4_ADDR_SIZE) == 0)
 #define xipaddr_is_equal(addr1, addr2)       ((addr1)->addr == (addr2)->addr)
 #define xipaddr_from_buf(dest, buf)          ((dest)->addr = *(uint32_t *)(buf))
@@ -804,18 +817,29 @@ static xnet_err_t tcp_send_reset (uint32_t remote_ack, uint16_t local_port, xipa
 void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     xtcp_hdr_t * tcp_hdr = (xtcp_hdr_t *)packet->data;
     xtcp_t* tcp;
+    uint16_t pre_checksum;
 
     // 大小检查，至少要有负载数据
     if (packet->size < sizeof(xtcp_hdr_t)) {
         return;
     }
 
+    pre_checksum = tcp_hdr->checksum;
+    tcp_hdr->checksum = 0;
+    if (pre_checksum != 0) {
+        uint16_t checksum = checksum_peso(remote_ip, &netif_ipaddr, XNET_PROTOCOL_TCP, (uint16_t*)tcp_hdr, packet->size);
+        checksum = (checksum == 0) ? 0xFFFF : checksum;
+        if (checksum != pre_checksum) {
+            return;
+        }
+    }
     // 从包头中解析相关参数
     tcp_hdr->src_port = swap_order16(tcp_hdr->src_port);
     tcp_hdr->dest_port = swap_order16(tcp_hdr->dest_port);
     tcp_hdr->hdr_flags.all = swap_order16(tcp_hdr->hdr_flags.all);
     tcp_hdr->seq = swap_order32(tcp_hdr->seq);
     tcp_hdr->ack = swap_order32(tcp_hdr->ack);
+    tcp_hdr->window = swap_order16(tcp_hdr->window);
 
     // 找到对应处理的tcb，可能是监听tcb，也可能是已经连接的tcb，没有处理项，则复位通知
     tcp = tcp_find(remote_ip, tcp_hdr->src_port, tcp_hdr->dest_port);

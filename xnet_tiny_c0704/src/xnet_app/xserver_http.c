@@ -117,6 +117,12 @@ static void close_http(xtcp_t * tcp) {
     printf("http closed.\n");
 }
 
+static void send_404_not_found(xtcp_t * tcp) {
+    sprintf(tx_buffer, "HTTP/1.0 404 NOT FOUND\r\n"
+                       "Content-Type: text/html\r\n"
+                       "\r\n404 not found");
+    http_send(tcp, tx_buffer, strlen(tx_buffer));
+}
 
 static void send_file (xtcp_t * tcp, const char * url) {
     FILE * file;
