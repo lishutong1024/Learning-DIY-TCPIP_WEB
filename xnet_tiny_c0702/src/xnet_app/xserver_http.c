@@ -122,20 +122,6 @@ struct xhttp_file_type_t {
     const char * content_type;
 };
 
-// 请参考以下链接
-// https://www.runoob.com/http/http-content-type.html
-const struct xhttp_file_type_t file_type_table[] = {
-        {".html", "text/html"},
-        {".bmp", "application/x-bmp"},
-        {".gif", "image/gif"},
-        {".ico", "image/x-icon"},
-        {".jpeg", "image/jpeg"},
-        {".css", "text/css"},
-        {".jpg", "image/jpeg"},
-        {".js", "application/x-javascript"},
-        {".png", "image/png"},
-};
-
 static void send_file (xtcp_t * tcp, const char * url) {
     FILE * file;
     uint32_t size;
@@ -144,13 +130,6 @@ static void send_file (xtcp_t * tcp, const char * url) {
 
     while (*url == '/') url++;
     sprintf(file_path, "%s/%s", XHTTP_DOC_DIR, url);
-
-    for (i = 0; i < sizeof(file_type_table) / sizeof(struct xhttp_file_type_t); i++) {
-        if (strstr(url_path, file_type_table[i].ext_name)) {
-            content_type = file_type_table[i].content_type;
-            break;
-        }
-    }
 
     file = fopen(file_path, "rb");
     if (file == NULL) {
@@ -163,12 +142,8 @@ static void send_file (xtcp_t * tcp, const char * url) {
     fseek(file, 0, SEEK_SET);
     sprintf(tx_buffer,
         "HTTP/1.0 200 OK\r\n"
-        "Server: TINY HTTP SERVER/1.0\r\n"
-        "Content-Length:%d\r\n"
-        "Connection:close\r\n"
-        "Pragma:no-cache\r\n"
-        "Content-Type:%s\r\n\r\n",
-        (int)size, content_type);
+        "Content-Length:%d\r\n\r\n",
+        (int)size);
     http_send(tcp, tx_buffer, strlen(tx_buffer));
 
 
@@ -183,6 +158,8 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
     if (state == XTCP_CONN_CONNECTED) {
         xhttp_fifo_in(&http_fifo, tcp);
         printf("http conntected.\n");
+    } else if (state == XTCP_CONN_CLOSED) {
+        printf("http closed.\n");
     }
     return XNET_ERR_OK;
 }
