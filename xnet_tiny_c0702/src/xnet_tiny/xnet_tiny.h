@@ -105,10 +105,16 @@ typedef struct _xtcp_hdr_t {
     uint32_t ack;		            // 通知对方期望接收的下一字节的序号
     union {
         struct {
+
+#define XTCP_FLAG_FIN           (1 << 0)
+#define XTCP_FLAG_SYN           (1 << 1)
+#define XTCP_FLAG_RST           (1 << 2)
+#define XTCP_FLAG_ACK           (1 << 4)
+
             uint16_t flags : 6;         // 标志位
             uint16_t reserved : 6;      // 保留位
             uint16_t hdr_len: 4;        // 首部长度，以4字节位为单位
-        }field;
+        };
         uint16_t all;
     }hdr_flags;
     uint16_t window;	            // 窗口大小，告诉对方自己能接收多少数据
@@ -223,16 +229,11 @@ void xudp_close(xudp_t *udp);
 xudp_t* xudp_find(uint16_t port);
 xnet_err_t xudp_bind(xudp_t *udp, uint16_t local_port);
 
-#define XTCP_FLAG_FIN           (1 << 0)
-#define XTCP_FLAG_SYN           (1 << 1)
-#define XTCP_FLAG_RST           (1 << 2)
-#define XTCP_FLAG_ACK           (1 << 4)
 typedef enum _xtcp_state_t {
     XTCP_STATE_FREE,
     XTCP_STATE_CLOSED,
     XTCP_STATE_LISTEN,
     XTCP_STATE_SYNC_RECVD,
-    XTCP_STATE_SYN_SENT,
     XTCP_STATE_ESTABLISHED,
     XTCP_STATE_FIN_WAIT_1,
     XTCP_STATE_FIN_WAIT_2,

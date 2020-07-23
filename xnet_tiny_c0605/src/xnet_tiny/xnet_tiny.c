@@ -1030,23 +1030,6 @@ static void tcp_process_accept(xtcp_t *listen_tcp, xipaddr_t *remote_ip, xtcp_hd
     }
 }
 
-static uint32_t get_reply_ack(xnet_packet_t * packet, xtcp_hdr_t* tcp_hdr) {
-    uint32_t seq = tcp_hdr->seq;
-    uint32_t hdr_flags = swap_order16(tcp_hdr->hdr_flags.all);
-
-    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_FIN) {
-        seq++;
-    }
-
-    if (tcp_hdr->hdr_flags.all & XTCP_FLAG_SYN) {
-        seq++;
-    }
-
-    seq += packet->size - tcp_hdr->hdr_flags.hdr_len * 4;
-    return seq;
-}
-
-
 /**
  * TCP包的输入处理
  */
@@ -1119,8 +1102,8 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
                 // 2.远程ack < tcp_unack_seq，即可能之前重发的ack，不处理
                 // 简单起见，不考虑序号溢出问题
                 if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_ACK) {
-                    if ((tcp->unack_seq < tcp->ack) && (tcp->ack <= tcp->next_seq)) {
-                        uint16_t curr_ack_size = tcp->ack - tcp->unack_seq;
+                    if ((tcp->unack_seq < tcp_hdr->ack) && (tcp_hdr->ack <= tcp->next_seq)) {
+                        uint16_t curr_ack_size = tcp_hdr->ack - tcp->unack_seq;
                         tcp_buf_add_acked_count(&tcp->tx_buf, curr_ack_size);
                         tcp->unack_seq += curr_ack_size;
                     }
@@ -1220,7 +1203,7 @@ xnet_err_t xtcp_listen(xtcp_t * tcp) {
 int xtcp_write(xtcp_t * tcp, uint8_t * data, uint16_t size) {
     uint16_t send_size;
 
-    if ((tcp->state != XTCP_STATE_ESTABLISHED) && (tcp->state != XTCP_STATE_CLOSE_WAIT)) {
+    if ((tcp->state != XTCP_STATE_ESTABLISHED)) {
         return -1;
     }
 
