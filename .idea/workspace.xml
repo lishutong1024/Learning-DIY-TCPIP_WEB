@@ -29,18 +29,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fc65e580-d7a5-4f8d-a439-9d26d9dd6884" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_app/xserver_http.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_datetime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_app/xserver_http.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.c" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.h" beforeDir="false" afterPath="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.h" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,14 +43,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/xnet_tiny_c0605/src/xnet_tiny/xnet_tiny.c" />
-        <option value="$PROJECT_DIR$/xnet_tiny_c0606/src/xnet_tiny/xnet_tiny.c" />
-      </list>
-    </option>
-  </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
     <option name="width" value="1280" />
@@ -67,40 +50,6 @@
   </component>
   <component name="ProjectId" id="1eITmskcwjYIROrpgn6MdmgrFfJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
-              <item name="xnet_tiny_c0604" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
-              <item name="xnet_tiny_c0605" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Learning-DIY-TCP_WEB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Learning-DIY-TCP_WEB" type="462c0819:PsiDirectoryNode" />
-              <item name="xnet_tiny_c0606" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -123,18 +72,6 @@
       <recent name="$PROJECT_DIR$/xnet_tiny_c0504/src/xnet_app" />
       <recent name="$PROJECT_DIR$/xnet_tiny_c0503/src/xnet_app" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -227,52 +164,19 @@
       <workItem from="1595474249589" duration="7000" />
       <workItem from="1595474410160" duration="92000" />
       <workItem from="1595489019245" duration="340000" />
+      <workItem from="1595498712704" duration="2020000" />
     </task>
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="439000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2536349" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.32909605" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -291,12 +195,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog" timestamp="1595473670537">
+    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog" timestamp="1595506544704">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595473670537" />
+    <state x="803" y="157" width="1736" height="896" maximized="true" key="DiffContextDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1595506544704" />
     <state x="746" y="273" key="VcsDiffUtil.ChangesDialog" timestamp="1595384886803">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
