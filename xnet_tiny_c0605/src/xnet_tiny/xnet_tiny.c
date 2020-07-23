@@ -1094,12 +1094,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
 
     // 序号不一致，可能要进行重发
     if (tcp_hdr->seq != tcp->ack) {
-        if (tcp->state != XTCP_STATE_ESTABLISHED) {
-            // 非连接状态下，直接复位，关闭简单处理
-            tcp->handler(tcp, XTCP_CONN_CLOSED);
-            tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp->local_port, remote_ip, tcp_hdr->src_port);
-            tcp_free(tcp);
-        }
+        tcp_send_reset(tcp_hdr->seq + 1, tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
 
@@ -1160,14 +1155,9 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
         case XTCP_STATE_FIN_WAIT_2:    // 自己发送关闭，但仍然能数据接收
             // 不做半关闭下仍然接收数据的处理
             if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_FIN) {
-                // 不处理此状态下的数据接收
-                if (tcp_hdr->hdr_flags.flags & XTCP_FLAG_FIN) {          // FIN
-                    tcp->ack++;
-                    tcp_send(tcp, XTCP_FLAG_ACK);        // 对方也关闭
-
-                    tcp->state = XTCP_STATE_CLOSED;
-                    tcp_free(tcp);                      // 直接释放掉，不进入TIMED_WAIT
-                }
+                tcp->ack++;
+                tcp_send(tcp, XTCP_FLAG_ACK);
+                tcp_free(tcp);
             }
             break;
         case XTCP_STATE_LAST_ACK:

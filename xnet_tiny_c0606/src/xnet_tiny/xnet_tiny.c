@@ -1135,12 +1135,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
 
     // 序号不一致，可能要进行重发
     if (tcp_hdr->seq != tcp->ack) {
-        if (tcp->state != XTCP_STATE_ESTABLISHED) {
-            // 非连接状态下，直接复位，关闭简单处理
-            tcp->handler(tcp, XTCP_CONN_CLOSED);
-            tcp_send_reset(get_reply_ack(packet, tcp_hdr), tcp->local_port, remote_ip, tcp_hdr->src_port);
-            tcp_free(tcp);
-        }
+        tcp_send_reset(tcp_hdr->seq + 1, tcp_hdr->dest_port, remote_ip, tcp_hdr->src_port);
         return;
     }
 
