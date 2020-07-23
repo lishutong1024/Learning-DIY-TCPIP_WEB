@@ -36,6 +36,7 @@
 static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
     if (state == XTCP_CONN_CONNECTED) {
         printf("http conntected.\n");
+        xtcp_close(tcp);
     } else if (state == XTCP_CONN_CLOSED) {
         printf("http closed.\n");
     }

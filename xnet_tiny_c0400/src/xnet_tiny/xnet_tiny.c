@@ -491,7 +491,7 @@ static xnet_err_t reply_icmp_request(xicmp_hdr_t * icmp_hdr, xipaddr_t* src_ip, 
     xicmp_hdr_t * replay_hdr;
     xnet_packet_t * tx = xnet_alloc_for_send(packet->size);
 
-    replay_hdr = (xicmp_hdr_t *)packet->data;
+    replay_hdr = (xicmp_hdr_t *)tx->data;
     replay_hdr->type = XICMP_CODE_ECHO_REPLY;
     replay_hdr->code = 0;
     replay_hdr->id = icmp_hdr->id;
@@ -500,7 +500,7 @@ static xnet_err_t reply_icmp_request(xicmp_hdr_t * icmp_hdr, xipaddr_t* src_ip, 
     memcpy(((uint8_t *)replay_hdr) + sizeof(xicmp_hdr_t), ((uint8_t *)icmp_hdr) + sizeof(xicmp_hdr_t),
             packet->size - sizeof(xicmp_hdr_t));
     replay_hdr->checksum = checksum16((uint16_t*)replay_hdr, tx->size, 0, 1);
-    return xip_out(XNET_PROTOCOL_ICMP, src_ip, packet);
+    return xip_out(XNET_PROTOCOL_ICMP, src_ip, tx);
 }
 
 /**
