@@ -1104,7 +1104,7 @@ void xtcp_in(xipaddr_t *remote_ip, xnet_packet_t * packet) {
     }
 
     // 序号相同时的处理
-    remove_header(packet, tcp_hdr->hdr_flags.hdr_len);
+    remove_header(packet, tcp_hdr->hdr_flags.hdr_len * 4);
     switch (tcp->state) {
         case XTCP_STATE_SYNC_RECVD: {
             // 已经收到SYN，且发了SYN+ACK，检查是否是ACK，是，则连接成功

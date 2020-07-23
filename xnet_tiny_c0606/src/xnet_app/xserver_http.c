@@ -10,7 +10,7 @@
  * 作者：李述铜
  * 网址: http://01ketang.cc/tcpip
  * QQ群：524699753（加群时请注明：tcpip），免费提供关于该源码的支持和问题解答。
- * 微信公众号：请搜索 01课程
+ * 微信公众号：请搜索 01课堂
  *
  * 版权声明：源码仅供学习参考，请勿用于商业产品，不保证可靠性。二次开发或其它商用前请联系作者。
  * 注：
@@ -48,12 +48,8 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
 }
 
 xnet_err_t xserver_http_create(uint16_t port) {
-    xnet_err_t err;
-
     xtcp_t * tcp = xtcp_open(http_handler);
-    if (!tcp) return XNET_ERR_MEM;
-    err = xtcp_bind(tcp, port);       // HTTP熟知端口
-    if (err < 0) return  err;
-
-    return xtcp_listen(tcp);
+    xtcp_bind(tcp, port);
+    xtcp_listen(tcp);
+    return XNET_ERR_OK;
 }
