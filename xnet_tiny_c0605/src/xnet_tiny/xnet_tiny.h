@@ -41,7 +41,7 @@
 #define XARP_CFG_MAX_RETRIES		    4                   // ARP表挂起时重试查询次数
 #define XUDP_CFG_MAX_UDP                10                  // 最大支持的UDP连接数
 #define XTCP_CFG_MAX_TCP                        40                  // 最大支持的TCP连接数
-#define XTCP_CFG_RTX_BUF_SIZE                   1024                // TCP收发缓冲区大小
+#define XTCP_CFG_RTX_BUF_SIZE                   2048                // TCP收发缓冲区大小，越大越小，比如2048
 
 #pragma pack(1)
 

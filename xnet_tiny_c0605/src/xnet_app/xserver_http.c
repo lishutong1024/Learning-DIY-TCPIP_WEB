@@ -45,6 +45,7 @@ static xnet_err_t http_handler (xtcp_t* tcp, xtcp_conn_state_t state) {
         for (i = 0; i < sizeof(rx_buffer); i++) {
             rx_buffer[i] = num[i % 16];
         }
+
         xtcp_write(tcp, rx_buffer, sizeof(rx_buffer));
     } else if (state == XTCP_CONN_CLOSED) {
         printf("http closed.\n");
