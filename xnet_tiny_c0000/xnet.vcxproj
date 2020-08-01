@@ -86,7 +86,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)src;$(ProjectDir)..\lib\npcap\include;$(ProjectDir)..\lib\xnet;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)src\xnet_tiny;$(ProjectDir)src\xnet_app;$(ProjectDir)src;$(ProjectDir)..\lib\npcap\include;$(ProjectDir)..\lib\xnet;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

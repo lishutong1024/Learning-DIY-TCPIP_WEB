@@ -11,7 +11,7 @@
 #include <memory.h>
 #include "pcap_device.h"
 
-#if defined(WIN32) || defined(WIN64)
+#if defined(WIN32)
 
 #include <winsock.h>
 #include <tchar.h>
@@ -20,23 +20,50 @@
 #pragma comment(lib, "ws2_32.lib")  // 加载win32的网络库
 
 // 加载pcap的lib，根据32位或64位平台来加
-#ifdef __i386
-#pragma comment(lib, "..\\lib\\npcap\\Lib\\Packet.lib")  
-#pragma comment(lib, "..\\lib\\npcap\\Lib\\wpcap.lib") 
-#else 
+#ifdef _WIN64
 #pragma comment(lib, "..\\lib\\npcap\\Lib\\x64\\Packet.lib")  
 #pragma comment(lib, "..\\lib\\npcap\\Lib\\x64\\wpcap.lib") 
+#else 
+#pragma comment(lib, "..\\lib\\npcap\\Lib\\Packet.lib")  
+#pragma comment(lib, "..\\lib\\npcap\\Lib\\wpcap.lib") 
 #endif
+
+static const char* read_num(const char* str, int * num) {
+    const char* pstr = str;
+
+    while ((*pstr < '0') || (*pstr > '9')) { 
+        if (*pstr == '\0') {
+            return '\0';
+        }
+
+        pstr++;  
+    }
+
+    *num = 0;
+    while (*pstr) {
+        char c = *pstr++;
+        if ((c >= '0') && (c <= '9')) {
+            *num = *num * 10 + c - '0';
+        } else {
+            break;
+        }
+    }
+
+    return pstr;
+}
+
 
 /**
  * 调整npcap的搜索路径：默认安装在系统的dll路径\npcap目录下
  * 设置该路径，以避免使用其它已经安装的winpcap版本的dll
  * 注意：要先安装npcap软件包
  */
-static int load_pcap_lib () {
+static int load_pcap_lib() {
     static int dll_loaded = 0;
     _TCHAR  npcap_dir[512];
     int size;
+    DWORD dwAttrib;
+    int m_version, n_version;
 
     if (dll_loaded) {
         return 0;
@@ -44,18 +71,45 @@ static int load_pcap_lib () {
 
     size = GetSystemDirectory(npcap_dir, 480);
     if (!size) {
-        fprintf(stderr, "Error in GetSystemDirectory: %x", GetLastError());
-        return -1;
+        goto error_end;
     }
 
     _tcscat_s(npcap_dir, 512, _T("\\Npcap"));
     if (SetDllDirectory(npcap_dir) == 0) {
-        fprintf(stderr, "Error in SetDllDirectory: %x", GetLastError());
+        goto error_end;
+    }
+
+    _tcscat_s(npcap_dir, 512, _T("\\npcap.dll"));
+    dwAttrib = GetFileAttributes(npcap_dir);
+    if ((INVALID_FILE_ATTRIBUTES != dwAttrib) && (0 == (dwAttrib & FILE_ATTRIBUTE_DIRECTORY))) {
+        goto error_end;
+    }
+
+    // 检查版本号，要求必须比工程所用的高
+    const char * v_str = pcap_lib_version();
+    v_str = read_num(v_str, &m_version);
+    read_num(v_str, &n_version);
+    if ((m_version < NPCAP_VERSION_M) || ((m_version == NPCAP_VERSION_M) && (n_version < NPCAP_VERSION_N))) {
+        wchar_t title[256];
+
+        wsprintf(title, _T("npcap版本号太老: %d.%d < %d.%d"), m_version, n_version, NPCAP_VERSION_M, NPCAP_VERSION_N);
+        MessageBox(0,
+            _T("1.请卸载所有已安装的npcap或者winpcap. \n2. 请安装最新版本npcap，或者安装课程提供的wireshark, 安装过程中安装其附带的npcap."),
+            title,
+            MB_ABORTRETRYIGNORE);
         return -1;
     }
 
     dll_loaded = 1;
     return 0;
+
+    
+error_end:
+    MessageBox(0,
+        _T("请安装课程提供的wireshark，并确认wireshark提供的npcap安装."),
+        _T("npcap驱动加载失败"),
+        MB_ABORTRETRYIGNORE);
+    return -1;
 }
 
 #else   // Mac或者linux
@@ -219,7 +273,8 @@ pcap_t* pcap_device_open(const char* ip, const uint8_t * mac_addr, uint8_t poll_
     // 只捕获输入，不要捕获自己发出去的
     // 注：win平台似乎不支持这个选项
     if (pcap_setdirection(pcap, PCAP_D_IN) != 0) {
-        fprintf(stderr, "pcap_open: set direction failed: %s\n", pcap_geterr(pcap));
+        // fprintf(stderr, "pcap_open: set direction not suppor: %s\n", pcap_geterr(pcap));
+        
     }
 
     // 只捕获发往本接口与广播的数据帧。相当于只处理发往这张网卡的包

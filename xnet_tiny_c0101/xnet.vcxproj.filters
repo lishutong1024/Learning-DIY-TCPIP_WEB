@@ -52,16 +52,5 @@
     <ClInclude Include="src\xnet_app\xserver_http.h">
       <Filter>xnet_app</Filter>
     </ClInclude>
-    <ClInclude Include="src\xnet_appcfg.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\lib\npcap\Lib\x64\Packet.lib">
-      <Filter>库文件</Filter>
-    </Library>
-    <Library Include="..\lib\npcap\Lib\x64\wpcap.lib">
-      <Filter>库文件</Filter>
-    </Library>
   </ItemGroup>
 </Project>
